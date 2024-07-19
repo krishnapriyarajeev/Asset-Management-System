@@ -1,0 +1,7 @@
+node_modules/
+dist/
+volumes/
+.logs
+.err.logs
+coverage
+.env
