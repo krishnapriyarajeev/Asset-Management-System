@@ -10,6 +10,7 @@ import { PiMouseThin } from "react-icons/pi";
 import { CiKeyboard } from "react-icons/ci";
 import { PiNotepad } from "react-icons/pi";
 import { TiPen } from "react-icons/ti";
+import { IoGitPullRequestOutline } from "react-icons/io5";
 
 const today = new Date();
 const options = {
@@ -21,28 +22,41 @@ const options = {
 const formatter = new Intl.DateTimeFormat('en-US', options);
 const formattedDate = formatter.format(today).replace(/,/g, '');
 const data = [{
-    logo: <LiaLaptopSolid className="sub-logo" />,
-    heading: "Laptops"
+    logo: <IoGitPullRequestOutline className="sub-logo" />,
+    heading: "#100",
+    name: "name",
+    date: "date"
 },
 {
-    logo: <PiHeadphones className="sub-logo" />,
-    heading: "Headphones"
+    logo: <IoGitPullRequestOutline className="sub-logo" />,
+    heading: "#101",
+    name: "name",
+    date: "date"
 },
 {
-    logo: <PiMouseThin className="sub-logo" />,
-    heading: "Mouse"
+    logo: <IoGitPullRequestOutline className="sub-logo" />,
+    heading: "#102",
+    name: "name",
+    date: "date"
 },
 {
-    logo: <CiKeyboard className="sub-logo" />,
-    heading: "Keyboard"
+    logo: <IoGitPullRequestOutline className="sub-logo" />,
+    heading: "#103",
+    name: "name",
+    date: "date"
 },
 {
-    logo: <PiNotepad className="sub-logo" />,
-    heading: "Notepad"
+    logo: <IoGitPullRequestOutline className="sub-logo" />,
+    heading: "#104",
+    name: "name",
+    date: "date"
+
 },
 {
-    logo: <TiPen className="sub-logo" />,
-    heading: "Pen"
+    logo: <IoGitPullRequestOutline className="sub-logo" />,
+    heading: "#105",
+    name: "name",
+    date: "date"
 }]
 const Request = () => {
     const navigate = useNavigate()
@@ -57,13 +71,13 @@ const Request = () => {
 
 
         <div className="heading-display">
-            <h1 className="head">Categories/</h1>
-            <h4 className="tail">assets</h4>
+            <h1 className="head">Lists/</h1>
+            <h4 className="tail">requests</h4>
             <CreateButton />
         </div>
         <div className="cards" >
-            {data.map(({ logo, heading }) => (
-                <Card key={heading} logo={logo} heading={heading} onClick={(path) => navigate(path)} />
+            {data.map(({ logo, heading, name, date }) => (
+                <Card key={heading} logo={logo} heading={heading} name={name} date={date} onClick={(path) => navigate(path)} />
             ))}
         </div>
     </div>;

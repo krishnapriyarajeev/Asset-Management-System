@@ -9,6 +9,7 @@
         min-width: 180px;
         transition: 1000ms;
         cursor: pointer;
+        
     }
     .sub-logo{
         margin-right: 10px;
@@ -21,3 +22,10 @@
         transform: scale(1.1);
         transition: 1000ms;
     }    
+    .card-name{
+        padding: 10px 10px 10px 5px;
+
+    }
+    .card-date{
+        padding: 0px 10px 10px 5px;
+    }

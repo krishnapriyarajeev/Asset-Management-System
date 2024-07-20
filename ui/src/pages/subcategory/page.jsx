@@ -1,7 +1,10 @@
 import { useParams } from "react-router-dom";
 import CategoryTable from "../../components/table/Category";
 import Container from "../../components/container/container";
-
+import CreateButton from "../../components/button/create";
+import './page.scss'
+import { Fragment } from "react";
+import User from '../../components/user/user'
 const SubCategory = () => {
   const { categoryId } = useParams();
   const subCategoryData = [
@@ -56,10 +59,21 @@ const SubCategory = () => {
   ];
 
   return (
-    <Container>
-      <h2>{categoryId} page</h2>
-      <CategoryTable tabledata={subCategoryData} />
-    </Container>
+    <div >
+      <div className="heading-subcategory">
+        <h1 className="head">{categoryId}/</h1>
+        <h4 className="tail">assets</h4>
+
+      </div>
+      <CreateButton />
+
+
+      <User />
+      <Container>
+        <CategoryTable tabledata={subCategoryData} />
+      </Container>
+    </div>
+
   );
 };
 

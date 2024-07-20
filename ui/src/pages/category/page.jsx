@@ -60,7 +60,9 @@ const Category = () => {
       <h1 className="head">Categories/</h1>
       <h4 className="tail">assets</h4>
       <CreateButton />
+
     </div>
+
     <div className="cards" >
       {data.map(({ logo, heading }) => (
         <Card key={heading} logo={logo} heading={heading} onClick={(path) => navigate(path)} />
