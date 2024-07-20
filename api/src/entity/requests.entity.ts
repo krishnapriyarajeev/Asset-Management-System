@@ -7,8 +7,6 @@ import Employee from "./employee.entity";
 @Entity()
 
 export default class Requests extends AbstractEntity{
-    @Column()
-    employeeid: number;
 
     @Column()
     status: RequestStatus; 

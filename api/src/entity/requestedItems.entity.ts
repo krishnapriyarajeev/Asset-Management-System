@@ -8,12 +8,6 @@ import Subcategory from "./subcategory.entity";
 export default class RequestedItems extends AbstractEntity{
 
     @Column()
-    subcategoryid: number;
-
-    @Column()
-    requestid: number;
-
-    @Column()
     reason: string;
 
     @Column()
