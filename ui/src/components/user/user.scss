@@ -1,0 +1,20 @@
+.user-component{
+    display: flex;
+    position: fixed;
+    right: 4%;
+    padding: 10px;
+    top: 10%;
+    .signout-button{
+        border: 1px solid black;
+        margin-right: 30px;
+        border-radius: 5px;
+        padding: 6px;
+        background-color: #EDF4FA;
+    }
+    .user-icon{
+        font-size: 40px;
+        border: 1px solid rgb(153, 153, 153);
+        background-color: #EDF4FA;
+        border-radius: 50px;
+    }
+}
