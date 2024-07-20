@@ -1,5 +1,5 @@
 import "./Form.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import FormField from "../FormField/FormField";
@@ -27,10 +27,12 @@ const Form = () => {
     newData[id] = value;
     setData((data) => ({ ...data, ...newData }));
   };
-
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <section className="form-section">
-      <form className="form">
+      <form className="form" onSubmit={console.log("Hello")}>
         <div className="form-details">
           {fields.map((field) => {
             return field.Component ? (
@@ -58,9 +60,9 @@ const Form = () => {
           <Button
             text="Cancel"
             className="form-buttons cancel"
-            handleSubmit={(e) => {
+            handleForm={(e) => {
               e.preventDefault();
-              navigate(-1);
+              navigate("/assets");
             }}
           />
         </div>

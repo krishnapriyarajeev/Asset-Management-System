@@ -3,9 +3,14 @@
 import "./Button.scss";
 import React from "react";
 
-const Button = ({ text, className }) => {
+const Button = ({ text, className, handleForm }) => {
   return (
-    <button type="submit" data-testid="button-test-id" className={className}>
+    <button
+      type="submit"
+      data-testid="button-test-id"
+      className={className}
+      onClick={handleForm}
+    >
       {text}
     </button>
   );
