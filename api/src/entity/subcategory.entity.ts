@@ -14,7 +14,7 @@ export default class Subcategory extends AbstractEntity{
     modelName: string;
 
     @Column()
-    subcategoryName: string;
+    Specifications: string;
 
     @ManyToOne(() => Category, (category) => category.subcategory)
     @JoinColumn()

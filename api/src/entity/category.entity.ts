@@ -10,6 +10,6 @@ export default class Category extends AbstractEntity{
     categoryName: string;
 
     @OneToMany(() => Subcategory, (subcategory) => subcategory.category)
-  subcategory: Subcategory[];
+    subcategory: Subcategory[];
 
 }
