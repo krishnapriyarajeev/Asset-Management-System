@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const navLinks = [
   {
-    link: "/asset",
+    link: "/assets",
     text: "Assets",
   },
   {

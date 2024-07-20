@@ -10,8 +10,8 @@ table {
 }
 
 thead th {
-    box-shadow: 0px 0px 5px #b5eafd;
-    background-color: #b5eafd;
+    box-shadow: 0px 0px 5px #bfe6f5;
+    background-color: #bfe6f5;
 }
 
 thead th:first-child {
@@ -36,11 +36,13 @@ th {
 tbody tr {
     border: 1px solid #dddddd;
     box-shadow: 2px 1px 5px rgb(231, 231, 231);
+    // TODO: not for all table
     cursor: pointer;
+    background-color: #EDF4FA;
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f3feff;
 }
 
 .delete-icon {
