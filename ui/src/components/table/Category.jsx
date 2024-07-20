@@ -1,33 +1,28 @@
 import { MdOutlineDelete, MdModeEditOutline } from "react-icons/md";
 import "./table.scss";
-import Pill from "../pill/pill";
+import { useNavigate } from "react-router-dom";
 
-const Table = ({ data = [] }) => {
+const CategoryTable = ({ tabledata = [] }) => {
+  const tableheader = ["S.No", "Brand", "Model", "Specs", "Count", "Actions"];
+  const navigate = useNavigate();
   return (
     <div className="table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Employee</th>
-            <th>Employee ID</th>
-            <th>Joining Date</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Experience</th>
-            <th>Action</th>
+            {tableheader.map((value) => (
+              <th key={value}>{value}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {data.map(({ name, id, joinDate, role, status, experience }) => (
-            <tr key={id}>
-              <td>{name}</td>
-              <td>{id}</td>
-              <td>{joinDate}</td>
-              <td>{role}</td>
-              <td>
-                <Pill type="green" innerText={status} />
-              </td>
-              <td>{experience} years</td>
+          {tabledata.map(({ brand, model, specs, count }, key) => (
+            <tr key={key} onClick={() => navigate(`${brand.toLowerCase()}`)}>
+              <td>{key}</td>
+              <td>{brand}</td>
+              <td>{model}</td>
+              <td>{specs}</td>
+              <td>{count}</td>
               <td className="action-td">
                 <MdOutlineDelete
                   size="25px"
@@ -58,4 +53,4 @@ const Table = ({ data = [] }) => {
   );
 };
 
-export default Table;
+export default CategoryTable;

@@ -3,7 +3,7 @@ import "./App.scss";
 import HomeLayout from "./layouts/home.layout";
 import Category from "./pages/category/page";
 import SubCategory from "./pages/subcategory/page";
-import ModalList from "./pages/modal/page";
+import ModalList from "./pages/model/page";
 
 function App() {
   const router = createBrowserRouter([
@@ -12,15 +12,15 @@ function App() {
       element: <HomeLayout />,
       children: [
         {
-          path: "category",
+          path: "",
           element: <Category />,
         },
         {
-          path: "category/:categoryId",
+          path: ":categoryId",
           element: <SubCategory />,
         },
         {
-          path: "category/:categoryId/:subCategoryId",
+          path: ":categoryId/:subCategoryId",
           element: <ModalList />,
         },
       ],
