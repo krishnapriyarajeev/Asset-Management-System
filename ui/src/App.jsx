@@ -4,10 +4,15 @@ import HomeLayout from "./layouts/home.layout";
 import Category from "./pages/category/page";
 import SubCategory from "./pages/subcategory/page";
 import ModalList from "./pages/model/page";
-import Request from "./pages/requests/requests"
+import Request from "./pages/requests/requests";
+import Login from "./pages/Login/Login";
 
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/login",
+      element: <Login />,
+    },
     {
       path: "/assets",
       element: <HomeLayout />,
@@ -23,8 +28,8 @@ function App() {
         {
           path: ":categoryId/:subCategoryId",
           element: <ModalList />,
-        }
-      ]
+        },
+      ],
     },
     {
       path: "/requests",
@@ -32,10 +37,10 @@ function App() {
       children: [
         {
           path: "",
-          element: <Request />
-        }
-      ]
-    }
+          element: <Request />,
+        },
+      ],
+    },
   ]);
 
   return (

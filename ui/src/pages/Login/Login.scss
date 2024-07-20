@@ -1,0 +1,47 @@
+.loginMain {
+  display: flex;
+  //   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  padding: 30px;
+  gap: 50px;
+}
+
+.hero {
+  background-color: #e6f7fd;
+  height: 94vh;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  height: 534px;
+  width: 543px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #72727234;
+  border-radius: 10px;
+  box-shadow: 0 0 4px #4e4e4ea4;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  height: 35vh;
+  gap: 25px;
+}
+
+.loginImage {
+  border-radius: 50%;
+  width: 500px;
+  height: 500px;
+  border: 30px solid rgb(255, 255, 255);
+}
+
+.kvlogo {
+  width: 200px;
+}
