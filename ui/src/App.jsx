@@ -6,9 +6,14 @@ import SubCategory from "./pages/subcategory/page";
 import ModalList from "./pages/model/page";
 import Request from "./pages/requests/requests";
 import Login from "./pages/Login/Login";
+import Form from "./components/Form/Form";
 
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/new",
+      element: <Form />,
+    },
     {
       path: "/login",
       element: <Login />,

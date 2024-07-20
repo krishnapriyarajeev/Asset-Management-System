@@ -1,0 +1,33 @@
+.form-section {
+  border-radius: 10px;
+  background-color: #edf4fa;
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.08);
+  margin: 0 65px 0 300px;
+  padding-right: 20px;
+  padding: 30px 0 30px 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+}
+
+.form-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+}
+
+.form-buttons {
+  height: 30px;
+  width: 150px;
+  margin-right: 10px;
+  background-color: #03aeee;
+  color: #ffff;
+  font-weight: bolder;
+  border-width: 1px;
+  border-style: none;
+  border-radius: 3px;
+  box-shadow: 0 2px 2px #03aeee3f;
+}
