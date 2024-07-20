@@ -1,0 +1,17 @@
+.navLink {
+  height: 48px;
+  width: 90%;
+  background-color: #edf4fa;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  border-radius: 0 5px 5px 0;
+  box-shadow: 0 4px 4px #aeaeae3f;
+  cursor: pointer;
+}
+
+.selectNav {
+  width: 80%;
+  color: #2579c7;
+  transition: 5ms;
+}

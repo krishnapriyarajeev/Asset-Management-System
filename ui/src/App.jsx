@@ -8,20 +8,33 @@ import ModalList from "./pages/model/page";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/asset",
       element: <HomeLayout />,
       children: [
         {
-          path: "",
-          element: <Category />,
+          path: "/asset",
+          children: [
+            {
+              path: "",
+              element: <Category />,
+            },
+            {
+              path: ":categoryId",
+              element: <SubCategory />,
+            },
+            {
+              path: ":categoryId/:subCategoryId",
+              element: <ModalList />,
+            },
+          ],
         },
         {
-          path: ":categoryId",
-          element: <SubCategory />,
+          path: "/requests",
         },
         {
-          path: ":categoryId/:subCategoryId",
-          element: <ModalList />,
+          path: "/employees",
+        },
+        {
+          path: "/createEmployee",
         },
       ],
     },
