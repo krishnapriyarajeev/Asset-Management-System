@@ -1,0 +1,48 @@
+.table-wrapper {
+    margin-top: 20px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 20px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+thead th {
+    box-shadow: 0px 0px 5px #b5eafd;
+    background-color: #b5eafd;
+}
+
+thead th:first-child {
+    border-radius: 10px 0px 0px 10px;
+}
+
+thead th:last-child {
+    border-radius: 0px 10px 10px 0px;
+}
+
+td,
+th {
+    text-align: left;
+    max-width: 50px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 28px;
+    color: #383838;
+}
+
+tbody tr {
+    border: 1px solid #dddddd;
+    box-shadow: 2px 1px 5px rgb(231, 231, 231);
+    cursor: pointer;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.delete-icon {
+    margin-right: 20px;
+}
