@@ -2,8 +2,7 @@ import { useParams } from "react-router-dom";
 import CategoryTable from "../../components/table/Category";
 import Container from "../../components/container/container";
 import CreateButton from "../../components/button/create";
-import './page.scss'
-import { Fragment } from "react";
+import "./page.scss";
 import User from '../../components/user/user'
 const SubCategory = () => {
   const { categoryId } = useParams();
