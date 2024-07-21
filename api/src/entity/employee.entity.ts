@@ -7,6 +7,7 @@ import { Status } from "../utils/status.enum";
 import Assets from "./assets.entity";
 import Requests from "./requests.entity";
 
+
 @Entity()
 @Unique(["email"])
 export default class Employee extends AbstractEntity {

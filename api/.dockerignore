@@ -3,3 +3,4 @@ dist/
 volumes/
 .logs
 .err.logs
+.env.file

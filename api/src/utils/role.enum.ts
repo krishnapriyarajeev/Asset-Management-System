@@ -3,4 +3,5 @@ export enum Role {
   ASSOCIATE = "Associate",
   PROBATION = "Probation",
   HR = "HR",
+  ADMIN="ADMIN",
 }

@@ -1,0 +1,119 @@
+import { NextFunction, Router, Response, Request } from "express";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import RequestWithUser from "../utils/requestWithUser";
+import HttpException from "../exceptions/http.exception";
+import { Role } from "../utils/role.enum";
+import { plainToInstance } from "class-transformer";
+import { validate } from "class-validator";
+import { CreateAssetDto, UpdateAssetDto } from "../dto/assets.dto";
+
+export default class assetController {
+  public router: Router;
+
+  constructor(private assetService: assetService) {
+    this.router = Router();
+
+    this.router.get("/", authMiddleware, this.getAllAsset);
+    this.router.get("/:id", authMiddleware, this.getAssetById);
+    this.router.post("/", authMiddleware, this.createAsset);
+    this.router.put("/", authMiddleware, this.updateAsset);
+    this.router.delete("/:id", authMiddleware, this.deleteAsset);
+  }
+  getAllAsset = async (_, res: Response) => {
+    const asset = await this.assetService.getAllAsset();
+    res.status(200).send(asset);
+  };
+
+  getAssetById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = Number(req.params.id);
+      const asset = await this.assetService.getAssetById(id);
+      if (!asset) {
+        throw new HttpException(404, "Asset not found");
+      }
+      //   res.json(plainToInstance(UpdateAssetDto, asset));
+      res.status(200).send(asset);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  createAsset = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
+      const assetDto = plainToInstance(CreateAssetDto, req.body);
+      const errors = await validate(assetDto);
+
+      if (errors.length) {
+        throw new HttpException(400, JSON.stringify(errors));
+      }
+
+      const assetData = await this.assetService.createAsset(
+        assetDto.serialNumber,
+        assetDto.status,
+        assetDto.employee,
+        assetDto.subcategory
+      );
+
+      res.status(201).send(assetData);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updateAsset = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
+      const assetDto = plainToInstance(UpdateAssetDto, req.body);
+      const errors = await validate(assetDto);
+
+      if (errors.length) {
+        throw new HttpException(400, JSON.stringify(errors));
+      }
+
+      const assetData = await this.assetService.updateAsset(
+        assetDto.serialNumber,
+        assetDto.status,
+        assetDto.subcategory,
+        assetDto.employee
+      );
+      //   res.json({
+      //     sucess: true,
+      //     message: "Asset Updated!",
+      //     data: assetData,
+      //   });
+      res.status(200).send(assetData);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  deleteAsset = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
+      const id = Number(req.params.id);
+      await this.assetService.deleteAsset(id);
+      res.json({ sucess: true, message: "Asset Deleted!" });
+    } catch (err) {
+      next(err);
+    }
+  };
+}
