@@ -8,6 +8,7 @@ import Request from "./pages/requests/page";
 import Login from "./pages/Login/Login";
 import Form from "./components/Form/Form";
 import RequestDetail from "./pages/reuestsDetailed/page";
+import EmployeeList from "./pages/EmployeeList/EmployeeList";
 
 function App() {
   const router = createBrowserRouter([
@@ -48,6 +49,16 @@ function App() {
         {
           path: ":requestId",
           element: <RequestDetail />,
+        },
+      ],
+    },
+    {
+      path: "/employees",
+      element: <HomeLayout />,
+      children: [
+        {
+          path: "",
+          element: <EmployeeList />,
         },
       ],
     },
