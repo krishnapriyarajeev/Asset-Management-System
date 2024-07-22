@@ -20,9 +20,9 @@ export default class EmployeeController {
   constructor(private employeeService: EmployeeService) {
     this.router = Router();
 
-    this.router.get("/", authMiddleware, this.getAllEmployees);
+    this.router.get("/", this.getAllEmployees);
     this.router.get("/:id", authMiddleware, this.getEmployeeById);
-    this.router.post("/", authMiddleware, this.createEmployee);
+    this.router.post("/", this.createEmployee);
     this.router.put("/", authMiddleware, this.updateEmployee);
     this.router.delete("/:id", authMiddleware, this.deleteEmployee);
     this.router.post("/login", this.loginEmployee);
@@ -51,9 +51,9 @@ export default class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.HR) {
-        throw new HttpException(403, "Invalid Access");
-      }
+      // if (req.role !== Role.HR) {
+      //   throw new HttpException(403, "Invalid Access");
+      // }
       const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(employeeDto);
 

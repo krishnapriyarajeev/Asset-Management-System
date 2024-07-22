@@ -19,8 +19,8 @@ export default class categoryController {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllCategory);
-    this.router.get("/:id", authMiddleware, this.getCategoryById);
-    this.router.post("/", authMiddleware, this.createCategory);
+    this.router.get("/:id", this.getCategoryById);
+    this.router.post("/", this.createCategory);
     this.router.put("/", authMiddleware, this.updateCategory);
     this.router.delete("/:id", authMiddleware, this.deleteCategory);
   }
@@ -49,9 +49,9 @@ export default class categoryController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.ADMIN) {
-        throw new HttpException(403, "Invalid Access");
-      }
+      // if (req.role !== Role.ADMIN) {
+      //   throw new HttpException(403, "Invalid Access");
+      // }
       const categoryDto = plainToInstance(CreateCategoryDto, req.body);
       const errors = await validate(categoryDto);
 
@@ -86,7 +86,7 @@ export default class categoryController {
       }
 
       const categoryData = await this.categoryService.updateCategory(
-        categoryDto.categoryName,
+        categoryDto
       );
       //   res.json({
       //     sucess: true,

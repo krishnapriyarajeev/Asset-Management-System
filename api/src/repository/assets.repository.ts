@@ -8,16 +8,14 @@ export default class AssetRepository {
 
   find = async () =>
     await this.assetRepository.find({
-      relations: {subcategory:true,employee:true},
+      relations: { subcategory: true, employee: true },
     });
 
-
-
-    //add relations
+  //add relations
   findOneBy = async (filter: Partial<Assets>) =>
     await this.assetRepository.findOne({
       where: filter,
-      relations :{subcategory:true,employee:true},
+      relations: { subcategory: true, employee: true },
     });
 
   save = async (newAsset: Partial<Assets>) =>

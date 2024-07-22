@@ -12,7 +12,6 @@ import {
   UpdateSubcategoryDto,
 } from "../dto/subcategory.dto";
 
-
 export default class SubCategoryController {
   public router: Router;
 
@@ -21,7 +20,7 @@ export default class SubCategoryController {
 
     this.router.get("/", authMiddleware, this.getAllSubCategory);
     this.router.get("/:id", authMiddleware, this.getSubCategoryById);
-    this.router.post("/", authMiddleware, this.createNewSubCategory);
+    this.router.post("/", this.createNewSubCategory);
     this.router.put("/", authMiddleware, this.updateSubCategory);
     this.router.delete("/:id", authMiddleware, this.deleteSubCategory);
   }
@@ -54,9 +53,9 @@ export default class SubCategoryController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.ADMIN) {
-        throw new HttpException(403, "Invalid Access");
-      }
+      // if (req.role !== Role.ADMIN) {
+      //   throw new HttpException(403, "Invalid Access");
+      // }
       const subCategoryDto = plainToInstance(CreateSubcategoryDto, req.body);
       const errors = await validate(subCategoryDto);
 
@@ -64,12 +63,13 @@ export default class SubCategoryController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const subCategoryData = await this.subCategoryService.createNewSubCategory(
-        subCategoryDto.brandName,
-        subCategoryDto.modelName,
-        subCategoryDto.Specifications,
-        subCategoryDto.category
-      );
+      const subCategoryData =
+        await this.subCategoryService.createNewSubCategory(
+          subCategoryDto.brandName,
+          subCategoryDto.modelName,
+          subCategoryDto.Specifications,
+          subCategoryDto.category
+        );
 
       res.status(201).send(subCategoryData);
     } catch (error) {
@@ -94,10 +94,7 @@ export default class SubCategoryController {
       }
 
       const subCategoryData = await this.subCategoryService.updateSubCategory(
-        subCategoryDto.brandName,
-        subCategoryDto.modelName,
-        subCategoryDto.Specifications,
-        subCategoryDto.category
+        subCategoryDto
       );
       //   res.json({
       //     sucess: true,

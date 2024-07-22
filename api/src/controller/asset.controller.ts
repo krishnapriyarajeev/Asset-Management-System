@@ -16,7 +16,7 @@ export default class assetController {
 
     this.router.get("/", authMiddleware, this.getAllAsset);
     this.router.get("/:id", authMiddleware, this.getAssetById);
-    this.router.post("/", authMiddleware, this.createAsset);
+    this.router.post("/", this.createAsset);
     this.router.put("/", authMiddleware, this.updateAsset);
     this.router.delete("/:id", authMiddleware, this.deleteAsset);
   }
@@ -84,12 +84,8 @@ export default class assetController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const assetData = await this.assetService.updateAsset(
-        assetDto.serialNumber,
-        assetDto.status,
-        assetDto.subcategory,
-        assetDto.employee
-      );
+      console.log("Here");
+      const assetData = await this.assetService.updateAsset(assetDto);
       //   res.json({
       //     sucess: true,
       //     message: "Asset Updated!",

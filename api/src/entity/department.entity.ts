@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, Unique } from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import Employee from "./employee.entity";
+import { IsOptional } from "class-validator";
 
 @Entity()
 @Unique(["name"])

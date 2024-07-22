@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString, ValidateNested,IsNumber } from "class-validator";
 import { CreateRequestsDto } from "./requests.dto";
 import { Type } from "class-transformer";
 import Requests from "../entity/requests.entity";
@@ -27,6 +27,9 @@ export class UpdateRequestedItems {
     @IsString()
     @IsOptional()
     reason: string;
+
+    @IsNumber()
+    id: number;
 
     @IsString()
     @IsOptional()

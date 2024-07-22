@@ -95,12 +95,7 @@ export default class requestedItemController {
       }
 
       const requestedItemData =
-        await this.requestedItemService.updateRequestedItem(
-          requestedItemDto.reason,
-          requestedItemDto.requestType,
-          requestedItemDto.requests,
-          requestedItemDto.subcategory
-        );
+        await this.requestedItemService.updateRequestedItem(requestedItemDto);
       //   res.json({
       //     sucess: true,
       //     message: "Asset Updated!",

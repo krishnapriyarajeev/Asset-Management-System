@@ -87,8 +87,7 @@ export default class requestsController {
       }
 
       const requestsData = await this.requestsService.updateRequest(
-        updateRequestsDto.employee,
-        updateRequestsDto.status
+        updateRequestsDto
       );
       //   res.json({
       //     sucess: true,

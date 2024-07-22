@@ -5,6 +5,7 @@ import HttpException from "../exceptions/http.exception";
 import SubCategoryRepository from "../repository/subCategory.repository";
 import Category from "../entity/category.entity";
 import Subcategory from "../entity/subcategory.entity";
+import { UpdateSubcategoryDto } from "../dto/subcategory.dto";
 
 export default class SubCategoryService {
   constructor(private subCategoryRepository: SubCategoryRepository) {
@@ -34,31 +35,24 @@ export default class SubCategoryService {
   };
 
   //Handle edge cases
-  public updateSubCategory = async (
-    modelName: string,
-
-    Specifications: string,
-    brandName: string,
-
-    category: Category
-  ) => {
-    const newSubCategory = new Subcategory();
-    if (Specifications) {
-      newSubCategory.Specifications = Specifications;
+  public updateSubCategory = async (subcategory: UpdateSubcategoryDto) => {
+    const updateSubCategoryData = await this.getSubCategoryById(subcategory.id);
+    if (subcategory.Specifications) {
+      updateSubCategoryData.Specifications = subcategory.Specifications;
     }
 
-    if (modelName) {
-      newSubCategory.modelName = modelName;
+    if (subcategory.modelName) {
+      updateSubCategoryData.modelName = subcategory.modelName;
     }
 
-    if (brandName) {
-      newSubCategory.brandName = brandName;
+    if (subcategory.brandName) {
+      updateSubCategoryData.brandName = subcategory.brandName;
     }
 
-    if (category) {
-      newSubCategory.category = category;
+    if (subcategory.category) {
+      updateSubCategoryData.category = subcategory.category;
     }
-    return await this.subCategoryRepository.save(newSubCategory);
+    return await this.subCategoryRepository.save(updateSubCategoryData);
   };
 
   public deleteSubCategory = async (id: number) => {
@@ -66,7 +60,7 @@ export default class SubCategoryService {
     if (!subCategoryData) {
       throw new HttpException(404, "subCategory Not Found");
     }
-    this.subCategoryRepository.remove(subCategoryData);
+    this.subCategoryRepository.remove({ id });
     return subCategoryData;
   };
 }

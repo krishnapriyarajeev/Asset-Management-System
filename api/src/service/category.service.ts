@@ -4,6 +4,7 @@ import Assets from "../entity/assets.entity";
 import HttpException from "../exceptions/http.exception";
 import CategoryRepository from "../repository/category.repository";
 import Category from "../entity/category.entity";
+import { UpdateCategoryDto } from "../dto/category.dto";
 
 export default class CategoryService {
   constructor(private categoryRepository: CategoryRepository) {
@@ -22,12 +23,12 @@ export default class CategoryService {
   };
 
   //Handle edge cases
-  public updateCategory = async (categoryName: string) => {
-    const newCategory = new Category();
-    if (categoryName) {
-      newCategory.categoryName = categoryName;
+  public updateCategory = async (category: UpdateCategoryDto) => {
+    const CategoryData = await this.getCategoryById(category.id);
+    if (category.categoryName) {
+      CategoryData.categoryName = category.categoryName;
     }
-    return await this.categoryRepository.save(newCategory);
+    return await this.categoryRepository.save(CategoryData);
   };
 
   public deleteCategory = async (id: number) => {
@@ -35,7 +36,7 @@ export default class CategoryService {
     if (!categoryData) {
       throw new HttpException(404, "Category Not Found");
     }
-    this.categoryRepository.remove(categoryData);
+    this.categoryRepository.remove({ id });
     return categoryData;
   };
 }

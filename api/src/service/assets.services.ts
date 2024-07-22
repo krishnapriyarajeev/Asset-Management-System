@@ -4,6 +4,7 @@ import Assets from "../entity/assets.entity";
 import HttpException from "../exceptions/http.exception";
 import AssetRepository from "../repository/assets.repository";
 import Subcategory from "../entity/subcategory.entity";
+import { UpdateAssetDto } from "../dto/assets.dto";
 
 export default class AssetService {
   constructor(private assetRepository: AssetRepository) {
@@ -15,40 +16,39 @@ export default class AssetService {
   public getAssetById = async (id: number) =>
     this.assetRepository.findOneBy({ id });
 
-  public createNewAsset = async (serialNumber: string, status: AssetStatus,subcategory: Subcategory,employee:Employee) => {
+  public createNewAsset = async (
+    serialNumber: string,
+    status: AssetStatus,
+    subcategory: Subcategory,
+    employee: Employee
+  ) => {
     const newAsset = new Assets();
     newAsset.serialNumber = serialNumber;
     newAsset.status = status;
-    newAsset.subcategory= subcategory;
-    newAsset.employee=employee
+    newAsset.subcategory = subcategory;
+    newAsset.employee = employee;
     return await this.assetRepository.save(newAsset);
   };
   //Handle edge cases
-  public updateAsset = async (
-    serialNumber: string,
-    status: AssetStatus,
-    subcategory:Subcategory,
-    employee:Employee
-  
- 
-  ) => {
-    const newAsset = new Assets();
-    if (serialNumber) {
-      newAsset.serialNumber = serialNumber;
+  public updateAsset = async (asset: UpdateAssetDto) => {
+    const assetData = await this.getAssetById(asset.id);
+
+    if (asset.serialNumber) {
+      assetData.serialNumber = asset.serialNumber;
     }
 
-    if (status) {
-      newAsset.status = status;
+    if (asset.status) {
+      assetData.status = asset.status;
     }
 
-    if (employee) {
-      newAsset.employee = employee;
+    if (asset.employee) {
+      assetData.employee = asset.employee;
     }
 
-    if (subcategory) {
-      newAsset.subcategory = subcategory;
+    if (asset.subcategory) {
+      assetData.subcategory = asset.subcategory;
     }
-    return await this.assetRepository.save(newAsset);
+    return await this.assetRepository.save(assetData);
   };
 
   public deleteAsset = async (id: number) => {
@@ -56,7 +56,7 @@ export default class AssetService {
     if (!assetData) {
       throw new HttpException(404, "asset Not Found");
     }
-    this.assetRepository.remove(assetData);
+    this.assetRepository.remove({ id });
     return assetData;
   };
 }

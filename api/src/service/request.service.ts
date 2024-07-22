@@ -5,6 +5,7 @@ import HttpException from "../exceptions/http.exception";
 import Requests from "../entity/requests.entity";
 import { RequestStatus } from "../utils/requestStatus.enum";
 import RequestRepository from "../repository/request.repository";
+import { UpdateRequestsDto } from "../dto/requests.dto";
 
 export default class RequestService {
   constructor(private requestRepository: RequestRepository) {
@@ -27,16 +28,18 @@ export default class RequestService {
   };
 
   //Handle edge cases
-  public updateRequest = async (employee: Employee, status: RequestStatus) => {
-    const newRequest = new Requests();
-    if (employee) {
-      newRequest.employee = employee;
+  public updateRequest = async (request:UpdateRequestsDto) => {
+
+    const requestData = await this.getRequestById(request.id);
+
+    if (request.employee) {
+        requestData.employee = request.employee;
     }
 
-    if (status) {
-      newRequest.status = status;
+    if (request.status) {
+        requestData.status = request.status;
     }
-    return await this.requestRepository.save(newRequest);
+    return await this.requestRepository.save(requestData);
   };
 
   public deleteRequest = async (id: number) => {
@@ -44,7 +47,7 @@ export default class RequestService {
     if (!requestData) {
       throw new HttpException(404, "asset Not Found");
     }
-    this.requestRepository.remove(requestData);
+    this.requestRepository.remove({ id });
     return requestData;
   };
 }
