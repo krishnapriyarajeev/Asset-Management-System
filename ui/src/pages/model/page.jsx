@@ -7,6 +7,21 @@ import "./page.scss";
 const ModalList = () => {
   const { subCategoryId } = useParams();
 
+  const fields = [
+  {
+    id: "SerialNumber",
+    text: "Serial Number"
+  },
+  {
+    id: "Status",
+    text:"Status"
+  },
+  {
+    id: "Employee ID",
+    text: "Employee ID"
+  }
+]
+
   const modelData = [
     {
       serialNo: "TNP101",
@@ -51,8 +66,8 @@ const ModalList = () => {
         <h1 className="head">{subCategoryId}</h1>
         <h4 className="tail">&nbsp;/assets</h4>
       </div>
-      <CreateButton />
-      <Table tabledata={modelData} />
+      <CreateButton fields={fields}/>
+      <Table tabledata={modelData} fields={fields}/>
     </Container>
   );
 };

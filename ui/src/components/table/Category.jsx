@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../Modal/deleteModal";
 import { useState } from "react";
 import EditModal from "../Modal/editModal";
+import CreateModal from "../Modal/createModal";
 
-const CategoryTable = ({ tabledata = [] }) => {
+const CategoryTable = ({ tabledata = [] , fields}) => {
   const tableheader = ["S.No", "Brand", "Model", "Specs", "Count", "Actions"];
   const navigate = useNavigate();
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-
+  
   const deleteHandler = () => {
     // TODO: Delete API call
     setDeleteModal(false);
@@ -30,6 +31,7 @@ const CategoryTable = ({ tabledata = [] }) => {
     setEditModal(false);
   };
 
+
   return (
     <>
       <DeleteModal
@@ -41,7 +43,9 @@ const CategoryTable = ({ tabledata = [] }) => {
         editHandler={editHandler}
         cancelHandler={cancelEdit}
         open={editModal}
+        fields={fields}
       />
+      
       <div className="table-wrapper">
         <table>
           <thead>

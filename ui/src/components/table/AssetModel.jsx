@@ -5,7 +5,7 @@ import DeleteModal from "../Modal/deleteModal";
 import EditModal from "../Modal/editModal";
 import { useState } from "react";
 
-const ModelTable = ({ tabledata = [] }) => {
+const ModelTable = ({ tabledata = [] , fields}) => {
   const tableheader = [
     "S.No",
     "Serial",
@@ -48,6 +48,7 @@ const ModelTable = ({ tabledata = [] }) => {
         editHandler={editHandler}
         cancelHandler={cancelEdit}
         open={editModal}
+        fields={fields}
       />
       <div className="table-wrapper">
         <table>

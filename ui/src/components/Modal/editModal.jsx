@@ -1,9 +1,10 @@
 import { IoClose } from "react-icons/io5";
 import "./deleteModal.scss";
 import Modal from "./modal";
-import Button from "../button/button";
+import Button from "../Button/Button";
+import Form from "../Form/Form";
 
-const EditModal = ({ editHandler, cancelHandler, open }) => {
+const EditModal = ({ editHandler, cancelHandler, open, fields}) => {
   return (
     open && (
       <Modal size="sm">
@@ -12,7 +13,7 @@ const EditModal = ({ editHandler, cancelHandler, open }) => {
         </div>
         <div className="delete-msg-wrap">
           <h2>Edit</h2>
-          {/* TODO: Form Component */}
+          <Form fields={fields}></Form>
           <Button innerText="Confirm" onClick={editHandler} />
         </div>
       </Modal>

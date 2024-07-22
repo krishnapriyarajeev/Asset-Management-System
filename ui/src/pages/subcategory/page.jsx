@@ -5,6 +5,21 @@ import CreateButton from "../../components/button/create";
 import "./page.scss";
 
 const SubCategory = () => {
+  const fields = [
+    {
+      id: "BrandName",
+      text: "Brand Name",
+    },
+    {
+      id: "ModelName",
+      text: "Model Name",
+    },
+    {
+      id: "Specifications",
+      text: "Specifications",
+    },
+  ];
+
   const { categoryId } = useParams();
   const subCategoryData = [
     {
@@ -63,9 +78,9 @@ const SubCategory = () => {
         <h1 className="head">{categoryId}</h1>
         <h4 className="tail">&nbsp;/assets</h4>
       </div>
-      <CreateButton />
+      <CreateButton fields={fields} />
       <Container>
-        <CategoryTable tabledata={subCategoryData} />
+        <CategoryTable tabledata={subCategoryData} fields={fields}/>
       </Container>
     </div>
   );

@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import "./deleteModal.scss";
 import Modal from "./modal";
-import Button from "../button/button";
+import Button from "../Button/Button";
 
 const DeleteModal = ({ deleteHandler, cancelHandler, open }) => {
   return (

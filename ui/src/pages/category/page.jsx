@@ -54,6 +54,13 @@ const datas = [
   },
 ];
 
+const fields = [
+  {
+    id: "CategoryName",
+    text: "Category Name"
+  }]
+
+
 const Category = () => {
   const navigate = useNavigate();
   return (
@@ -61,7 +68,7 @@ const Category = () => {
       <div className="heading-display">
         <h1 className="head">Categories</h1>
         <h4 className="tail">&nbsp;/assets</h4>
-        <CreateButton />
+        <CreateButton fields={fields}/>
       </div>
 
       <div className="cards">

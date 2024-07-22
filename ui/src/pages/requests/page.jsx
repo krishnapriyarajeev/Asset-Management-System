@@ -3,6 +3,7 @@ import "./requests.scss";
 import CreateButton from "../../components/button/create";
 import { IoGitPullRequestOutline } from "react-icons/io5";
 import CategoryCard from "../../components/card/CategoryCard";
+import Select from "../../components/Select/Select";
 
 const data = [
   {
@@ -42,6 +43,20 @@ const data = [
     date: "date",
   },
 ];
+
+const fields = [
+  {
+    id: "RequestType",
+    label: "Request Type",
+    Component: Select,
+    choose: ["New", "Exchange"],
+  },
+  {
+    id: "reason",
+    text: "Reason",
+  },
+];
+
 const Request = () => {
   const navigate = useNavigate();
   return (
@@ -49,7 +64,7 @@ const Request = () => {
       <div className="heading-display">
         <h1 className="head">Lists</h1>
         <h4 className="tail">&nbsp;/requests</h4>
-        <CreateButton />
+        <CreateButton fields={fields}/>
       </div>
       <div className="cards">
         {/* {data.map(({ logo, heading, name, date }) => (

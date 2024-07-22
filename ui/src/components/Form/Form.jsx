@@ -3,22 +3,9 @@ import { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import FormField from "../FormField/FormField";
-import Select from "../Select/Select";
 
-const fields = [
-  {
-    id: "RequestType",
-    label: "Request Type",
-    Component: Select,
-    choose: ["New", "Exchange"],
-  },
-  {
-    id: "reason",
-    text: "Reason",
-  },
-];
-
-const Form = () => {
+const Form = ({ fields = [] }) => {
+  // console.log(fields);
   const [data, setData] = useState({});
   const navigate = useNavigate();
 
