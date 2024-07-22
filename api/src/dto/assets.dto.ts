@@ -15,7 +15,8 @@ export class CreateAssetDto{
     @IsEnum(AssetStatus)
     @IsNotEmpty()
     status: AssetStatus;
-
+    
+    
     @ValidateNested()
     @Type(() => CreateSubcategoryDto)
     subcategory: Subcategory;

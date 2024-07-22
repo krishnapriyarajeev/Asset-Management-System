@@ -6,11 +6,12 @@ import { Role } from "../utils/role.enum";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { CreateAssetDto, UpdateAssetDto } from "../dto/assets.dto";
+import AssetService from "../service/assets.services";
 
 export default class assetController {
   public router: Router;
 
-  constructor(private assetService: assetService) {
+  constructor(private assetService: AssetService) {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllAsset);
@@ -20,7 +21,7 @@ export default class assetController {
     this.router.delete("/:id", authMiddleware, this.deleteAsset);
   }
   getAllAsset = async (_, res: Response) => {
-    const asset = await this.assetService.getAllAsset();
+    const asset = await this.assetService.getAllAssets();
     res.status(200).send(asset);
   };
 
@@ -44,9 +45,9 @@ export default class assetController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.ADMIN) {
-        throw new HttpException(403, "Invalid Access");
-      }
+      // if (req.role !== Role.ADMIN) {
+      //   throw new HttpException(403, "Invalid Access");
+      // }
       const assetDto = plainToInstance(CreateAssetDto, req.body);
       const errors = await validate(assetDto);
 
@@ -54,11 +55,11 @@ export default class assetController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const assetData = await this.assetService.createAsset(
+      const assetData = await this.assetService.createNewAsset(
         assetDto.serialNumber,
         assetDto.status,
-        assetDto.employee,
-        assetDto.subcategory
+        assetDto.subcategory,
+        assetDto.employee
       );
 
       res.status(201).send(assetData);

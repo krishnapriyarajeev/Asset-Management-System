@@ -5,6 +5,7 @@ import HttpException from "../exceptions/http.exception";
 import { Role } from "../utils/role.enum";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
+import RequestService from "../service/request.service";
 import {
   CreateRequestsDto,
   RequestResponseDto,
@@ -14,7 +15,7 @@ import {
 export default class requestsController {
   public router: Router;
 
-  constructor(private requestsService: requestsService) {
+  constructor(private requestsService: RequestService) {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllRequests);
@@ -31,7 +32,7 @@ export default class requestsController {
   getRequestsById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = Number(req.params.id);
-      const requests = await this.requestsService.getRequestsById(id);
+      const requests = await this.requestsService.getRequestById(id);
       if (!requests) {
         throw new HttpException(404, "Request not found");
       }
@@ -58,7 +59,7 @@ export default class requestsController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const requestsData = await this.requestsService.createRequests(
+      const requestsData = await this.requestsService.createNewRequest(
         requestsDto.employee,
         requestsDto.status
       );
@@ -85,7 +86,7 @@ export default class requestsController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const requestsData = await this.requestsService.updateRequests(
+      const requestsData = await this.requestsService.updateRequest(
         updateRequestsDto.employee,
         updateRequestsDto.status
       );
@@ -110,7 +111,7 @@ export default class requestsController {
         throw new HttpException(403, "Invalid Access");
       }
       const id = Number(req.params.id);
-      await this.requestsService.deleteRequests(id);
+      await this.requestsService.deleteRequest(id);
       res.json({ sucess: true, message: "Request Deleted!" });
     } catch (err) {
       next(err);

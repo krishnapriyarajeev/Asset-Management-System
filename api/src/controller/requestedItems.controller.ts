@@ -5,6 +5,7 @@ import HttpException from "../exceptions/http.exception";
 import { Role } from "../utils/role.enum";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
+import RequestedItemService from "../service/requestedItems.service";
 import {
   CreateRequestedItems,
   UpdateRequestedItems,
@@ -13,7 +14,7 @@ import {
 export default class requestedItemController {
   public router: Router;
 
-  constructor(private requestedItemService: requestedItemService) {
+  constructor(private requestedItemService: RequestedItemService) {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllRequestedItem);
@@ -23,7 +24,8 @@ export default class requestedItemController {
     this.router.delete("/:id", authMiddleware, this.deleteRequestedItem);
   }
   getAllRequestedItem = async (_, res: Response) => {
-    const requestedItem = await this.requestedItemService.getAllRequestedItem();
+    const requestedItem =
+      await this.requestedItemService.getAllRequestedItems();
     res.status(200).send(requestedItem);
   };
 
@@ -35,7 +37,7 @@ export default class requestedItemController {
     try {
       const id = Number(req.params.id);
       const requestedItem =
-        await this.requestedItemService.getRequestedItemById(id);
+        await this.requestedItemService.getRequestedItemsById(id);
       if (!requestedItem) {
         throw new HttpException(404, "Requested item not found");
       }
@@ -63,7 +65,7 @@ export default class requestedItemController {
       }
 
       const requestedItemData =
-        await this.requestedItemService.createRequestedItem(
+        await this.requestedItemService.createNewRequestedItem(
           requestedItemDto.reason,
           requestedItemDto.requestType,
           requestedItemDto.requests,
@@ -92,12 +94,13 @@ export default class requestedItemController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const requestedItemData = await this.requestedItemService.updateAsset(
-        requestedItemDto.reason,
-        requestedItemDto.requestType,
-        requestedItemDto.requests,
-        requestedItemDto.subcategory
-      );
+      const requestedItemData =
+        await this.requestedItemService.updateRequestedItem(
+          requestedItemDto.reason,
+          requestedItemDto.requestType,
+          requestedItemDto.requests,
+          requestedItemDto.subcategory
+        );
       //   res.json({
       //     sucess: true,
       //     message: "Asset Updated!",

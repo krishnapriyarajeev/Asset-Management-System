@@ -5,21 +5,23 @@ import HttpException from "../exceptions/http.exception";
 import { Role } from "../utils/role.enum";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
+import SubCategoryService from "../service/subcategory.service";
 import {
   CreateSubcategoryDto,
   SubcategoryResponseDto,
   UpdateSubcategoryDto,
 } from "../dto/subcategory.dto";
 
-export default class categoryController {
+
+export default class SubCategoryController {
   public router: Router;
 
-  constructor(private subCategoryService: subCategoryService) {
+  constructor(private subCategoryService: SubCategoryService) {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllSubCategory);
     this.router.get("/:id", authMiddleware, this.getSubCategoryById);
-    this.router.post("/", authMiddleware, this.createSubCategory);
+    this.router.post("/", authMiddleware, this.createNewSubCategory);
     this.router.put("/", authMiddleware, this.updateSubCategory);
     this.router.delete("/:id", authMiddleware, this.deleteSubCategory);
   }
@@ -46,7 +48,7 @@ export default class categoryController {
     }
   };
 
-  createSubCategory = async (
+  createNewSubCategory = async (
     req: RequestWithUser,
     res: Response,
     next: NextFunction
@@ -62,7 +64,7 @@ export default class categoryController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const subCategoryData = await this.subCategoryService.createSubCategory(
+      const subCategoryData = await this.subCategoryService.createNewSubCategory(
         subCategoryDto.brandName,
         subCategoryDto.modelName,
         subCategoryDto.Specifications,

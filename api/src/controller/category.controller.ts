@@ -2,6 +2,7 @@ import { NextFunction, Router, Response, Request } from "express";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import RequestWithUser from "../utils/requestWithUser";
 import HttpException from "../exceptions/http.exception";
+import CategoryService from "../service/category.service";
 import { Role } from "../utils/role.enum";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
@@ -14,7 +15,7 @@ import {
 export default class categoryController {
   public router: Router;
 
-  constructor(private categoryService: categoryService) {
+  constructor(private categoryService: CategoryService) {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllCategory);
@@ -58,9 +59,8 @@ export default class categoryController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      const categoryData = await this.categoryService.createCategory(
-        categoryDto.categoryName,
-        categoryDto.subCategory
+      const categoryData = await this.categoryService.createNewCatgory(
+        categoryDto.categoryName
       );
 
       res.status(201).send(categoryData);
@@ -87,7 +87,6 @@ export default class categoryController {
 
       const categoryData = await this.categoryService.updateCategory(
         categoryDto.categoryName,
-        categoryDto.subCategory
       );
       //   res.json({
       //     sucess: true,

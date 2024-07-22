@@ -6,6 +6,11 @@ import { dataSource } from "./db/data-source.db";
 import employeeRouter from "./routes/employee.route";
 import { errorHandler } from "./middlewares/errorHandler";
 import departmentRouter from "./routes/department.route";
+import assetRouter from "./routes/asset.route";
+import categoryRouter from "./routes/category.route";
+import SubcategoryRouter from "./routes/subcategory.route";
+import requestRouter from "./routes/request.route";
+import requestedItemsRouter from "./routes/requestedItems.route";
 
 const app = express();
 dotenv.config();
@@ -28,6 +33,16 @@ app.get("/", (_, res) => {
 });
 
 app.use("/employee", employeeRouter);
+
+app.use("/asset", assetRouter);
+
+app.use("/category", categoryRouter);
+
+app.use("/subcategory", SubcategoryRouter);
+
+app.use("/request", requestRouter);
+
+app.use("/requestedItems", requestedItemsRouter);
 
 app.use("/department", departmentRouter);
 
