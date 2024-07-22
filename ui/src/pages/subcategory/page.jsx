@@ -22,7 +22,7 @@ const statusField = [
 
   },
   {
-    head:"Unassigned",
+    head:"Unallocated",
     count:"40",
     front:"#74d680 74%",
     middle:"#378b29 0%",
@@ -32,7 +32,7 @@ const statusField = [
 
   },
   {
-    head:"Assigned",
+    head:"Allocated",
     count:"50",
     front:"#c11d38 0%",
     middle:"#ffc857 0%",
