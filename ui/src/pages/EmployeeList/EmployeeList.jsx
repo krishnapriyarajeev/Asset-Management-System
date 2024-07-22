@@ -61,7 +61,6 @@ const EmployeeList = () => {
         </div>
         <CreateButton />
 
-        <User />
         <DeleteModal
           deleteHandler={deleteHandler}
           cancelHandler={cancelDelete}

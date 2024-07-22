@@ -41,7 +41,6 @@ const RequestDetail = () => {
       </div>
       <CreateButton />
 
-      <User />
       <Container>
         <RequestsTable tabledata={subCategoryData} />
       </Container>

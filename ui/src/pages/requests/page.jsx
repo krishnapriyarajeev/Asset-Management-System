@@ -56,13 +56,12 @@ const Request = () => {
   const navigate = useNavigate();
   return (
     <div className="category-style">
-      <div className="intro">
+      {/* <div className="intro">
         <h2 className="hello-display">Hello,&nbsp;</h2>
         <h1 className="name-display">Name!</h1>
       </div>
-      <User />
 
-      <h1 className="date-format">{formattedDate}</h1>
+      <h1 className="date-format">{formattedDate}</h1> */}
 
       <div className="heading-display">
         <h1 className="head">Lists/</h1>

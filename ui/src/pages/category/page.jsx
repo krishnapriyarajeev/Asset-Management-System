@@ -10,6 +10,7 @@ import { PiMouseThin } from "react-icons/pi";
 import { CiKeyboard } from "react-icons/ci";
 import { PiNotepad } from "react-icons/pi";
 import { TiPen } from "react-icons/ti";
+import Container from "../../components/container/container";
 
 const today = new Date();
 const options = {
@@ -47,21 +48,20 @@ const data = [{
 const Category = () => {
   const navigate = useNavigate()
   return <div className="category-style">
-    <div className="intro">
+    {/* <div className="intro">
       <h2 className="hello-display">Hello,&nbsp;</h2>
       <h1 className="name-display">Name!</h1>
-    </div>
-    <User />
+    </div> */}
 
-    <h1 className="date-format">{formattedDate}</h1>
+    {/* <h1 className="date-format">{formattedDate}</h1> */}
 
 
     <div className="heading-display">
-      <h1 className="head">Categories/</h1>
-      <h4 className="tail">assets</h4>
-      <CreateButton />
+      <h1 className="head">Categories/</h1> 
+      <h4 className="tail">assets</h4> 
 
     </div>
+    <CreateButton />
 
     <div className="cards" >
       {data.map(({ logo, heading }) => (

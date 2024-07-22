@@ -67,7 +67,6 @@ const SubCategory = () => {
       <CreateButton />
 
 
-      <User />
       <Container>
         <CategoryTable tabledata={subCategoryData} />
       </Container>

@@ -5,6 +5,7 @@ import DeleteModal from "../Modal/deleteModal";
 import { useState } from "react";
 import EditModal from "../Modal/editModal";
 import { CiCircleCheck } from "react-icons/ci";
+import DeclineModal from "../Modal/declineModal";
 
 const RequestsTable = ({ tabledata = [] }) => {
   const tableheader = [
@@ -47,7 +48,7 @@ const RequestsTable = ({ tabledata = [] }) => {
         cancelHandler={cancelDelete}
         open={deleteModal}
       />
-      <EditModal
+      <DeclineModal
         editHandler={editHandler}
         cancelHandler={cancelEdit}
         open={editModal}
@@ -69,7 +70,6 @@ const RequestsTable = ({ tabledata = [] }) => {
               ) => (
                 <tr
                   key={key}
-                  onClick={() => navigate(`${brand.toLowerCase()}`)}
                 >
                   <td>{key}</td>
                   <td>{employee}</td>
@@ -96,7 +96,7 @@ const RequestsTable = ({ tabledata = [] }) => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setEditModal(true);
+                        setEditModal(true); 
                         // setEditId(id);
                       }}
                     />

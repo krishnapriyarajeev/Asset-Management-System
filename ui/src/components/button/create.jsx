@@ -3,10 +3,9 @@ import './create.scss'
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 
 const CreateButton = () => {
-  return <Link className="create">
-    <h4>Create+</h4>
-    <MdOutlineCreateNewFolder className="create-icon" />
-  </Link>
+  return <button className="create">
+    <h4>Create &nbsp; +</h4>
+  </button>
 }
 
 export default CreateButton

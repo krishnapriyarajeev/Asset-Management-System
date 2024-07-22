@@ -48,6 +48,7 @@ const ModalList = () => {
 
   return (
     <Container>
+
       <div className="heading-sub">
         <h1 className="head">{subCategoryId}/</h1>
         <h4 className="tail">assets</h4>
@@ -56,7 +57,6 @@ const ModalList = () => {
       <CreateButton />
 
 
-      <User />
       <Table tabledata={modelData} />
     </Container>
   );

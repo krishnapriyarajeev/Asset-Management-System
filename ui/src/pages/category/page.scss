@@ -1,14 +1,14 @@
 .category-style{
     padding-left: 300px;
-    padding-top: 5%;
+    padding-top: 100px;
     width: calc(100% - 300px);
-    .intro{
-        display: flex;
-        .hello-display{
-            padding-top: 8px;
-        }
+    // .intro{
+    //     display: flex;
+    //     .hello-display{
+    //         padding-top: 8px;
+    //     }
     
-    }
+    // }
     .cards{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -24,11 +24,11 @@
          
     }
     
-    .date-format{
-        font-weight:300;
-        font-size: 20px;
-        margin-bottom: 5%;
-    }
+    // .date-format{
+    //     font-weight:300;
+    //     font-size: 20px;
+    //     margin-bottom: 5%;
+    // }
     
 }
 

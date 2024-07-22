@@ -8,7 +8,7 @@ const Button = ({
 }) => (
   <button
     type={type}
-    data-testid="button-component"
+    data-testid="button-"
     className={style === "outline" ? "outline-btn" : "normal-btn"}
     onClick={onClick ? onClick : ""}
   >
