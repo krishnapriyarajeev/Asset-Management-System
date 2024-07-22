@@ -143,7 +143,10 @@ const EmployeeDetails = () => {
           <table>
             <tbody>
               {tabledata.map((asset, key) => (
-                <tr key={key} onClick={() => navigate()}>
+                <tr
+                  key={key}
+                  style={{ cursor: "default", pointerEvents: "none" }}
+                >
                   <td>{key}</td>
                   {Object.values(asset).map((value, key) => {
                     return <td key={key}>{value}</td>;

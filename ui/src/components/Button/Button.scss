@@ -8,4 +8,9 @@
   margin-right: 15px;
   background-color: #03aeee;
   color: white;
+  transition: 500ms;
+}
+.loginButton:hover {
+  background-color: #89dafa;
+  transition: 500ms;
 }

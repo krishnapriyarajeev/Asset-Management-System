@@ -6,7 +6,7 @@ import Button from "../button/button";
 const DeclineModal = ({ editHandler, cancelHandler, open }) => {
   return (
     open && (
-      <Modal size="sm">
+      <Modal>
         <div className="close-icon-wrap" onClick={cancelHandler}>
           <IoClose size="25px" />
         </div>

@@ -6,16 +6,16 @@ import SubCategory from "./pages/subcategory/page";
 import ModalList from "./pages/model/page";
 import Request from "./pages/requests/page";
 import Login from "./pages/Login/Login";
-import Form from "./components/Form/Form";
 import RequestDetail from "./pages/reuestsDetailed/page";
 import EmployeeList from "./pages/EmployeeList/EmployeeList";
 import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/new",
-      element: <Form />,
+      element: <AdminDashboard />,
     },
     {
       path: "/",
@@ -67,7 +67,6 @@ function App() {
         },
       ],
     },
-    
   ]);
 
   return (

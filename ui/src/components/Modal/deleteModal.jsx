@@ -1,12 +1,12 @@
 import { IoClose } from "react-icons/io5";
 import "./deleteModal.scss";
 import Modal from "./modal";
-import Button from "../Button/Button";
+import Button from "../button/button";
 
 const DeleteModal = ({ deleteHandler, cancelHandler, open }) => {
   return (
     open && (
-      <Modal size="sm">
+      <Modal>
         <div className="close-icon-wrap" onClick={cancelHandler}>
           <IoClose size="25px" />
         </div>

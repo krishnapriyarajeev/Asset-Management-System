@@ -4,71 +4,70 @@ import Container from "../../components/container/container";
 import CreateButton from "../../components/button/create";
 import "./page.scss";
 
-import StatusCard from "../../components/statusCard/statusCard"
+import StatusCard from "../../components/statusCard/statusCard";
 import { FiActivity } from "react-icons/fi";
 import { FiTrendingUp } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiAlertCircle } from "react-icons/fi";
 const statusField = [
   {
-    head:"Total",
-    count:"100",
-    front:"#007FFF",
-    middle:"#007FFF",
-    end:"#007FFF",
-    color:"#663dff 0%",
-    icon:FiActivity
-
-
+    head: "Total",
+    count: "100",
+    front: "#007FFF",
+    middle: "#007FFF",
+    end: "#007FFF",
+    color: "#663dff 0%",
+    icon: FiActivity,
   },
   {
-    head:"Unallocated",
-    count:"40",
-    front:"#74d680 74%",
-    middle:"#378b29 0%",
-    end:"#74d680 74%",
-    color:"#dbf26e 0% ",
-    icon:FiTrendingUp
-
+    head: "Unallocated",
+    count: "40",
+    front: "#74d680 74%",
+    middle: "#378b29 0%",
+    end: "#74d680 74%",
+    color: "#dbf26e 0% ",
+    icon: FiTrendingUp,
   },
   {
-    head:"Allocated",
-    count:"50",
-    front:"#c11d38 0%",
-    middle:"#ffc857 0%",
-    end:"#ffc857 24%",
-    color:"#c11d38 0%",
-    icon:IoEyeOutline
-    
+    head: "Allocated",
+    count: "50",
+    front: "#c11d38 0%",
+    middle: "#ffc857 0%",
+    end: "#ffc857 24%",
+    color: "#c11d38 0%",
+    icon: IoEyeOutline,
   },
   {
-    head:"Damaged",
-    count:"10",
-    front:"#e85d65",
-    middle:"#e85d65",
-    end:"#e85d65",
-    color:"#ffc857 0%",
-    icon:FiAlertCircle
-
-  }
-]
+    head: "Damaged",
+    count: "10",
+    front: "#e85d65",
+    middle: "#e85d65",
+    end: "#e85d65",
+    color: "#ffc857 0%",
+    icon: FiAlertCircle,
+  },
+];
 const ModalList = () => {
   const { subCategoryId } = useParams();
 
   const fields = [
-  {
-    id: "SerialNumber",
-    text: "Serial Number"
-  },
-  {
-    id: "Status",
-    text:"Status"
-  },
-  {
-    id: "Employee ID",
-    text: "Employee ID"
-  }
-]
+    {
+      id: "SerialNumber",
+      text: "Serial Number",
+    },
+    {
+      id: "Status",
+      text: "Status",
+    },
+    {
+      id: "Employee ID",
+      text: "Employee ID",
+    },
+    {
+      id: "Employee ID",
+      text: "Employee ID",
+    },
+  ];
 
   const modelData = [
     {
@@ -109,21 +108,32 @@ const ModalList = () => {
   ];
 
   return (
-<>
-    <div className="heading-subcategory">
+    <>
+      <div className="heading-subcategory">
         <h1 className="head">{subCategoryId}</h1>
         <h4 className="tail">&nbsp;/assets</h4>
       </div>
 
-      
-    <Container>
-    <div className="status-field-card">
-      {statusField.map(({head,count,front,middle,end,color,icon})=>(<StatusCard head={head} count={count} front={front} middle={middle} end={end} color={color} icon={icon}/>))}
-      </div>
-      <CreateButton fields={fields}/>
-      <Table tabledata={modelData} fields={fields}/>
-
-    </Container>
+      <Container>
+        <div className="status-field-card">
+          {statusField.map(
+            ({ head, count, front, middle, end, color, icon }) => (
+              <StatusCard
+                head={head}
+                count={count}
+                front={front}
+                middle={middle}
+                end={end}
+                color={color}
+                icon={icon}
+                key={head}
+              />
+            )
+          )}
+        </div>
+        <CreateButton fields={fields} />
+        <Table tabledata={modelData} fields={fields} />
+      </Container>
     </>
   );
 };

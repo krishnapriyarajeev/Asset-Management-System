@@ -2,7 +2,6 @@
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import TextField from "../../components/LoginTextField/TextField";
-import loginlogo from "../../assets/kv-login.jpeg";
 import kvlogo from "../../assets/kv-logo.png";
 import { useEffect, useRef, useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -66,11 +65,6 @@ const Login = () => {
 
   return (
     <main className="loginMain">
-      <div className="hero">
-        <div className="wrapper-hero">
-          <img src={loginlogo} alt="Login Image" className="loginImage" />
-        </div>
-      </div>
       <div className="login">
         <form onSubmit={handleLogin} className="loginForm">
           <img src={kvlogo} alt="Logo" className="kvlogo" />

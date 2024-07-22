@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import FormField from "../FormField/FormField";
 
-const Form = ({ fields = [] }) => {
+const Form = ({ fields = [], editHandler, cancelHandler }) => {
   // console.log(fields);
   const [data, setData] = useState({});
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Form = ({ fields = [] }) => {
     console.log(data);
   }, [data]);
   return (
-    <section className="form-section">
+    <section className="form-modal">
       <form className="form" onSubmit={console.log("Hello")}>
         <div className="form-details">
           {fields.map((field) => {
@@ -43,13 +43,17 @@ const Form = ({ fields = [] }) => {
           })}
         </div>
         <div>
-          <Button text="Create" className="form-buttons" />
+          <Button
+            text="Create"
+            className="form-buttons"
+            handleForm={editHandler}
+          />
           <Button
             text="Cancel"
             className="form-buttons cancel"
             handleForm={(e) => {
               e.preventDefault();
-              navigate("/assets");
+              cancelHandler();
             }}
           />
         </div>
