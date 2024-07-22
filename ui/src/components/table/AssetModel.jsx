@@ -68,7 +68,7 @@ const ModelTable = ({ tabledata = [] , fields}) => {
                   <td>{!employee ? "---" : employee}</td>
                   <td>
                     <Pill
-                      type={
+                      color={
                         status === "allocated"
                           ? "yellow"
                           : status === "unallocated"
@@ -76,6 +76,7 @@ const ModelTable = ({ tabledata = [] , fields}) => {
                           : "red"
                       }
                       innerText={status}
+                      type="sm"
                     />
                   </td>
                   <td>{createdAt}</td>

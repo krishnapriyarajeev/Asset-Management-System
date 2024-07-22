@@ -1,12 +1,9 @@
 import "./EmployeeDetails.scss";
 import { useNavigate, useParams } from "react-router-dom";
-import CreateButton from "../../components/button/create";
-import User from "../../components/user/user";
 import Container from "../../components/container/container";
 import Pill from "../../components/pill/pill";
 import DetailRow from "../../components/DetailRow/DetailRow";
-import { MdModeEditOutline, MdOutlineDelete } from "react-icons/md";
-import DeleteModal from "../../components/Modal/deleteModal";
+import { MdModeEditOutline } from "react-icons/md";
 import EditModal from "../../components/Modal/editModal";
 import { useState } from "react";
 
@@ -85,12 +82,10 @@ const EmployeeDetails = () => {
         open={editModal}
       />
       <div className="heading-subcategory">
-          <h1 className="head">{employee.ename}/</h1>
-          <h4 className="tail">Employee</h4>
-        </div>
+        <h1 className="head">{employee.ename}/</h1>
+        <h4 className="tail">Employee</h4>
+      </div>
       <Container>
-        
-
         <section className="form-section detail-section">
           <div className="detail-container">
             {fields.map((field) => {
@@ -98,7 +93,7 @@ const EmployeeDetails = () => {
                 <div className="detail-space" key="status">
                   <label className="head">Status</label>
                   <Pill
-                    type={
+                    color={
                       employee.status === "Active"
                         ? "green"
                         : employee.status === "Probation"
@@ -106,6 +101,7 @@ const EmployeeDetails = () => {
                         : "red"
                     }
                     innerText={employee.status}
+                    type="sm"
                   />
                 </div>
               ) : (

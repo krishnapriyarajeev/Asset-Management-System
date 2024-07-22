@@ -41,6 +41,12 @@ tbody tr {
 
 }
 
+.request-table {
+    tbody tr {
+        cursor: initial;
+    }
+}
+
 tbody tr:hover {
     background-color: #eeeeee;
     transition: 500ms;

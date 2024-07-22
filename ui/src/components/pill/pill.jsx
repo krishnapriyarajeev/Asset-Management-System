@@ -2,8 +2,8 @@
 
 import "./pill.scss";
 
-const Pill = ({ type, innerText }) => (
-  <div className={`${type} plain pill`}>
+const Pill = ({ color, innerText, plain = false, type = "sm" }) => (
+  <div className={`pill ${color} pill-${type} ${plain && "plain"}`}>
     <p>{innerText}</p>
   </div>
 );

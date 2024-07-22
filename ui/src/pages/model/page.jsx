@@ -63,10 +63,6 @@ const ModalList = () => {
       id: "Employee ID",
       text: "Employee ID",
     },
-    {
-      id: "Employee ID",
-      text: "Employee ID",
-    },
   ];
 
   const modelData = [
@@ -117,8 +113,9 @@ const ModalList = () => {
       <Container>
         <div className="status-field-card">
           {statusField.map(
-            ({ head, count, front, middle, end, color, icon }) => (
+            ({ head, count, front, middle, end, color, icon }, index) => (
               <StatusCard
+                key={index}
                 head={head}
                 count={count}
                 front={front}
@@ -126,7 +123,6 @@ const ModalList = () => {
                 end={end}
                 color={color}
                 icon={icon}
-                key={head}
               />
             )
           )}

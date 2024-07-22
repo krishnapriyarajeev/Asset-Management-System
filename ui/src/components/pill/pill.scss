@@ -1,5 +1,4 @@
 .pill {
-    padding: 5px 10px 5px 10px;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -8,6 +7,15 @@
         font-size: 15px;
         display: inline;
     }
+}
+
+.pill-sm {
+    padding: 5px;
+    width: 100px;
+}
+
+.pill-default {
+    padding: 5px 10px 5px 10px;
 }
 
 .red {
@@ -45,6 +53,7 @@
         font-weight: 600;
     }
 }
+
 .plain {
     background-color: #f0f3f7;
 }

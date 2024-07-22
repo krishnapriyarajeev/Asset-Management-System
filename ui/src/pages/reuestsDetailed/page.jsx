@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import Container from "../../components/container/container";
-import CreateButton from "../../components/button/create";
 import "./page.scss";
-import User from "../../components/user/user";
 import RequestsTable from "../../components/table/Requests";
+
 const RequestDetail = () => {
   const { requestId } = useParams();
   const subCategoryData = [
@@ -12,6 +11,16 @@ const RequestDetail = () => {
       category: "Laptop",
       brand: "Dell",
       model: "Inpiron",
+      type: "Exchange",
+      reason: "Due to my product was damaged",
+      requestedAt: "2023-01-15",
+    },
+    {
+      employee: "Sam",
+      category: "Laptop",
+      brand: "Dell",
+      model: "Inpiron",
+      type: "Request",
       reason: "Due to my product was damaged",
       requestedAt: "2023-01-15",
     },
@@ -21,14 +30,7 @@ const RequestDetail = () => {
       brand: "Dell",
       model: "Inpiron",
       reason: "Due to my product was damaged",
-      requestedAt: "2023-01-15",
-    },
-    {
-      employee: "Sam",
-      category: "Laptop",
-      brand: "Dell",
-      model: "Inpiron",
-      reason: "Due to my product was damaged",
+      type: "Exchange",
       requestedAt: "2023-01-15",
     },
   ];
@@ -39,7 +41,6 @@ const RequestDetail = () => {
         <h1 className="head">{requestId}</h1>
         <h4 className="tail">&nbsp;/requests</h4>
       </div>
-      <CreateButton />
 
       <Container>
         <RequestsTable tabledata={subCategoryData} />

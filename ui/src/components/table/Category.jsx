@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../Modal/deleteModal";
 import { useState } from "react";
 import EditModal from "../Modal/editModal";
-import CreateModal from "../Modal/createModal";
 
 const CategoryTable = ({ tabledata = [] , fields}) => {
   const tableheader = ["S.No", "Brand", "Model", "Specs", "Count", "Actions"];

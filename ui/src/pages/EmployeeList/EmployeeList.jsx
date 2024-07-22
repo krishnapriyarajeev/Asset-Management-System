@@ -55,13 +55,12 @@ const EmployeeList = () => {
   return (
     <>
       <div className="heading-subcategory">
-          <h1 className="head">Lists</h1>
-          <h4 className="tail">&nbsp;/Employees</h4>
-        </div>
+        <h1 className="head">Lists</h1>
+        <h4 className="tail">&nbsp;/Employees</h4>
+      </div>
       <Container>
-        
         <CreateButton />
-        
+
         <DeleteModal
           deleteHandler={deleteHandler}
           cancelHandler={cancelDelete}
@@ -91,7 +90,7 @@ const EmployeeList = () => {
                   <td>{employee.dept}</td>
                   <td>
                     <Pill
-                      type={
+                      color={
                         employee.status === "Active"
                           ? "green"
                           : employee.status === "Probation"
@@ -99,6 +98,7 @@ const EmployeeList = () => {
                           : "red"
                       }
                       innerText={employee.status}
+                      type="sm"
                     />
                   </td>
                   <td className="action-td">

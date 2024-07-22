@@ -9,12 +9,28 @@ const CategoryCard = ({ data, onClick }) => (
       <h6>Created At: {data.date}</h6>
       {/* <h4 className="card-heading">{data.item}</h4> */}
       <div className="pill-group">
-        <Pill innerText={`Unallocated: ${data.unassigned}`} type="green" />
-        <Pill innerText={`Allocated: ${data.assigned}`} type="yellow" />
-        <Pill innerText={`Damaged: ${data.damaged}`} type="red" />
+        <Pill
+          innerText={`Unallocated: ${data.unassigned}`}
+          color="green"
+          type="default"
+          plain
+        />
+        <Pill
+          innerText={`Allocated: ${data.assigned}`}
+          color="yellow"
+          type="default"
+          plain
+        />
+        <Pill
+          innerText={`Damaged: ${data.damaged}`}
+          color="red"
+          type="default"
+          plain
+        />
         <Pill
           innerText={`Total: ${data.unassigned + data.assigned + data.damaged}`}
-          type="purple"
+          color="purple"
+          plain
         />
       </div>
     </div>

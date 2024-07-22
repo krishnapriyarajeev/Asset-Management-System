@@ -1,11 +1,10 @@
 import { RxCross2 } from "react-icons/rx";
 import "./table.scss";
-import { useNavigate } from "react-router-dom";
 import DeleteModal from "../Modal/deleteModal";
 import { useState } from "react";
-import EditModal from "../Modal/editModal";
 import { CiCircleCheck } from "react-icons/ci";
 import DeclineModal from "../Modal/declineModal";
+import Pill from "../pill/pill";
 
 const RequestsTable = ({ tabledata = [] }) => {
   const tableheader = [
@@ -15,10 +14,10 @@ const RequestsTable = ({ tabledata = [] }) => {
     "Brand",
     "Model",
     "Reason",
+    "Type",
     "Requested At",
     "Actions",
   ];
-  const navigate = useNavigate();
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   const [deleteModal, setDeleteModal] = useState(false);
@@ -53,7 +52,7 @@ const RequestsTable = ({ tabledata = [] }) => {
         cancelHandler={cancelEdit}
         open={editModal}
       />
-      <div className="table-wrapper">
+      <div className="table-wrapper request-table">
         <table>
           <thead>
             <tr>
@@ -65,18 +64,25 @@ const RequestsTable = ({ tabledata = [] }) => {
           <tbody>
             {tabledata.map(
               (
-                { employee, category, brand, model, reason, requestedAt },
+                { employee, category, brand, model, reason, type, requestedAt },
                 key
               ) => (
-                <tr
-                  key={key}
-                >
+                <tr key={key}>
                   <td>{key}</td>
                   <td>{employee}</td>
                   <td>{category}</td>
                   <td>{brand}</td>
                   <td>{model}</td>
                   <td>{reason}</td>
+                  <td>
+                    <Pill
+                      color={
+                        type.toLowerCase() === "exchange" ? "purple" : "green"
+                      }
+                      innerText={type}
+                      type="sm"
+                    />
+                  </td>
                   <td>{requestedAt}</td>
                   <td className="action-td">
                     <CiCircleCheck
@@ -96,7 +102,7 @@ const RequestsTable = ({ tabledata = [] }) => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setEditModal(true); 
+                        setEditModal(true);
                         // setEditId(id);
                       }}
                     />
