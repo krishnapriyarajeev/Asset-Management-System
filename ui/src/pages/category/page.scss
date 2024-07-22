@@ -16,3 +16,9 @@
     margin-bottom: 50px;
   }
 }
+.status-field-card{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 1500px;
+  gap: 50px;
+}

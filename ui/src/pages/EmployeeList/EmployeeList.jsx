@@ -54,13 +54,14 @@ const EmployeeList = () => {
 
   return (
     <>
-      <Container>
-        <div className="heading-sub">
+      <div className="heading-subcategory">
           <h1 className="head">Lists</h1>
           <h4 className="tail">&nbsp;/Employees</h4>
         </div>
+      <Container>
+        
         <CreateButton />
-
+        
         <DeleteModal
           deleteHandler={deleteHandler}
           cancelHandler={cancelDelete}

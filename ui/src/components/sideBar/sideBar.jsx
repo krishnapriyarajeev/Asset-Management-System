@@ -32,7 +32,8 @@ const SideBar = () => {
 
   return (
     <aside className="sideBarBackground">
-      <img src={kvlogo} alt="" className="kvLogo" />
+      <div className="kv-logo">
+      <img src={kvlogo} alt="" className="kvLogo" /></div>
       <nav className="navigation">
         {navLinks.map((navlink) => {
           return (

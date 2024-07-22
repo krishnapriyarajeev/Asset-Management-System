@@ -1,6 +1,4 @@
-.table-wrapper {
-    margin-top: 20px;
-}
+
 
 table {
     border-collapse: separate;
@@ -10,8 +8,8 @@ table {
 }
 
 thead th {
-    box-shadow: 0px 0px 5px #bfe6f5;
-    background-color: #bfe6f5;
+    box-shadow: 0px 0px 5px #1bbeff;
+    background-color: #3cc8ff;
 }
 
 thead th:first-child {
@@ -38,11 +36,14 @@ tbody tr {
     box-shadow: 2px 1px 5px rgb(231, 231, 231);
     // TODO: not for all table
     cursor: pointer;
-    background-color: #EDF4FA;
+    background-color: #f0f3f7;
+    transition: 500ms;
+
 }
 
 tbody tr:hover {
-    background-color: #f3feff;
+    background-color: #eeeeee;
+    transition: 500ms;
 }
 
 .delete-icon {
