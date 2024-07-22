@@ -36,8 +36,8 @@ const RequestDetail = () => {
   return (
     <div>
       <div className="heading-subcategory">
-        <h1 className="head">{requestId}/</h1>
-        <h4 className="tail">requests</h4>
+        <h1 className="head">{requestId}</h1>
+        <h4 className="tail">&nbsp;/requests</h4>
       </div>
       <CreateButton />
 

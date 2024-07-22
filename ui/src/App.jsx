@@ -18,7 +18,7 @@ function App() {
       element: <Form />,
     },
     {
-      path: "/login",
+      path: "/",
       element: <Login />,
     },
     {

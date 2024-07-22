@@ -2,8 +2,7 @@ import { useParams } from "react-router-dom";
 import Table from "../../components/table/AssetModel";
 import Container from "../../components/container/container";
 import CreateButton from "../../components/button/create";
-import User from "../../components/user/user";
-import './page.scss'
+import "./page.scss";
 
 const ModalList = () => {
   const { subCategoryId } = useParams();
@@ -48,15 +47,11 @@ const ModalList = () => {
 
   return (
     <Container>
-
       <div className="heading-sub">
-        <h1 className="head">{subCategoryId}/</h1>
-        <h4 className="tail">assets</h4>
-
+        <h1 className="head">{subCategoryId}</h1>
+        <h4 className="tail">&nbsp;/assets</h4>
       </div>
       <CreateButton />
-
-
       <Table tabledata={modelData} />
     </Container>
   );

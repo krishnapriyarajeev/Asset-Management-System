@@ -3,7 +3,7 @@ import CategoryTable from "../../components/table/Category";
 import Container from "../../components/container/container";
 import CreateButton from "../../components/button/create";
 import "./page.scss";
-import User from '../../components/user/user'
+
 const SubCategory = () => {
   const { categoryId } = useParams();
   const subCategoryData = [
@@ -58,20 +58,16 @@ const SubCategory = () => {
   ];
 
   return (
-    <div >
+    <div>
       <div className="heading-subcategory">
-        <h1 className="head">{categoryId}/</h1>
-        <h4 className="tail">assets</h4>
-
+        <h1 className="head">{categoryId}</h1>
+        <h4 className="tail">&nbsp;/assets</h4>
       </div>
       <CreateButton />
-
-
       <Container>
         <CategoryTable tabledata={subCategoryData} />
       </Container>
     </div>
-
   );
 };
 

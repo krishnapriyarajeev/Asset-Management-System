@@ -56,8 +56,8 @@ const EmployeeList = () => {
     <>
       <Container>
         <div className="heading-sub">
-          <h1 className="head">Lists/</h1>
-          <h4 className="tail">Employees</h4>
+          <h1 className="head">Lists</h1>
+          <h4 className="tail">&nbsp;/Employees</h4>
         </div>
         <CreateButton />
 

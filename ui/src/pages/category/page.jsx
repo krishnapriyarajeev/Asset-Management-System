@@ -1,74 +1,81 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
-import User from '../../components/user/user'
-import './page.scss'
-import Card from '../../components/card/card'
+import { useNavigate } from "react-router-dom";
+import "./page.scss";
 import CreateButton from "../../components/button/create";
-import { LiaLaptopSolid } from "react-icons/lia";
-import { PiHeadphones } from "react-icons/pi";
-import { PiMouseThin } from "react-icons/pi";
-import { CiKeyboard } from "react-icons/ci";
-import { PiNotepad } from "react-icons/pi";
-import { TiPen } from "react-icons/ti";
-import Container from "../../components/container/container";
+import CategoryCard from "../../components/card/CategoryCard";
 
-const today = new Date();
-const options = {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-};
-const formatter = new Intl.DateTimeFormat('en-US', options);
-const formattedDate = formatter.format(today).replace(/,/g, '');
-const data = [{
-  logo: <LiaLaptopSolid className="sub-logo" />,
-  heading: "Laptops"
-},
-{
-  logo: <PiHeadphones className="sub-logo" />,
-  heading: "Headphones"
-},
-{
-  logo: <PiMouseThin className="sub-logo" />,
-  heading: "Mouse"
-},
-{
-  logo: <CiKeyboard className="sub-logo" />,
-  heading: "Keyboard"
-},
-{
-  logo: <PiNotepad className="sub-logo" />,
-  heading: "Notepad"
-},
-{
-  logo: <TiPen className="sub-logo" />,
-  heading: "Pen"
-}]
+const datas = [
+  {
+    id: 1,
+    heading: "Laptops",
+    date: "2024-07-21",
+    unassigned: 5,
+    assigned: 10,
+    damaged: 2,
+  },
+  {
+    id: 2,
+    heading: "Headphones",
+    date: "2024-07-20",
+    unassigned: 3,
+    assigned: 7,
+    damaged: 1,
+  },
+  {
+    id: 3,
+    heading: "Mouse",
+    date: "2024-07-19",
+    unassigned: 8,
+    assigned: 5,
+    damaged: 4,
+  },
+  {
+    id: 4,
+    heading: "Keyboard",
+    date: "2024-07-18",
+    unassigned: 2,
+    assigned: 4,
+    damaged: 0,
+  },
+  {
+    id: 5,
+    heading: "Notepad",
+    date: "2024-07-17",
+    unassigned: 10,
+    assigned: 12,
+    damaged: 3,
+  },
+  {
+    id: 6,
+    heading: "Pen",
+    date: "2024-07-16",
+    unassigned: 1,
+    assigned: 5,
+    damaged: 1,
+  },
+];
+
 const Category = () => {
-  const navigate = useNavigate()
-  return <div className="category-style">
-    {/* <div className="intro">
-      <h2 className="hello-display">Hello,&nbsp;</h2>
-      <h1 className="name-display">Name!</h1>
-    </div> */}
+  const navigate = useNavigate();
+  return (
+    <div className="category-style">
+      <div className="heading-display">
+        <h1 className="head">Categories</h1>
+        <h4 className="tail">&nbsp;/assets</h4>
+        <CreateButton />
+      </div>
 
-    {/* <h1 className="date-format">{formattedDate}</h1> */}
-
-
-    <div className="heading-display">
-      <h1 className="head">Categories/</h1> 
-      <h4 className="tail">assets</h4> 
-
+      <div className="cards">
+        {datas.map((data) => (
+          <CategoryCard
+            key={data.id}
+            data={data}
+            onClick={(path) => navigate(path)}
+          />
+        ))}
+      </div>
     </div>
-    <CreateButton />
-
-    <div className="cards" >
-      {data.map(({ logo, heading }) => (
-        <Card key={heading} logo={logo} heading={heading} onClick={(path) => navigate(path)} />
-      ))}
-    </div>
-  </div>;
+  );
+  // );
 };
 
 export default Category;

@@ -1,35 +1,47 @@
 .pill {
-    padding: 8px;
-    width: 100px;
+    padding: 5px 10px 5px 10px;
     border-radius: 20px;
     display: flex;
     justify-content: center;
 
     p {
         font-size: 15px;
+        display: inline;
     }
 }
 
 .red {
-    background-color: rgb(251, 161, 145);
+    background-color: rgb(255, 213, 206);
 
     p {
-        color: rgb(85, 21, 9);
+        color: rgb(146, 68, 55);
+        font-weight: 600;
     }
 }
 
 .yellow {
-    background-color: rgb(228, 230, 129);
+    background-color: rgb(232, 233, 170);
 
     p {
-        color: rgb(124, 104, 14);
+        color: rgb(121, 104, 31);
+        font-weight: 600;
     }
 }
 
 .green {
-    background-color: rgb(78, 227, 177);
+    background-color: rgb(198, 253, 212);
 
     p {
-        color: rgb(6, 84, 58);
+        color: rgb(23, 97, 73);
+        font-weight: 600;
+    }
+}
+
+.purple {
+    background-color: rgb(228, 219, 255);
+
+    p {
+        color: rgb(102, 78, 170);
+        font-weight: 600;
     }
 }

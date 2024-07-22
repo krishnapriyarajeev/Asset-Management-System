@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
-import './create.scss'
-import { MdOutlineCreateNewFolder } from "react-icons/md";
+import "./create.scss";
 
 const CreateButton = () => {
-  return <button className="create">
-    <h4>Create &nbsp; +</h4>
-  </button>
-}
+  return (
+    <button className="create">
+      <h4>Create &nbsp; +</h4>
+    </button>
+  );
+};
 
-export default CreateButton
+export default CreateButton;
