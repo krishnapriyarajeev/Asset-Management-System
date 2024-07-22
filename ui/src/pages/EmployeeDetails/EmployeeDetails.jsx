@@ -84,12 +84,12 @@ const EmployeeDetails = () => {
         cancelHandler={cancelEdit}
         open={editModal}
       />
-
-      <Container>
-        <div className="heading-sub">
+      <div className="heading-subcategory">
           <h1 className="head">{employee.ename}/</h1>
           <h4 className="tail">Employee</h4>
         </div>
+      <Container>
+        
 
         <section className="form-section detail-section">
           <div className="detail-container">
