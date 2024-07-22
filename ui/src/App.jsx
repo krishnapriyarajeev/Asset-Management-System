@@ -9,6 +9,7 @@ import Login from "./pages/Login/Login";
 import Form from "./components/Form/Form";
 import RequestDetail from "./pages/reuestsDetailed/page";
 import EmployeeList from "./pages/EmployeeList/EmployeeList";
+import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
 
 function App() {
   const router = createBrowserRouter([
@@ -59,6 +60,10 @@ function App() {
         {
           path: "",
           element: <EmployeeList />,
+        },
+        {
+          path: ":id",
+          element: <EmployeeDetails />,
         },
       ],
     },

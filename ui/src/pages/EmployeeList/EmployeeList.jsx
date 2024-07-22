@@ -5,7 +5,8 @@ import DeleteModal from "../../components/Modal/deleteModal";
 import { useState } from "react";
 import CreateButton from "../../components/button/create";
 import Container from "../../components/container/container";
-import User from "../../components/user/user";
+
+import { useNavigate } from "react-router-dom";
 
 const EmployeeList = () => {
   const tableheader = [
@@ -32,6 +33,7 @@ const EmployeeList = () => {
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const navigate = useNavigate();
 
   const deleteHandler = () => {
     // TODO: Delete API call
@@ -52,8 +54,6 @@ const EmployeeList = () => {
 
   return (
     <>
-      <User />
-
       <Container>
         <div className="heading-sub">
           <h1 className="head">Lists/</h1>
@@ -82,7 +82,7 @@ const EmployeeList = () => {
             </thead>
             <tbody>
               {tabledata.map((employee) => (
-                <tr key={employee.id}>
+                <tr key={employee.id} onClick={() => navigate(employee.id)}>
                   <td>{employee.id}</td>
                   <td>{employee.ename}</td>
                   <td>{employee.email}</td>
@@ -93,7 +93,7 @@ const EmployeeList = () => {
                       type={
                         employee.status === "Active"
                           ? "green"
-                          : status === "Probation"
+                          : employee.status === "Probation"
                           ? "yellow"
                           : "red"
                       }

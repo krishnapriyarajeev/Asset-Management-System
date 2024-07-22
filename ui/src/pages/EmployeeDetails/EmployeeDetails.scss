@@ -1,0 +1,29 @@
+.detail-section {
+  margin: 0;
+}
+
+.detail-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.detail-hr {
+  width: 98%;
+  border-color: #00000012;
+  margin: 20px 0 20px;
+}
+
+.detail-div {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.detail-space {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.head {
+  font-weight: 600;
+}
