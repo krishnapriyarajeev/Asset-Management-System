@@ -1,0 +1,22 @@
+.status-card{
+    border: 1px soid black;
+    width: 15%;
+    display: flex;
+    padding: 15px 10px 15px 20px;
+    color: #ffffff;
+    background-image: linear-gradient(to right, rgb(166, 0, 207), rgb(214, 122, 253) , rgb(233, 183, 255));    border-radius: 6px;
+    .status-icon{
+        border-radius: 100px;
+        font-size: 40px;
+        margin: 10px;
+        color: #ffffff;
+        padding: 3px;
+        background-color: rgb(212, 72, 255);
+    }
+    h4{
+        font-size: 20px;
+    }
+    h3{
+        font-size: 30px;
+    }
+}
