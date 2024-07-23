@@ -15,6 +15,7 @@ const RequestDetail = () => {
       brand: "Dell",
       model: "Inpiron",
       type: "Exchange",
+      status: "pending",
       reason: "Due to my product was damaged",
       requestedAt: "2023-01-15",
     },
@@ -24,6 +25,7 @@ const RequestDetail = () => {
       brand: "Dell",
       model: "Inpiron",
       type: "Request",
+      status: "accepted",
       reason: "Due to my product was damaged",
       requestedAt: "2023-01-15",
     },
@@ -32,6 +34,7 @@ const RequestDetail = () => {
       category: "Laptop",
       brand: "Dell",
       model: "Inpiron",
+      status: "declined",
       reason: "Due to my product was damaged",
       type: "Exchange",
       requestedAt: "2023-01-15",
@@ -46,7 +49,7 @@ const RequestDetail = () => {
       </div>
 
       <Container>
-        <RequestsTable tabledata={subCategoryData} pending={status} />
+        <RequestsTable tabledata={subCategoryData} requestStatus={status} />
       </Container>
     </div>
   );

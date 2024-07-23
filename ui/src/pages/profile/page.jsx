@@ -1,12 +1,8 @@
-import "./employeeDashboard.scss";
-import { useNavigate, useParams } from "react-router-dom";
-import CreateButton from "../../components/button/create";
-import User from "../../components/user/user";
+import "./page.scss";
+import { useParams } from "react-router-dom";
 import Container from "../../components/container/container";
 import Pill from "../../components/pill/pill";
 import DetailRow from "../../components/DetailRow/DetailRow";
-import { MdModeEditOutline, MdOutlineDelete } from "react-icons/md";
-import DeleteModal from "../../components/Modal/deleteModal";
 import EditModal from "../../components/Modal/editModal";
 import { useState } from "react";
 
@@ -32,7 +28,6 @@ const fields = [
   },
 ];
 
-
 const employee = {
   id: "1",
   ename: "Alice",
@@ -47,28 +42,17 @@ const employee = {
 };
 const today = new Date();
 const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  weekday: "long",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
 };
-const formatter = new Intl.DateTimeFormat('en-US', options);
-const formattedDate = formatter.format(today).replace(/,/g, '');
+const formatter = new Intl.DateTimeFormat("en-US", options);
+const formattedDate = formatter.format(today).replace(/,/g, "");
 
-const EmployeeDashboard = () => {
+const Profile = () => {
   const { id } = useParams();
-  const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const navigate = useNavigate();
-
-  const deleteHandler = () => {
-    // TODO: Delete API call
-    setDeleteModal(false);
-  };
-
-  const cancelDelete = () => {
-    setDeleteModal(false);
-  };
 
   const editHandler = () => {
     setEditModal(true);
@@ -80,25 +64,20 @@ const EmployeeDashboard = () => {
 
   return (
     <>
-        <div className="employee-request">
+      <div className="employee-request">
         <div className="heading">
-            <h2 className="tail">Hello,</h2>
-            <h1 className="head">Name!</h1>
-
+          <h2 className="tail">Hello,&nbsp;</h2>
+          <h1 className="head">{employee.ename}</h1>
         </div>
         <h1 className="date">{formattedDate}</h1>
-
-
-</div>
+      </div>
       <EditModal
         editHandler={editHandler}
         cancelHandler={cancelEdit}
         open={editModal}
       />
-      
-      <Container>
-        
 
+      <Container>
         <section className="form-section detail-section">
           <div className="detail-container">
             {fields.map((field) => {
@@ -146,9 +125,8 @@ const EmployeeDashboard = () => {
             </div>
           </div>
         </section>
-        
       </Container>
     </>
   );
 };
-export default EmployeeDashboard;
+export default Profile;

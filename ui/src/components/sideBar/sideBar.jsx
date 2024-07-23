@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 
 const navLinks = [
   {
-    link: "/admindashboard",
-    text: "Dashboard",
+    link: "/profile",
+    text: "Profile",
   },
   {
     link: "/assets",

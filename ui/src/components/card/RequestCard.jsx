@@ -11,13 +11,7 @@ const RequestCard = ({ data, onClick }) => (
       <div className="pill-group">
         <Pill
           innerText={data.status}
-          color={
-            data.status === "pending"
-              ? "yellow"
-              : data.status === "accepted"
-              ? "green"
-              : "red"
-          }
+          color={data.status === "pending" ? "yellow" : "purple"}
           type="default"
         />
       </div>

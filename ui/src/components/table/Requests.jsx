@@ -6,7 +6,7 @@ import { CiCircleCheck } from "react-icons/ci";
 import DeclineModal from "../Modal/declineModal";
 import Pill from "../pill/pill";
 
-const RequestsTable = ({ tabledata = [], status = "pending" }) => {
+const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
   let tableheader = [
     "S.No",
     "Employee",
@@ -18,7 +18,7 @@ const RequestsTable = ({ tabledata = [], status = "pending" }) => {
     "Requested At",
   ];
 
-  if (status.toLowerCase() === "pending") tableheader.push("Actions");
+  if (requestStatus.toLowerCase() === "pending") tableheader.push("Actions");
   else tableheader.push("Status");
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
@@ -66,7 +66,16 @@ const RequestsTable = ({ tabledata = [], status = "pending" }) => {
           <tbody>
             {tabledata.map(
               (
-                { employee, category, brand, model, reason, type, requestedAt },
+                {
+                  employee,
+                  category,
+                  brand,
+                  model,
+                  reason,
+                  type,
+                  status,
+                  requestedAt,
+                },
                 key
               ) => (
                 <tr key={key}>
@@ -85,19 +94,8 @@ const RequestsTable = ({ tabledata = [], status = "pending" }) => {
                       type="sm"
                     />
                   </td>
-                  {status.toLowerCase() !== "pending" && (
-                    <td>
-                      <Pill
-                        color={
-                          status.toLowerCase() === "accepted" ? "green" : "red"
-                        }
-                        innerText={type}
-                        type="sm"
-                      />
-                    </td>
-                  )}
                   <td>{requestedAt}</td>
-                  {status.toLowerCase() === "pending" && (
+                  {requestStatus.toLowerCase() === "pending" && (
                     <td className="action-td">
                       <CiCircleCheck
                         size="25px"
@@ -119,6 +117,17 @@ const RequestsTable = ({ tabledata = [], status = "pending" }) => {
                           setEditModal(true);
                           // setEditId(id);
                         }}
+                      />
+                    </td>
+                  )}
+                  {requestStatus.toLowerCase() !== "pending" && (
+                    <td>
+                      <Pill
+                        color={
+                          status.toLowerCase() === "accepted" ? "green" : "red"
+                        }
+                        innerText={type}
+                        type="sm"
                       />
                     </td>
                   )}

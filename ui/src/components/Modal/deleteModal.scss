@@ -29,23 +29,22 @@
   text-align: center;
 }
 
-.employee-history{
+.employee-history {
   .heading-display {
-      display: flex;
-      padding-top: 100px;
-      .tail {
-          padding-top: 16px;
-      }
-      margin-bottom: 50px;
+    display: flex;
+    padding-top: 100px;
+    margin-bottom: 50px;
+    .tail {
+      padding-top: 16px;
+    }
   }
 }
-  .heading-request {
-      display: flex;
-      padding-top: 30px;
-      .tail {
-          padding-top: 16px;
-      }
-      margin-bottom: 30px;
-      margin-left: -250px;
+.heading-request {
+  display: flex;
+  padding-top: 30px;
+  margin-bottom: 30px;
+  margin-left: -250px;
+  .tail {
+    padding-top: 16px;
   }
-
+}

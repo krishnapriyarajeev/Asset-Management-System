@@ -57,14 +57,14 @@ const requestData = [
     name: "Jane Smith",
     department: "HR",
     date: "2023-07-05",
-    status: "accepted",
+    status: "completed",
   },
   {
     id: 3,
     name: "Alice Johnson",
     department: "Finance",
     date: "2023-07-10",
-    status: "declined",
+    status: "completed",
   },
   {
     id: 4,

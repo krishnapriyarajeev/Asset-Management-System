@@ -9,24 +9,15 @@ import Login from "./pages/Login/Login";
 import RequestDetail from "./pages/reqestsDetailed/page";
 import EmployeeList from "./pages/EmployeeList/EmployeeList";
 import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-import EmployeeDashboard from "./pages/employeeDashboard/employeeDashboard";
 import EmployeeLayout from "./layouts/employee.home.layout";
-import EmployeeRequest from "./pages/employeeRequest/employeeRequest";
 import RequestHistory from "./pages/requestHistory/requestHistory";
+import Profile from "./pages/profile/page";
+
+// TODO: get user data from localstorage
+const getUserData = "Admin";
 
 function App() {
   const router = createBrowserRouter([
-    {
-      path: "/admindashboard",
-      element: <HomeLayout />,
-      children: [
-        {
-          path: "",
-          element: <AdminDashboard />,
-        },
-      ],
-    },
     {
       path: "/",
       element: <Login />,
@@ -79,22 +70,22 @@ function App() {
     },
     {
       path: "/profile",
-      element: <EmployeeLayout />,
+      element: getUserData === "Admin" ? <HomeLayout /> : <EmployeeLayout />,
       children: [
         {
           path: "",
-          element: <EmployeeDashboard />,
-        }
+          element: <Profile />,
+        },
       ],
     },
     {
       path: "/asset",
-      element: <EmployeeLayout />,
+      element: getUserData === "Admin" ? <HomeLayout /> : <EmployeeLayout />,
       children: [
         {
           path: "",
           element: <RequestHistory />,
-        }
+        },
       ],
     },
   ]);
