@@ -1,12 +1,13 @@
+// eslint-disable-next-line react/prop-types
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import "./Login.scss";
-import Button from "../../components/Button/Button";
 import TextField from "../../components/LoginTextField/TextField";
 import kvlogo from "../../assets/kv-logo.png";
 import { useEffect, useRef, useState } from "react";
+import Button from "../../components/button/button";
 // import { useNavigate } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
 const Login = () => {
   // const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -83,7 +84,7 @@ const Login = () => {
             handleChange={handlePassWord}
             value={password}
           />
-          <Button text="Log In" className="loginButton" />
+          <Button innerText="Log In" type="submit" />
         </form>
       </div>
     </main>

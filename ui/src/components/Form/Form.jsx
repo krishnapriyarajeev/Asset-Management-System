@@ -1,22 +1,17 @@
 import "./Form.scss";
-import { useEffect, useState } from "react";
-import Button from "../Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import FormField from "../FormField/FormField";
+import Button from "../button/button";
 
 const Form = ({ fields = [], editHandler, cancelHandler }) => {
-  // console.log(fields);
   const [data, setData] = useState({});
-  const navigate = useNavigate();
 
   const handleData = ([id, value]) => {
     let newData = {};
     newData[id] = value;
     setData((data) => ({ ...data, ...newData }));
   };
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
   return (
     <section className="form-modal">
       <form className="form" onSubmit={console.log("Hello")}>
@@ -43,19 +38,17 @@ const Form = ({ fields = [], editHandler, cancelHandler }) => {
           })}
         </div>
         <div>
-          <Button
-            text="Create"
-            className="form-buttons"
-            handleForm={editHandler}
-          />
-          <Button
-            text="Cancel"
-            className="form-buttons cancel"
-            handleForm={(e) => {
-              e.preventDefault();
-              cancelHandler();
-            }}
-          />
+          <div className="button-group">
+            <Button innerText="Create" onClick={editHandler} type="submit" />
+            <Button
+              innerText="Cancel"
+              onClick={(e) => {
+                e.preventDefault();
+                cancelHandler();
+              }}
+              type="reset"
+            />
+          </div>
         </div>
       </form>
     </section>

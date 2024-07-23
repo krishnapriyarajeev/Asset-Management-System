@@ -3,19 +3,15 @@ import CreateModal from "../Modal/createModal";
 import { useState } from "react";
 
 const CreateButton = ({ fields }) => {
-  console.log(fields);
   const [createModal, setCreateModal] = useState(false);
 
   const createHandler = () => {
     setCreateModal(true);
-    console.log(createModal);
   };
 
   const cancelCreate = () => {
     setCreateModal(false);
   };
-
-  // console.log(props.fields);
 
   return (
     <>

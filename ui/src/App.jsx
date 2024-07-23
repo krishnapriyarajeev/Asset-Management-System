@@ -6,7 +6,7 @@ import SubCategory from "./pages/subcategory/page";
 import ModalList from "./pages/model/page";
 import Request from "./pages/requests/page";
 import Login from "./pages/Login/Login";
-import RequestDetail from "./pages/reuestsDetailed/page";
+import RequestDetail from "./pages/reqestsDetailed/page";
 import EmployeeList from "./pages/EmployeeList/EmployeeList";
 import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";

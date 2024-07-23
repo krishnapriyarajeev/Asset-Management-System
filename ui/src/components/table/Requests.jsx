@@ -6,8 +6,8 @@ import { CiCircleCheck } from "react-icons/ci";
 import DeclineModal from "../Modal/declineModal";
 import Pill from "../pill/pill";
 
-const RequestsTable = ({ tabledata = [] }) => {
-  const tableheader = [
+const RequestsTable = ({ tabledata = [], status = "pending" }) => {
+  let tableheader = [
     "S.No",
     "Employee",
     "Category",
@@ -16,8 +16,10 @@ const RequestsTable = ({ tabledata = [] }) => {
     "Reason",
     "Type",
     "Requested At",
-    "Actions",
   ];
+
+  if (status.toLowerCase() === "pending") tableheader.push("Actions");
+  else tableheader.push("Status");
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   const [deleteModal, setDeleteModal] = useState(false);
@@ -83,30 +85,43 @@ const RequestsTable = ({ tabledata = [] }) => {
                       type="sm"
                     />
                   </td>
+                  {status.toLowerCase() !== "pending" && (
+                    <td>
+                      <Pill
+                        color={
+                          status.toLowerCase() === "accepted" ? "green" : "red"
+                        }
+                        innerText={type}
+                        type="sm"
+                      />
+                    </td>
+                  )}
                   <td>{requestedAt}</td>
-                  <td className="action-td">
-                    <CiCircleCheck
-                      size="25px"
-                      color="#6ab7e7d9"
-                      className="delete-icon"
-                      style={{ cursor: "pointer" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        // setDeleteId(id);
-                      }}
-                    />
-                    <RxCross2
-                      size="25px"
-                      color="#e76a6ad9"
-                      className="edit-icon"
-                      style={{ cursor: "pointer" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setEditModal(true);
-                        // setEditId(id);
-                      }}
-                    />
-                  </td>
+                  {status.toLowerCase() === "pending" && (
+                    <td className="action-td">
+                      <CiCircleCheck
+                        size="25px"
+                        color="#6ab7e7d9"
+                        className="delete-icon"
+                        style={{ cursor: "pointer" }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // setDeleteId(id);
+                        }}
+                      />
+                      <RxCross2
+                        size="25px"
+                        color="#e76a6ad9"
+                        className="edit-icon"
+                        style={{ cursor: "pointer" }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditModal(true);
+                          // setEditId(id);
+                        }}
+                      />
+                    </td>
+                  )}
                 </tr>
               )
             )}

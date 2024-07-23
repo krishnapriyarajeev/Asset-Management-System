@@ -104,7 +104,9 @@ const Request = () => {
           <RequestCard
             key={index}
             data={data}
-            onClick={(path) => navigate(`${path}`)}
+            onClick={(path) =>
+              navigate(`${path}`, { state: { status: data.status } })
+            }
           />
         ))}
       </div>

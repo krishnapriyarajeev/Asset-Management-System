@@ -1,10 +1,13 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Container from "../../components/container/container";
 import "./page.scss";
 import RequestsTable from "../../components/table/Requests";
 
 const RequestDetail = () => {
   const { requestId } = useParams();
+  const location = useLocation();
+  const { status } = location.state;
+
   const subCategoryData = [
     {
       employee: "Sam",
@@ -43,7 +46,7 @@ const RequestDetail = () => {
       </div>
 
       <Container>
-        <RequestsTable tabledata={subCategoryData} />
+        <RequestsTable tabledata={subCategoryData} pending={status} />
       </Container>
     </div>
   );
