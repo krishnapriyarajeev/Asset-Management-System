@@ -7,13 +7,16 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 118.5%;
     gap: 60px;
+
+    
   }
   .heading-display {
     display: flex;
+    margin-bottom: 50px;
+
     .tail {
       padding-top: 16px;
     }
-    margin-bottom: 50px;
   }
 }
 .status-field-card{
