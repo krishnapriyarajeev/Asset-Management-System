@@ -69,6 +69,11 @@ const Login = () => {
     loginFocus.current.focus();
   }, []);
 
+  const user = localStorage.getItem("kvLogin");
+  useEffect(() => {
+    if (user) navigate(-1);
+  }, [user, navigate]);
+
   return (
     <main className="loginMain">
       <Toast showToast={!toast.status} message={toast.message} status="fail" />

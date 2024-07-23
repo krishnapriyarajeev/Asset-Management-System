@@ -14,6 +14,7 @@ import RequestHistory from "./pages/requestHistory/requestHistory";
 import Profile from "./pages/profile/page";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import ErrorPage from "./pages/notfound/page";
 
 // TODO: get user data from localstorage
 const getUserData = "Admin";
@@ -23,6 +24,7 @@ function App() {
     {
       path: "/",
       element: <Login />,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/assets",
