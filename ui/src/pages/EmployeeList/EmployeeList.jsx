@@ -177,7 +177,7 @@ const EmployeeList = () => {
         <h4 className="tail">&nbsp;/Employees</h4>
       </div>
       <Container>
-        <CreateButton createFields={createFields} />
+        <CreateButton fields={createFields} />
 
         {deleteId.length > 0 && (
           <DeleteModal

@@ -2,7 +2,13 @@ import { IoClose } from "react-icons/io5";
 import Modal from "./modal";
 import Form from "../Form/Form";
 
-const CreateModal = ({ createHandler, cancelHandler, open, createFields }) => {
+const CreateModal = ({
+  createHandler,
+  cancelHandler,
+  open,
+  createFields,
+  select,
+}) => {
   return (
     open && (
       <Modal>
@@ -17,6 +23,7 @@ const CreateModal = ({ createHandler, cancelHandler, open, createFields }) => {
             acceptHandler={createHandler}
             cancelHandler={cancelHandler}
             acceptText="Create"
+            accept={select}
           ></Form>
         </div>
       </Modal>

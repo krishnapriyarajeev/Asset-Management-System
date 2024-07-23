@@ -3,10 +3,10 @@ import "./create.scss";
 import CreateModal from "../Modal/createModal";
 import { useState } from "react";
 
-const CreateButton = ({ createFields }) => {
+const CreateButton = ({ fields}) => {
   const [createModal, setCreateModal] = useState(false);
 
-  const createHandler = (data) => {
+  const createEmployeeHandler = (data) => {
     const { line1, line2, departmentName, ...newData } = {
       ...data,
       department: { name: data.departmentName },
@@ -14,6 +14,17 @@ const CreateButton = ({ createFields }) => {
     };
     console.log(newData);
     setCreateModal(false);
+  };
+
+
+  const createAssetHandler = (data) => {
+    console.log(data);
+  };
+
+  const createHandler = (data) => {
+    if (window.location.pathname.includes("/assets")) createAssetHandler(data);
+    if (window.location.pathname.includes("/employees"))
+      createEmployeeHandler(data);
   };
 
   const cancelCreate = () => {
@@ -26,7 +37,8 @@ const CreateButton = ({ createFields }) => {
         createHandler={createHandler}
         cancelHandler={cancelCreate}
         open={createModal}
-        createFields={createFields}
+        createFields={fields}
+        // select={select}
       />
       <button
         className="create"
