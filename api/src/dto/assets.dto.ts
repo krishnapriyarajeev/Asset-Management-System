@@ -13,15 +13,17 @@ import { Type } from "class-transformer";
 import Employee from "../entity/employee.entity";
 import { CreateEmployeeDto } from "./employee.dto";
 import { CannotCreateEntityIdMapError } from "typeorm";
+import { Transform } from "class-transformer";
 
 export class CreateAssetDto {
   @IsString()
   @IsNotEmpty()
   serialNumber: string;
 
+  @IsOptional()
   @IsEnum(AssetStatus)
-  @IsNotEmpty()
-  status: AssetStatus;
+  @Transform(({ value }) => (value === "" ? AssetStatus.UNALLOCATED : value))
+  status?: AssetStatus;
 
   // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)
@@ -48,7 +50,6 @@ export class UpdateAssetDto {
   @IsEnum(AssetStatus)
   @IsOptional()
   status: AssetStatus;
-
 
   // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)
