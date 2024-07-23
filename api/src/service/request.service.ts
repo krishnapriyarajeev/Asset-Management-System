@@ -18,7 +18,7 @@ export default class RequestService {
     this.requestRepository.findOneBy({ id });
 
   public createNewRequest = async (
-    employee: Employee,
+    employee: any,
     status: RequestStatus
   ) => {
     const newRequest = new Requests();
@@ -32,8 +32,8 @@ export default class RequestService {
 
     const requestData = await this.getRequestById(request.id);
 
-    if (request.employee) {
-        requestData.employee = request.employee;
+    if (request.employee_id) {
+        requestData.employee.id = request.employee_id;
     }
 
     if (request.status) {

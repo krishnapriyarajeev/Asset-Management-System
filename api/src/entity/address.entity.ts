@@ -10,9 +10,6 @@ export default class Address extends AbstractEntity {
   @Column()
   line2: string;
 
-  @Column()
-  flatOrPhoneNo: string;
-
   @OneToOne(() => Employee, (employee) => employee.address)
   @JoinColumn()
   employee: Employee;

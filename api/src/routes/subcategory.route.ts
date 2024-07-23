@@ -5,6 +5,7 @@ import SubCategoryRepository from "../repository/subCategory.repository";
 import CategoryService from "../service/category.service";
 import SubCategoryService from "../service/subcategory.service";
 import SubCategoryController from "../controller/subCategory.controller";
+import Category from "../entity/category.entity";
 
 const SubcategoryRouter = new SubCategoryController(
   new SubCategoryService(

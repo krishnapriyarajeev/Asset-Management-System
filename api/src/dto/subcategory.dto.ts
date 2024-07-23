@@ -23,9 +23,11 @@ export class CreateSubcategoryDto {
   @IsNotEmpty()
   Specifications: string;
 
-  @ValidateNested()
-  @Type(() => CreateCategoryDto)
-  category: Category;
+  // @ValidateNested()
+  // @Type(() => CreateCategoryDto)
+  @IsNumber()
+  @IsNotEmpty()
+  category_id: number;
 }
 
 export class UpdateSubcategoryDto {
@@ -44,10 +46,12 @@ export class UpdateSubcategoryDto {
   @IsOptional()
   Specifications: string;
 
+  
+  // @ValidateNested()
+  // @Type(() => CreateCategoryDto)
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateCategoryDto)
-  category: Category;
+  @IsNumber()
+  category_id: number;
 }
 
 export class SubcategoryResponseDto extends CreateSubcategoryDto {}

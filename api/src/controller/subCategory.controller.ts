@@ -68,7 +68,7 @@ export default class SubCategoryController {
           subCategoryDto.brandName,
           subCategoryDto.modelName,
           subCategoryDto.Specifications,
-          subCategoryDto.category
+          subCategoryDto.category_id
         );
 
       res.status(201).send(subCategoryData);

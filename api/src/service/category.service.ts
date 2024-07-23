@@ -1,6 +1,3 @@
-import { AssetStatus } from "../utils/assetStatus.enum";
-import Employee from "../entity/employee.entity";
-import Assets from "../entity/assets.entity";
 import HttpException from "../exceptions/http.exception";
 import CategoryRepository from "../repository/category.repository";
 import Category from "../entity/category.entity";
@@ -22,7 +19,6 @@ export default class CategoryService {
     return await this.categoryRepository.save(newCategory);
   };
 
-  //Handle edge cases
   public updateCategory = async (category: UpdateCategoryDto) => {
     const CategoryData = await this.getCategoryById(category.id);
     if (category.categoryName) {

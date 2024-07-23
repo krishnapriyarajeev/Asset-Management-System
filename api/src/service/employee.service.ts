@@ -23,7 +23,7 @@ export default class EmployeeService {
   public getAllEmployees = async () => this.employeeRepository.find();
 
   public getEmployeeById = async (id: number) =>
-    this.employeeRepository.findOneBy({ id }, ["address", "department"]);
+    this.employeeRepository.findOneBy({ id });
 
   public createNewEmployee = async (
     name: string,
@@ -32,7 +32,6 @@ export default class EmployeeService {
     password: string,
     status: Status,
     experience: number,
-    joinDate: Date,
     role: Role,
     department: Department
   ) => {
@@ -50,7 +49,6 @@ export default class EmployeeService {
     newEmployee.role = role;
     newEmployee.status = status;
     newEmployee.experience = experience;
-    newEmployee.joinDate = joinDate;
     newEmployee.department = departmentData;
     return await this.employeeRepository.save(newEmployee);
   };

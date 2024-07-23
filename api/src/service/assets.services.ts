@@ -5,9 +5,13 @@ import HttpException from "../exceptions/http.exception";
 import AssetRepository from "../repository/assets.repository";
 import Subcategory from "../entity/subcategory.entity";
 import { UpdateAssetDto } from "../dto/assets.dto";
+import EmployeeService from "./employee.service";
+import SubCategoryService from "./subcategory.service";
 
 export default class AssetService {
-  constructor(private assetRepository: AssetRepository) {
+  constructor(
+    private assetRepository: AssetRepository,
+  ) {
     this.assetRepository = assetRepository;
   }
 
@@ -19,9 +23,10 @@ export default class AssetService {
   public createNewAsset = async (
     serialNumber: string,
     status: AssetStatus,
-    subcategory: Subcategory,
-    employee: Employee
+    subcategory: any,
+    employee: any
   ) => {
+
     const newAsset = new Assets();
     newAsset.serialNumber = serialNumber;
     newAsset.status = status;
@@ -41,12 +46,12 @@ export default class AssetService {
       assetData.status = asset.status;
     }
 
-    if (asset.employee) {
-      assetData.employee = asset.employee;
+    if (asset.employee_id){
+      assetData.employee.id = asset.employee_id;
     }
 
-    if (asset.subcategory) {
-      assetData.subcategory = asset.subcategory;
+    if (asset.subcategory_id){
+      assetData.subcategory.id = asset.subcategory_id;
     }
     return await this.assetRepository.save(assetData);
   };

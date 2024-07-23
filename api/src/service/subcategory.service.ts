@@ -6,9 +6,12 @@ import SubCategoryRepository from "../repository/subCategory.repository";
 import Category from "../entity/category.entity";
 import Subcategory from "../entity/subcategory.entity";
 import { UpdateSubcategoryDto } from "../dto/subcategory.dto";
+import CategoryService from "./category.service";
 
 export default class SubCategoryService {
-  constructor(private subCategoryRepository: SubCategoryRepository) {
+  constructor(
+    private subCategoryRepository: SubCategoryRepository
+  ) {
     this.subCategoryRepository = subCategoryRepository;
   }
 
@@ -17,14 +20,17 @@ export default class SubCategoryService {
   public getSubCategoryById = async (id: number) =>
     this.subCategoryRepository.findOneBy({ id });
 
+  public getSubCategoryByName = async (brandName: string, modelName: string, Specifications: string) =>
+    this.subCategoryRepository.findOneBy({ brandName, modelName, Specifications });
+
   public createNewSubCategory = async (
     modelName: string,
-
     Specifications: string,
     brandName: string,
-
-    category: Category
+    category: any
   ) => {
+    console.log(category);
+
     const newSubCategory = new Subcategory();
     newSubCategory.modelName = modelName;
     newSubCategory.brandName = brandName;
@@ -37,6 +43,7 @@ export default class SubCategoryService {
   //Handle edge cases
   public updateSubCategory = async (subcategory: UpdateSubcategoryDto) => {
     const updateSubCategoryData = await this.getSubCategoryById(subcategory.id);
+
     if (subcategory.Specifications) {
       updateSubCategoryData.Specifications = subcategory.Specifications;
     }
@@ -49,9 +56,10 @@ export default class SubCategoryService {
       updateSubCategoryData.brandName = subcategory.brandName;
     }
 
-    if (subcategory.category) {
-      updateSubCategoryData.category = subcategory.category;
+    if(subcategory.category_id){
+    updateSubCategoryData.category.id = subcategory.category_id;
     }
+
     return await this.subCategoryRepository.save(updateSubCategoryData);
   };
 

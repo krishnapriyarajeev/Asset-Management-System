@@ -24,9 +24,9 @@ export default class RequestedItemService {
 
     requestType: string,
 
-    requests: Requests,
+    requests: any,
 
-    subcategory: Subcategory
+    subcategory: any
   ) => {
     const newRequest = new Requests();
     const newsubCategory = new Subcategory();
@@ -49,12 +49,12 @@ export default class RequestedItemService {
       requestedItemsData.reason = requestedItem.reason;
     }
 
-    if (requestedItem.requests) {
-      requestedItemsData.requests = requestedItem.requests;
+    if (requestedItem.requests_id) {
+      requestedItemsData.requests.id = requestedItem.requests_id;
     }
 
-    if (requestedItem.subcategory) {
-      requestedItemsData.subcategory = requestedItem.subcategory;
+    if (requestedItem.subcategory_id) {
+      requestedItemsData.subcategory.id = requestedItem.subcategory_id;
     }
     return await this.requestedItemRepository.save(requestedItemsData);
   };
@@ -62,7 +62,7 @@ export default class RequestedItemService {
   public deleteRequestedItem = async (id: number) => {
     const requestItemData = await this.getRequestedItemsById(id);
     if (!requestItemData) {
-      throw new HttpException(404, "asset Not Found");
+      throw new HttpException(404, "Requested Item Not Found");
     }
     this.requestedItemRepository.remove({ id });
     return requestItemData;

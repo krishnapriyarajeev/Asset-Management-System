@@ -23,15 +23,17 @@ export class CreateAssetDto {
   @IsNotEmpty()
   status: AssetStatus;
 
-  @ValidateNested()
-  @Type(() => CreateSubcategoryDto)
-  @IsOptional()
-  subcategory: Subcategory;
+  // @ValidateNested()
+  // @Type(() => CreateSubcategoryDto)
+  @IsNotEmpty()
+  @IsNotEmpty()
+  subcategory_id: number;
 
-  @ValidateNested()
-  @Type(() => CreateEmployeeDto)
+  // @ValidateNested()
+  // @Type(() => CreateEmployeeDto)
+  @IsNotEmpty()
   @IsOptional()
-  employee: Employee;
+  employee_id: number;
 }
 
 export class UpdateAssetDto {
@@ -40,21 +42,25 @@ export class UpdateAssetDto {
   serialNumber: string;
 
   @IsNumber()
+  @IsNotEmpty()
   id: number;
 
   @IsEnum(AssetStatus)
   @IsOptional()
   status: AssetStatus;
 
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateSubcategoryDto)
-  subcategory: Subcategory;
 
+  // @ValidateNested()
+  // @Type(() => CreateSubcategoryDto)
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateEmployeeDto)
-  employee: Employee;
+  @IsNumber()
+  subcategory_id: number;
+
+  // @ValidateNested()
+  // @Type(() => CreateEmployeeDto)
+  @IsOptional()
+  @IsNumber()
+  employee_id: number;
 }
 
 export class AssetResponseDto extends CreateAssetDto {}

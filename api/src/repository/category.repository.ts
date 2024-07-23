@@ -11,7 +11,7 @@ export default class CategoryRepository {
     await this.categoryRepository.find({
       relations: { subcategory: true },
     });
-
+  
   //add relations
   findOneBy = async (filter: Partial<Category>) =>
     await this.categoryRepository.findOne({

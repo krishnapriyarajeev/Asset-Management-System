@@ -28,10 +28,7 @@ export default class Employee extends AbstractEntity {
 
   @Column()
   experience: number;
-
-  @Column()
-  joinDate: Date;
-
+  
   @OneToOne(() => Address, (address) => address.employee, {
     cascade: true,
     onDelete: "CASCADE",
@@ -39,6 +36,7 @@ export default class Employee extends AbstractEntity {
   address: Address;
 
   @ManyToOne(() => Department, (department) => department.employee)
+  @JoinColumn()
   department: Department;
 
   @OneToMany(() => Assets, (assets) => assets.employee)

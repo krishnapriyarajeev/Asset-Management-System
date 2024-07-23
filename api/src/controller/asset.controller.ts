@@ -58,8 +58,8 @@ export default class assetController {
       const assetData = await this.assetService.createNewAsset(
         assetDto.serialNumber,
         assetDto.status,
-        assetDto.subcategory,
-        assetDto.employee
+        assetDto.subcategory_id,
+        assetDto.employee_id
       );
 
       res.status(201).send(assetData);

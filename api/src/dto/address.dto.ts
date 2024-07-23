@@ -8,10 +8,6 @@ export class CreateAddressDto {
   @IsString()
   @IsNotEmpty()
   line2: string;
-
-  @IsString()
-  @IsNotEmpty()
-  flatOrPhoneNo: string;
 }
 
 export class UpdateAddressDto {
@@ -21,5 +17,5 @@ export class UpdateAddressDto {
 
   @IsString()
   @IsOptional()
-  pincode?: string;
+  line2?: string;
 }

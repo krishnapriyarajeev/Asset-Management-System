@@ -14,13 +14,19 @@ export class CreateRequestedItems {
     @IsNotEmpty()
     requestType: string;
 
-    @ValidateNested()
-    @Type(() => CreateRequestsDto)
-    requests: Requests;
+    // @ValidateNested()
+    // @IsOptional()
+    // @Type(() => CreateRequestsDto)
+    @IsNotEmpty()
+    @IsNumber()
+    requests_id: number;
 
-    @ValidateNested()
-    @Type(() => CreateSubcategoryDto)
-    subcategory: Subcategory;
+    // @ValidateNested()
+    // @IsOptional()
+    // @Type(() => CreateSubcategoryDto)
+    @IsNotEmpty()
+    @IsNumber()
+    subcategory_id: number;
 }
 
 export class UpdateRequestedItems {
@@ -35,13 +41,17 @@ export class UpdateRequestedItems {
     @IsOptional()
     requestType: string;
     
+   
+    // @ValidateNested()
+    // @Type(() => CreateRequestsDto)
     @IsOptional()
-    @ValidateNested()
-    @Type(() => CreateRequestsDto)
-    requests: Requests;
+    @IsNumber()
+    requests_id: number;
 
+    
+    // @ValidateNested()
+    // @Type(() => CreateSubcategoryDto)
     @IsOptional()
-    @ValidateNested()
-    @Type(() => CreateSubcategoryDto)
-    subcategory: Subcategory;
+    @IsNumber()
+    subcategory_id: number;
 }

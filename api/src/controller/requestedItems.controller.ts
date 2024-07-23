@@ -68,8 +68,8 @@ export default class requestedItemController {
         await this.requestedItemService.createNewRequestedItem(
           requestedItemDto.reason,
           requestedItemDto.requestType,
-          requestedItemDto.requests,
-          requestedItemDto.subcategory
+          requestedItemDto.requests_id,
+          requestedItemDto.subcategory_id
         );
 
       res.status(201).send(requestedItemData);

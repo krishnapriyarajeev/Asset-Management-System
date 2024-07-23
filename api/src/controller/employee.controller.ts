@@ -20,9 +20,9 @@ export default class EmployeeController {
   constructor(private employeeService: EmployeeService) {
     this.router = Router();
 
-    this.router.get("/", this.getAllEmployees);
+    this.router.get("/",authMiddleware, this.getAllEmployees);
     this.router.get("/:id", authMiddleware, this.getEmployeeById);
-    this.router.post("/", this.createEmployee);
+    this.router.post("/", authMiddleware, this.createEmployee);
     this.router.put("/", authMiddleware, this.updateEmployee);
     this.router.delete("/:id", authMiddleware, this.deleteEmployee);
     this.router.post("/login", this.loginEmployee);
@@ -51,9 +51,9 @@ export default class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      // if (req.role !== Role.HR) {
-      //   throw new HttpException(403, "Invalid Access");
-      // }
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
       const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(employeeDto);
 
@@ -69,7 +69,6 @@ export default class EmployeeController {
         employeeDto.password,
         employeeDto.status,
         employeeDto.experience,
-        employeeDto.joinDate,
         employeeDto.role,
         employeeDto.department
       );
@@ -89,7 +88,7 @@ export default class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.HR) {
+      if (req.role !== Role.ADMIN) {
         throw new HttpException(403, "Invalid Access");
       }
       const employeeDto = plainToInstance(UpdateEmployeeDto, req.body);
@@ -117,7 +116,7 @@ export default class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.HR) {
+      if (req.role !== Role.ADMIN) {
         throw new HttpException(403, "Invalid Access");
       }
       const id = Number(req.params.id);

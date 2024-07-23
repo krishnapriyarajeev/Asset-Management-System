@@ -60,7 +60,7 @@ export default class requestsController {
       }
 
       const requestsData = await this.requestsService.createNewRequest(
-        requestsDto.employee,
+        requestsDto.employee_id,
         requestsDto.status
       );
 

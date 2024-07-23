@@ -40,10 +40,6 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   experience: number;
 
-  @IsDateString()
-  @IsNotEmpty()
-  joinDate: Date;
-
   @ValidateNested()
   @Type(() => CreateAddressDto)
   address: Address;

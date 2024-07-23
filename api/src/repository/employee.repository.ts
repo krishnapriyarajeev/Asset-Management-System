@@ -11,10 +11,10 @@ export default class EmployeeRepository {
       relations: { address: true, department: true },
     });
 
-  findOneBy = async (filter: Partial<Employee>, relations?: string[]) =>
+  findOneBy = async (filter: Partial<Employee>) =>
     await this.employeeRepository.findOne({
       where: filter,
-      relations,
+      relations: { address: true, department: true },
     });
 
   save = async (newEmployee: Partial<Employee>) =>
