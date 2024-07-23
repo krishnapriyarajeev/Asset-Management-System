@@ -1,7 +1,9 @@
+import { useState } from "react";
 import "./FormField.scss";
 
 /* eslint-disable react/prop-types */
 const FormField = (props) => {
+  const [type, setType] = useState(props.type);
   const onChange = (e) => {
     let x = [e.target.id, e.target.value];
     console.log(x);
@@ -13,13 +15,15 @@ const FormField = (props) => {
         {props.text}
       </label>
       <input
-        type="text"
+        onMouseEnter={() => props.type == "password" && setType("text")}
+        onMouseLeave={() => setType(props.type)}
+        type={type}
         className="form-input"
         id={props.id}
         placeholder={props.text}
         onChange={onChange}
-        disabled={props.id == "eid"}
-        value={props.id == "eid" ? props.editid : props.data[props.id]}
+        disabled={props.id == "id"}
+        value={props.data && props.data[props.id]}
       />
     </div>
   );

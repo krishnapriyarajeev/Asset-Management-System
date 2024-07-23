@@ -1,8 +1,14 @@
-import "./page.scss";
-import { useParams } from "react-router-dom";
+import "./employeeDashboard.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import CreateButton from "../../components/button/create";
+import User from "../../components/user/user";
 import Container from "../../components/container/container";
 import Pill from "../../components/pill/pill";
 import DetailRow from "../../components/DetailRow/DetailRow";
+import { MdModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import DeleteModal from "../../components/Modal/deleteModal";
+import EditModal from "../../components/Modal/editModal";
+import { useState } from "react";
 
 const fields = [
   {
@@ -23,6 +29,15 @@ const fields = [
   },
   {
     id: "status",
+  },
+];
+
+const tabledata = [
+  {
+    category: "Laptops",
+    brand: "Dell",
+    model: "Inspiron 15",
+    specs: "12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
   },
 ];
 
@@ -48,15 +63,16 @@ const options = {
 const formatter = new Intl.DateTimeFormat("en-US", options);
 const formattedDate = formatter.format(today).replace(/,/g, "");
 
-const Profile = () => {
+const EmployeeDashboard = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   return (
     <>
       <div className="employee-request">
         <div className="heading">
-          <h2 className="tail">Hello,&nbsp;</h2>
-          <h1 className="head">{employee.ename}</h1>
+          <h2 className="tail">Hello,</h2>
+          <h1 className="head">Name!</h1>
         </div>
         <h1 className="date">{formattedDate}</h1>
       </div>
@@ -105,12 +121,43 @@ const Profile = () => {
               <label htmlFor="id" className="head">
                 Employee ID
               </label>
-              <div id="id">{id}</div>
+              <div id="id">{employee.id}</div>
             </div>
           </div>
         </section>
+        <h1 style={{ marginTop: "30px" }}>Assets</h1>
+        <div className="table-wrapper">
+          <table>
+            <tbody>
+              {tabledata.map((asset, key) => (
+                <tr key={key} onClick={() => navigate()}>
+                  <td>{key}</td>
+                  {Object.values(asset).map((value, key) => {
+                    return <td key={key}>{value}</td>;
+                  })}
+                  {/* <td>{asset.brand}</td>
+                  <td>{asset.model}</td>
+                  <td>{asset.specs}</td> */}
+                  <td className="action-td">
+                    {/* <MdOutlineDelete
+                  size="25px"
+                  color="#e76a6ad9"
+                  className="delete-icon"
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeleteModal(true);
+                    // setDeleteId(id);
+                  }}
+                /> */}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Container>
     </>
   );
 };
-export default Profile;
+export default EmployeeDashboard;

@@ -1,5 +1,5 @@
 import "./EmployeeDetails.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Container from "../../components/container/container";
 import Pill from "../../components/pill/pill";
 import DetailRow from "../../components/DetailRow/DetailRow";
@@ -53,34 +53,21 @@ const employee = {
 
 const EmployeeDetails = () => {
   const { id } = useParams();
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
-  const navigate = useNavigate();
-
-  const deleteHandler = () => {
-    // TODO: Delete API call
-    setDeleteModal(false);
-  };
-
-  const cancelDelete = () => {
-    setDeleteModal(false);
-  };
+  const [editId, setEditId] = useState("");
 
   const editHandler = () => {
-    setEditModal(true);
+    setEditId(id);
   };
 
   const cancelEdit = () => {
-    setEditModal(false);
+    setEditId("");
   };
 
   return (
     <>
-      <EditModal
-        editHandler={editHandler}
-        cancelHandler={cancelEdit}
-        open={editModal}
-      />
+      {editId.length && (
+        <EditModal editHandler={editHandler} cancelHandler={cancelEdit} />
+      )}
       <div className="heading-subcategory">
         <h1 className="head">{employee.ename}/</h1>
         <h4 className="tail">Employee</h4>
@@ -139,17 +126,11 @@ const EmployeeDetails = () => {
           <table>
             <tbody>
               {tabledata.map((asset, key) => (
-                <tr
-                  key={key}
-                  style={{ cursor: "default", pointerEvents: "none" }}
-                >
+                <tr key={key} style={{ cursor: "default" }}>
                   <td>{key}</td>
                   {Object.values(asset).map((value, key) => {
                     return <td key={key}>{value}</td>;
                   })}
-                  {/* <td>{asset.brand}</td>
-                  <td>{asset.model}</td>
-                  <td>{asset.specs}</td> */}
                   <td className="action-td">
                     {/* <MdOutlineDelete
                   size="25px"
@@ -169,8 +150,7 @@ const EmployeeDetails = () => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setEditModal(true);
-                        // setEditId(id);
+                        setEditId(id);
                       }}
                     />
                   </td>

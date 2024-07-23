@@ -1,10 +1,37 @@
 import "./Form.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormField from "../FormField/FormField";
 import Button from "../button/button";
 
-const Form = ({ fields = [], editHandler, cancelHandler }) => {
-  const [data, setData] = useState({});
+const Form = ({
+  fields = [],
+  employee,
+  acceptHandler,
+  cancelHandler,
+  acceptText,
+  disable,
+  accept = "",
+}) => {
+  // console.log(fields);
+  const [data, setData] = useState();
+  useEffect(() => {
+    if (window.location.href.includes("/employees"))
+      setData(
+        employee
+          ? employee
+          : {
+              id: "",
+              name: "",
+              email: "",
+              role: "UI",
+              status: "Active",
+              experience: "",
+              departmentName: "",
+              line1: "",
+              line2: "",
+            }
+      );
+  }, []);
 
   const handleData = ([id, value]) => {
     let newData = {};
@@ -14,8 +41,8 @@ const Form = ({ fields = [], editHandler, cancelHandler }) => {
 
   return (
     <section className="form-modal">
-      <form className="form" onSubmit={console.log("Hello")}>
-        <div className="form-details">
+      <form className="form" onSubmit={(e) => e.preventDefault()}>
+        <div className={`form-details ${accept}`}>
           {fields.map((field) => {
             return field.Component ? (
               <field.Component
@@ -24,10 +51,16 @@ const Form = ({ fields = [], editHandler, cancelHandler }) => {
                 choose={field.choose}
                 onselect={handleData}
                 label={field.label}
-                // defaultValue={requestType}
+                defaultValue={
+                  data?.id &&
+                  ((field.id == "status" && data.status) ||
+                    (field.id == "role" && data.role))
+                }
               />
             ) : (
               <FormField
+                type={field.type}
+                disable={disable}
                 id={field.id}
                 text={field.text}
                 key={field.id}
@@ -39,7 +72,11 @@ const Form = ({ fields = [], editHandler, cancelHandler }) => {
         </div>
         <div>
           <div className="button-group">
-            <Button innerText="Create" onClick={editHandler} type="submit" />
+            <Button
+              innerText={acceptText}
+              onClick={() => acceptHandler(data)}
+              type="submit"
+            />
             <Button
               innerText="Cancel"
               style="outline"

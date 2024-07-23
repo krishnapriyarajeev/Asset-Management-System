@@ -3,23 +3,25 @@ import "./deleteModal.scss";
 import Modal from "./modal";
 import Form from "../Form/Form";
 
-const EditModal = ({ editHandler, cancelHandler, open, fields }) => {
+const EditModal = ({ editHandler, cancelHandler, editFields, data }) => {
+  const disable = true;
   return (
-    open && (
-      <Modal>
-        <div className="close-icon-wrap" onClick={cancelHandler}>
-          <IoClose size="25px" />
-        </div>
-        <div className="delete-msg-wrap">
-          <h2>Edit</h2>
-          <Form
-            fields={fields}
-            editHandler={editHandler}
-            cancelHandler={cancelHandler}
-          />
-        </div>
-      </Modal>
-    )
+    <Modal>
+      <div className="close-icon-wrap" onClick={cancelHandler}>
+        <IoClose size="25px" />
+      </div>
+      <div className="delete-msg-wrap">
+        <h2>Edit</h2>
+        <Form
+          fields={editFields}
+          acceptHandler={editHandler}
+          cancelHandler={cancelHandler}
+          disable={disable}
+          acceptText="Edit"
+          employee={data}
+        />
+      </div>
+    </Modal>
   );
 };
 

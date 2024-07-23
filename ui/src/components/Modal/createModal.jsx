@@ -2,8 +2,7 @@ import { IoClose } from "react-icons/io5";
 import Modal from "./modal";
 import Form from "../Form/Form";
 
-const CreateModal = ({ createHandler, cancelHandler, open, fields }) => {
-  console.log(fields);
+const CreateModal = ({ createHandler, cancelHandler, open, createFields }) => {
   return (
     open && (
       <Modal>
@@ -14,9 +13,10 @@ const CreateModal = ({ createHandler, cancelHandler, open, fields }) => {
         <div className="delete-msg-wrap">
           <h2>Create</h2>
           <Form
-            fields={fields}
-            createHandler={createHandler}
+            fields={createFields}
+            acceptHandler={createHandler}
             cancelHandler={cancelHandler}
+            acceptText="Create"
           ></Form>
         </div>
       </Modal>

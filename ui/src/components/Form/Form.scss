@@ -23,6 +23,10 @@
   gap: 30px;
 }
 
+.accept-form {
+  grid-template-columns: 1fr;
+}
+
 .form-buttons {
   height: 30px;
   width: 150px;
@@ -38,5 +42,6 @@
 
 .button-group {
   display: flex;
+  justify-content: center;
   gap: 20px;
 }

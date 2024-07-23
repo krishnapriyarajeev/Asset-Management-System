@@ -124,7 +124,6 @@ const SubCategory = () => {
       </div>
 
       <CreateButton fields={fields} />
-
       <div className="subcategory-style">
         <div className="status-field-card">
           {statusField.map(

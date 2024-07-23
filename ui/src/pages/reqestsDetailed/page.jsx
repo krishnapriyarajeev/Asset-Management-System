@@ -10,16 +10,18 @@ const RequestDetail = () => {
 
   const subCategoryData = [
     {
+      id: "1",
       employee: "Sam",
       category: "Laptop",
       brand: "Dell",
       model: "Inpiron",
       type: "Exchange",
-      status: "pending",
+      status: "accepted",
       reason: "Due to my product was damaged",
       requestedAt: "2023-01-15",
     },
     {
+      id: "2",
       employee: "Sam",
       category: "Laptop",
       brand: "Dell",
@@ -30,6 +32,7 @@ const RequestDetail = () => {
       requestedAt: "2023-01-15",
     },
     {
+      id: "3",
       employee: "Sam",
       category: "Laptop",
       brand: "Dell",

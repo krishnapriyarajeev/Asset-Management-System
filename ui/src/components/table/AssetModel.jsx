@@ -5,7 +5,7 @@ import DeleteModal from "../Modal/deleteModal";
 import EditModal from "../Modal/editModal";
 import { useState } from "react";
 
-const ModelTable = ({ tabledata = [] , fields}) => {
+const ModelTable = ({ tabledata = [], fields }) => {
   const tableheader = [
     "S.No",
     "Serial",
@@ -17,39 +17,43 @@ const ModelTable = ({ tabledata = [] , fields}) => {
   ];
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+  const [editId, setEditId] = useState("");
 
   const deleteHandler = () => {
     // TODO: Delete API call
-    setDeleteModal(false);
+    console.log(deleteId);
+    setDeleteId("");
   };
 
   const cancelDelete = () => {
-    setDeleteModal(false);
+    setDeleteId("");
   };
 
   const editHandler = () => {
-    setEditModal(true);
+    console.log(editId);
+    setEditId("");
   };
 
   const cancelEdit = () => {
-    setEditModal(false);
+    setEditId("");
   };
 
   return (
     <>
-      <DeleteModal
-        deleteHandler={deleteHandler}
-        cancelHandler={cancelDelete}
-        open={deleteModal}
-      />
-      <EditModal
-        editHandler={editHandler}
-        cancelHandler={cancelEdit}
-        open={editModal}
-        fields={fields}
-      />
+      {deleteId.length > 0 && (
+        <DeleteModal
+          deleteHandler={deleteHandler}
+          cancelHandler={cancelDelete}
+        />
+      )}
+      {editId.length > 0 && (
+        <EditModal
+          editHandler={editHandler}
+          cancelHandler={cancelEdit}
+          fields={fields}
+        />
+      )}
       <div className="table-wrapper">
         <table>
           <thead>
@@ -89,7 +93,7 @@ const ModelTable = ({ tabledata = [] , fields}) => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setDeleteModal(true);
+                        setDeleteId(serialNo);
                         // setDeleteId(id);
                       }}
                     />
@@ -100,8 +104,7 @@ const ModelTable = ({ tabledata = [] , fields}) => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setEditModal(true);
-                        // setEditId(id);
+                        setEditId(serialNo);
                       }}
                     />
                   </td>

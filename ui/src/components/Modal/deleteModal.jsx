@@ -3,28 +3,26 @@ import "./deleteModal.scss";
 import Modal from "./modal";
 import Button from "../button/button";
 
-const DeleteModal = ({ deleteHandler, cancelHandler, open }) => {
+const DeleteModal = ({ deleteHandler, cancelHandler }) => {
   return (
-    open && (
-      <Modal>
-        <div className="close-icon-wrap" onClick={cancelHandler}>
-          <IoClose size="25px" />
+    <Modal>
+      <div className="close-icon-wrap" onClick={cancelHandler}>
+        <IoClose size="25px" />
+      </div>
+      <div className="delete-msg-wrap">
+        <h2>Are you Sure ?</h2>
+        <h4>Do you really want to delete ?</h4>
+        <div className="button-wrap">
+          <Button innerText="Confirm" onClick={deleteHandler} />
+          <Button
+            innerText="Cancel"
+            type="reset"
+            style="outline"
+            onClick={cancelHandler}
+          />
         </div>
-        <div className="delete-msg-wrap">
-          <h2>Are you Sure ?</h2>
-          <h4>Do you really want to delete ?</h4>
-          <div className="button-wrap">
-            <Button innerText="Confirm" onClick={deleteHandler} />
-            <Button
-              innerText="Cancel"
-              type="reset"
-              style="outline"
-              onClick={cancelHandler}
-            />
-          </div>
-        </div>
-      </Modal>
-    )
+      </div>
+    </Modal>
   );
 };
 

@@ -5,46 +5,46 @@ import DeleteModal from "../Modal/deleteModal";
 import { useState } from "react";
 import EditModal from "../Modal/editModal";
 
-const CategoryTable = ({ tabledata = [] , fields}) => {
+const CategoryTable = ({ tabledata = [], fields }) => {
   const tableheader = ["S.No", "Brand", "Model", "Specs", "Count", "Actions"];
   const navigate = useNavigate();
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
-  
+  const [deleteId, setDeleteId] = useState("");
+  const [editId, setEditId] = useState("");
+
   const deleteHandler = () => {
     // TODO: Delete API call
-    setDeleteModal(false);
+    setDeleteId("");
   };
 
   const cancelDelete = () => {
-    setDeleteModal(false);
+    setDeleteId("");
   };
 
   const editHandler = () => {
-    setEditModal(true);
+    setEditId("");
   };
 
   const cancelEdit = () => {
-    setEditModal(false);
+    setEditId("");
   };
-
 
   return (
     <>
-      <DeleteModal
-        deleteHandler={deleteHandler}
-        cancelHandler={cancelDelete}
-        open={deleteModal}
-      />
-      <EditModal
-        editHandler={editHandler}
-        cancelHandler={cancelEdit}
-        open={editModal}
-        fields={fields}
-      />
-      
+      {deleteId && (
+        <DeleteModal
+          deleteHandler={deleteHandler}
+          cancelHandler={cancelDelete}
+        />
+      )}
+      {editId && (
+        <EditModal
+          editHandler={editHandler}
+          cancelHandler={cancelEdit}
+          fields={fields}
+        />
+      )}
       <div className="table-wrapper">
         <table>
           <thead>
@@ -70,8 +70,7 @@ const CategoryTable = ({ tabledata = [] , fields}) => {
                     style={{ cursor: "pointer" }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setDeleteModal(true);
-                      // setDeleteId(id);
+                      setDeleteId(model);
                     }}
                   />
                   <MdModeEditOutline
@@ -81,8 +80,7 @@ const CategoryTable = ({ tabledata = [] , fields}) => {
                     style={{ cursor: "pointer" }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setEditModal(true);
-                      // setEditId(id);
+                      setEditId(model);
                     }}
                   />
                 </td>

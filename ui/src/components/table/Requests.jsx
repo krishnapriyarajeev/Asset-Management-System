@@ -1,10 +1,10 @@
 import { RxCross2 } from "react-icons/rx";
 import "./table.scss";
-import DeleteModal from "../Modal/deleteModal";
 import { useState } from "react";
 import { CiCircleCheck } from "react-icons/ci";
-import DeclineModal from "../Modal/declineModal";
 import Pill from "../pill/pill";
+import AcceptModal from "../Modal/acceptModal";
+import DeclineModal from "../Modal/declineModal";
 
 const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
   let tableheader = [
@@ -22,38 +22,44 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
   else tableheader.push("Status");
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
+  const [declineId, setDeclineId] = useState("");
+  const [acceptId, setAcceptId] = useState("");
+  const [acceptType, setAcceptType] = useState("");
 
   const deleteHandler = () => {
     // TODO: Delete API call
-    setDeleteModal(false);
+    setDeclineId("");
   };
 
   const cancelDelete = () => {
-    setDeleteModal(false);
+    setDeclineId("");
   };
 
   const editHandler = () => {
-    setEditModal(true);
+    setAcceptId("");
+    setAcceptType("");
   };
 
   const cancelEdit = () => {
-    setEditModal(false);
+    setAcceptId("");
+    setAcceptType("");
   };
 
   return (
     <>
-      <DeleteModal
-        deleteHandler={deleteHandler}
-        cancelHandler={cancelDelete}
-        open={deleteModal}
-      />
-      <DeclineModal
-        editHandler={editHandler}
-        cancelHandler={cancelEdit}
-        open={editModal}
-      />
+      {declineId.length > 0 && (
+        <DeclineModal
+          deleteHandler={deleteHandler}
+          cancelHandler={cancelDelete}
+        />
+      )}
+      {acceptId.length > 0 && (
+        <AcceptModal
+          editHandler={editHandler}
+          cancelHandler={cancelEdit}
+          acceptType={acceptType}
+        />
+      )}
       <div className="table-wrapper request-table">
         <table>
           <thead>
@@ -67,6 +73,7 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
             {tabledata.map(
               (
                 {
+                  id,
                   employee,
                   category,
                   brand,
@@ -78,7 +85,7 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
                 },
                 key
               ) => (
-                <tr key={key}>
+                <tr key={id}>
                   <td>{key}</td>
                   <td>{employee}</td>
                   <td>{category}</td>
@@ -104,7 +111,8 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
                         style={{ cursor: "pointer" }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          // setDeleteId(id);
+                          setAcceptId(id);
+                          setAcceptType(type);
                         }}
                       />
                       <RxCross2
@@ -114,8 +122,7 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
                         style={{ cursor: "pointer" }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setEditModal(true);
-                          // setEditId(id);
+                          setDeclineId(id);
                         }}
                       />
                     </td>
@@ -126,7 +133,7 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
                         color={
                           status.toLowerCase() === "accepted" ? "green" : "red"
                         }
-                        innerText={type}
+                        innerText={status}
                         type="sm"
                       />
                     </td>
