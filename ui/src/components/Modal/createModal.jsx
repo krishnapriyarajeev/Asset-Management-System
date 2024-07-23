@@ -1,7 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import Modal from "./modal";
 import Form from "../Form/Form";
-import Button from "../Button/Button";
 
 const CreateModal = ({ createHandler, cancelHandler, open, fields }) => {
   console.log(fields);
@@ -19,13 +18,6 @@ const CreateModal = ({ createHandler, cancelHandler, open, fields }) => {
             createHandler={createHandler}
             cancelHandler={cancelHandler}
           ></Form>
-          <Button innerText="Confirm" onClick={createHandler} />
-          <Button
-            innerText="Cancel"
-            type="reset"
-            style="outline"
-            onClick={cancelHandler}
-          />
         </div>
       </Modal>
     )

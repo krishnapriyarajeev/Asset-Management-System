@@ -42,6 +42,7 @@ const Form = ({ fields = [], editHandler, cancelHandler }) => {
             <Button innerText="Create" onClick={editHandler} type="submit" />
             <Button
               innerText="Cancel"
+              style="outline"
               onClick={(e) => {
                 e.preventDefault();
                 cancelHandler();
