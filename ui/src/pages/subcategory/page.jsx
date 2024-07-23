@@ -130,10 +130,15 @@ const SubCategory = () => {
       
         
       <CreateButton fields={fields} />
-      <Container>
+      
+      <div className="subcategory-style">
+
       <div className="status-field-card">
       {statusField.map(({head,count,front,middle,end,color,icon})=>(<StatusCard head={head} count={count} front={front} middle={middle} end={end} color={color} icon={icon}/>))}
       </div>
+      </div>
+      <Container>
+
       <CategoryTable tabledata={subCategoryData} fields={fields}/>
       </Container>
     </div>

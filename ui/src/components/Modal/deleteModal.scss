@@ -1,7 +1,7 @@
 .close-icon-wrap {
   position: absolute;
   left: 95%;
-  top: 5%;
+  top: 10%;
   cursor: pointer;
 }
 
@@ -28,3 +28,24 @@
   font-size: 20px;
   text-align: center;
 }
+
+.employee-history{
+  .heading-display {
+      display: flex;
+      padding-top: 100px;
+      .tail {
+          padding-top: 16px;
+      }
+      margin-bottom: 50px;
+  }
+}
+  .heading-request {
+      display: flex;
+      padding-top: 30px;
+      .tail {
+          padding-top: 16px;
+      }
+      margin-bottom: 30px;
+      margin-left: -250px;
+  }
+

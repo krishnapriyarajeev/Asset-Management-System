@@ -1,80 +1,76 @@
+import { useState } from "react";
 import Container from "../../components/container/container"
-import Table from "../../components/table/employeeRequest"
+import './requestHistory.scss'
+import HistoryModal from "../../components/Modal/historyModal";
+import RequestModal from "../../components/Modal/requestModel";
 
 
   
-const modelData = [
-    {
-      Category: "Laptop",
-      Subcategory: "Dell Latitude 5501",
-      Specs: "12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
-      RequestedAt: "2023-01-15",
-      Status: "Approved",
-    },
-    {
-      Category: "Laptop",
-      Subcategory: "HP Envy x360",
-      Specs: "8GB RAM, Intel i7 10th Gen, Intel Iris Plus, 256GB SSD",
-      RequestedAt: "2023-02-20",
-      Status: "Approved",
-    },
-    {
-      Category: "Laptop",
-      Subcategory: "Apple MacBook Air",
-      Specs: "16GB RAM, M1 Chip, 512GB SSD",
-      RequestedAt: "2023-03-10",
-      Status: "Pending",
-    },
-    {
-      Category: "Keyboard",
-      Subcategory: "Logitech MX Keys",
-      Specs: "Wireless, Backlit",
-      RequestedAt: "2023-04-05",
-      Status: "Approved",
-    },
-    {
-      Category: "Keyboard",
-      Subcategory: "Corsair K95 RGB",
-      Specs: "Mechanical, RGB Lighting",
-      RequestedAt: "2023-05-18",
-      Status: "Declined",
-    },
-    {
-      Category: "Mouse",
-      Subcategory: "Razer DeathAdder V2",
-      Specs: "Wired, High Precision",
-      RequestedAt: "2023-06-22",
-      Status: "Pending",
-    },
-    {
-      Category: "Mouse",
-      Subcategory: "Logitech MX Master 3",
-      Specs: "Wireless, Ergonomic",
-      RequestedAt: "2023-07-12",
-      Status: "Approved",
-    },
-    {
-      Category: "Headphones",
-      Subcategory: "Sony WH-1000XM4",
-      Specs: "Noise Cancelling, Wireless",
-      RequestedAt: "2023-08-02",
-      Status: "Declined",
-    }
-  ];
+const tabledata = [
+  {
+    category: "Laptops",
+    brand: "Dell",
+    model: "Inspiron 15",
+    specs: "12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
+  },
+  {
+    category: "Mouse",
+    brand: "Logitech",
+    model: "MX Master 13",
+    specs: "Wireless, Ergonomic",
+  },
+];
   
 const RequestHistory = () => {
+    const [modalToggle, setModalToggle] = useState(false)
+    const [requestToggle,setRequestToggle] = useState(false)
     return <>
-        <div className='employee-request'>
+    <HistoryModal open={modalToggle} cancelHandler={()=>setModalToggle(false)}/>
+    <RequestModal open={requestToggle} cancelHandler={()=>setRequestToggle(false)}/>
+      <div className='employee-request'>
         <div className="heading-display">
-            <h1 className="head">History</h1>
-            <h4 className="tail">&nbsp;/requests</h4>
+            <h1 className="head">Assets</h1>
+            <h4 className="tail">&nbsp;/employee</h4>
         </div>
       </div>
+      <button className="history-button" onClick={()=>{setModalToggle(true)}}>History</button>
+      <button className="request-button" onClick={()=>{setRequestToggle(true)}}>Request</button>
       <Container>
-      <Table tabledata={modelData}/>
-      </Container>
+        <div className="table-wrapper">
+          <table>
+            <tbody>
+              {tabledata.map((asset, key) => (
+                <tr key={key} onClick={() => navigate()}>
+                  <td>{key}</td>
+                  {Object.values(asset).map((value, key) => {
+                    return <td key={key}>{value}</td>;
+                  })}
+                  {/* <td>{asset.brand}</td>
+                  <td>{asset.model}</td>
+                  <td>{asset.specs}</td> */}
+                  <td className="action-td">
+                    {/* <MdOutlineDelete
+                  size="25px"
+                  color="#e76a6ad9"
+                  className="delete-icon"
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeleteModal(true);
+                    // setDeleteId(id);
+                  }}
+                /> */}
+                    
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
+        </div>
+        </Container>
+        
     </>
-
 
 
 }

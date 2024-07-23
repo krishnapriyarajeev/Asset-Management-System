@@ -109,9 +109,9 @@ const ModalList = () => {
         <h1 className="head">{subCategoryId}</h1>
         <h4 className="tail">&nbsp;/assets</h4>
       </div>
+      <div className="subcategory-style">
 
-      <Container>
-        <div className="status-field-card">
+      <div className="status-field-card">
           {statusField.map(
             ({ head, count, front, middle, end, color, icon }, index) => (
               <StatusCard
@@ -127,6 +127,9 @@ const ModalList = () => {
             )
           )}
         </div>
+        </div>
+      <Container>
+        
         <CreateButton fields={fields} />
         <Table tabledata={modelData} fields={fields} />
       </Container>

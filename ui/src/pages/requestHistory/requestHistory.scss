@@ -1,0 +1,28 @@
+.history-button{
+    position: fixed;
+    border: none;
+    padding: 10px 20px 10px 20px;
+    background-color: #3cc8ff;
+    top: 100px;
+    right: 65px;
+    border-radius: 6px;
+    color: white;
+    font-size: 15px;
+}
+.history-button:hover{
+    background-color: #36b0e0;
+}
+.request-button{
+    position: fixed;
+    border: none;
+    padding: 10px 20px 10px 20px;
+    background-color: #3cc8ff;
+    top: 100px;
+    right: 190px;
+    border-radius: 6px;
+    color: white;
+    font-size: 15px;
+}
+.request-button:hover{
+    background-color: #36b0e0;
+}

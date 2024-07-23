@@ -32,14 +32,6 @@ const fields = [
   },
 ];
 
-const tabledata = [
-  {
-    category: "Laptops",
-    brand: "Dell",
-    model: "Inspiron 15",
-    specs: "12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
-  },
-];
 
 const employee = {
   id: "1",
@@ -154,38 +146,7 @@ const EmployeeDashboard = () => {
             </div>
           </div>
         </section>
-        <h1 style={{ marginTop: "30px" }}>Assets</h1>
-        <div className="table-wrapper">
-          <table>
-            <tbody>
-              {tabledata.map((asset, key) => (
-                <tr key={key} onClick={() => navigate()}>
-                  <td>{key}</td>
-                  {Object.values(asset).map((value, key) => {
-                    return <td key={key}>{value}</td>;
-                  })}
-                  {/* <td>{asset.brand}</td>
-                  <td>{asset.model}</td>
-                  <td>{asset.specs}</td> */}
-                  <td className="action-td">
-                    {/* <MdOutlineDelete
-                  size="25px"
-                  color="#e76a6ad9"
-                  className="delete-icon"
-                  style={{ cursor: "pointer" }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteModal(true);
-                    // setDeleteId(id);
-                  }}
-                /> */}
-                    
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        
       </Container>
     </>
   );

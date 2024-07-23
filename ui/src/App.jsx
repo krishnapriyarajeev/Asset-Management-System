@@ -78,7 +78,7 @@ function App() {
       ],
     },
     {
-      path: "/dashboard",
+      path: "/profile",
       element: <EmployeeLayout />,
       children: [
         {
@@ -88,17 +88,7 @@ function App() {
       ],
     },
     {
-      path: "/request",
-      element: <EmployeeLayout />,
-      children: [
-        {
-          path: "",
-          element: <EmployeeRequest />,
-        }
-      ],
-    },
-    {
-      path: "/history",
+      path: "/asset",
       element: <EmployeeLayout />,
       children: [
         {

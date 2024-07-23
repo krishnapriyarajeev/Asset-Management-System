@@ -19,6 +19,10 @@
 .status-field-card {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  width: 1500px;
+  width: 119%;
   gap: 50px;
+}
+.subcategory-style {
+  padding-left: 300px;
+  width: calc(100% - 300px);
 }

@@ -12,7 +12,7 @@ const StatusCard = (props) => {
         style={{ backgroundColor: `${props.color}` }}
       />
 
-      <h4>
+      <h4> 
         {props.head}
         <h3>{props.count}</h3>
       </h4>

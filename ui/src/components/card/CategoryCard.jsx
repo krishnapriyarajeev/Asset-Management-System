@@ -6,7 +6,7 @@ const CategoryCard = ({ data, onClick }) => (
   <div className="sub-card" onClick={() => onClick(data.heading.toLowerCase())}>
     <div>
       <h3>{data.heading}</h3>
-      <h6>Created At: {data.date}</h6>
+      {/* <h6>Created At: {data.date}</h6> */}
       {/* <h4 className="card-heading">{data.item}</h4> */}
       <div className="pill-group">
         <Pill
