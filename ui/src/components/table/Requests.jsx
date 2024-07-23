@@ -77,7 +77,7 @@ const RequestsTable = ({ tabledata = [] }) => {
                   <td>
                     <Pill
                       color={
-                        type.toLowerCase() === "exchange" ? "purple" : "green"
+                        type.toLowerCase() === "exchange" ? "purple" : "blue"
                       }
                       innerText={type}
                       type="sm"
