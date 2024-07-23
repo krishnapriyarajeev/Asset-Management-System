@@ -6,13 +6,17 @@ import TextField from "../../components/LoginTextField/TextField";
 import kvlogo from "../../assets/kv-logo.png";
 import { useEffect, useRef, useState } from "react";
 import Button from "../../components/button/button";
-// import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "./login.api";
+import { useNavigate } from "react-router-dom";
+import Toast from "../../components/toast/toast";
 
 const Login = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const loginFocus = useRef();
+  const [login, { isSuccess, data, isError }] = useLoginMutation();
+  const [toast, setToast] = useState({ status: true, message: "" });
 
   const validateEmail = (email) => {
     return String(email)
@@ -22,50 +26,52 @@ const Login = () => {
       );
   };
 
+  const toggleToast = (message) => {
+    setTimeout(() => {
+      setToast({ status: true });
+    }, 2000);
+    setToast({
+      status: false,
+      message,
+    });
+  };
+
   const handleLogin = (e) => {
-    // login({ email: username, password: password });
-    const email = username.toLowerCase();
-    if (!username.length || !password.length) console.log("Enter Credentials");
-    if (!validateEmail(email)) console.log("Invalide Email");
     e.preventDefault();
+    login({ email: username, password: password });
+    const email = username.toLowerCase();
+    if (!username.length || !password.length) toggleToast("Enter Credentials");
+
+    if (!validateEmail(email)) toggleToast("Invalid Email");
   };
 
   const handleUsername = (text) => {
-    console.log(username);
-    if (text.length > 100) console.log("length");
-    else {
-      console.log("<5");
+    if (text.length > 30) {
+      toggleToast("Email shouldn't be lengthy");
+    } else {
       setUsername(text);
     }
   };
 
   const handlePassWord = (text) => {
-    if (text.length > 100) console.log("length");
+    if (text.length > 16) toggleToast("Password shouldn't be lengthy");
     else setPassword(text);
   };
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     localStorage.setItem("token", data.token);
-  //     navigate("/employees");
-  //   }
-  // }, [isSuccess]);
-
-  // useEffect(() => {
-  //   console.log("isError: ", isError);
-  // }, [isError]);
-
   useEffect(() => {
-    console.log(username, password);
-  }, [username, password]);
+    if (isSuccess) {
+      localStorage.setItem("kvLogin", data.token);
+      navigate("/profile");
+    } else if (isError) toggleToast("Credentials Wrong, Try again!!");
+  }, [isSuccess, isError, data, navigate]);
 
   useEffect(() => {
     loginFocus.current.focus();
-    // if (localStorage.getItem("token"))
   }, []);
 
   return (
     <main className="loginMain">
+      <Toast showToast={!toast.status} message={toast.message} status="fail" />
       <div className="login">
         <form onSubmit={handleLogin} className="loginForm">
           <img src={kvlogo} alt="Logo" className="kvlogo" />

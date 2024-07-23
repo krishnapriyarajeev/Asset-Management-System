@@ -12,6 +12,8 @@ import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
 import EmployeeLayout from "./layouts/employee.home.layout";
 import RequestHistory from "./pages/requestHistory/requestHistory";
 import Profile from "./pages/profile/page";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 // TODO: get user data from localstorage
 const getUserData = "Admin";
@@ -91,9 +93,9 @@ function App() {
   ]);
 
   return (
-    <>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </>
+    </Provider>
   );
 }
 
