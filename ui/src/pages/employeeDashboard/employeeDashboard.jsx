@@ -114,7 +114,7 @@ const EmployeeDashboard = () => {
                 <div className="detail-space" key="status">
                   <label className="head">Status</label>
                   <Pill
-                    type={
+                    color={
                       employee.status === "Active"
                         ? "green"
                         : employee.status === "Probation"
