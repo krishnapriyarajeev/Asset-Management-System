@@ -18,8 +18,14 @@ import RequestHistory from "./pages/requestHistory/requestHistory";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/new",
-      element: <AdminDashboard />,
+      path: "/admindashboard",
+      element: <HomeLayout />,
+      children: [
+        {
+          path: "",
+          element: <AdminDashboard />,
+        },
+      ],
     },
     {
       path: "/",

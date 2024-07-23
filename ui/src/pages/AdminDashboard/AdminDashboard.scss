@@ -1,0 +1,17 @@
+.date-format {
+  font-weight: 300;
+  font-size: 20px;
+  margin-bottom: 5%;
+}
+
+.intro-style {
+  width: calc(100% - 300px);
+  padding-top: 100px;
+
+  .intro {
+    display: flex;
+    .hello-display {
+      padding-top: 8px;
+    }
+  }
+}

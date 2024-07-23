@@ -1,3 +1,4 @@
+import "./AdminDashboard.scss";
 import Container from "../../components/container/container";
 import "../EmployeeDetails/EmployeeDetails.scss";
 import DetailRow from "../../components/DetailRow/DetailRow";
@@ -39,62 +40,76 @@ const employee = {
   },
 };
 
+const today = new Date();
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+};
+const formatter = new Intl.DateTimeFormat("en-US", options);
+const formattedDate = formatter.format(today).replace(/,/g, "");
+
 const AdminDashboard = () => {
   return (
-    <Container>
-      <div className="heading-sub">
-        <h1 className="head">{employee.ename}/</h1>
-        <h4 className="tail">Employee</h4>
-      </div>
-
-      <section className="form-section detail-section">
-        <div className="detail-container">
-          {fields.map((field) => {
-            return field.id == "status" ? (
-              <div className="detail-space" key="status">
-                <label className="head">Status</label>
-                <Pill
-                  type={
-                    employee.status === "Active"
-                      ? "green"
-                      : employee.status === "Probation"
-                      ? "yellow"
-                      : "red"
-                  }
-                  innerText={employee.status}
-                />
-              </div>
-            ) : (
-              <DetailRow
-                id={field.id}
-                text={field.text}
-                value={employee[field.id]}
-                key={field.id}
-              />
-            );
-          })}
+    <>
+      <Container>
+        <div className="intro-style">
+          <div className="intro">
+            <h2 className="hello-display">Hello,&nbsp;</h2>
+            <h1 className="name-display">Name!</h1>
+          </div>
+          <h1 className="date-format">{formattedDate}</h1>
         </div>
-        <hr className="detail-hr" />
-        <div className="detail-div">
-          <div className="detail-space">
-            <label htmlFor="add" className="head">
-              Address
-            </label>
-            <div id="add">
-              {employee.address.line1},
-              <br />
-              {employee.address.pincode}
+        <section className="form-section detail-section">
+          <div className="detail-container">
+            {fields.map((field) => {
+              return field.id == "status" ? (
+                <div className="detail-space" key="status">
+                  <label className="head">Status</label>
+                  <Pill
+                    color={
+                      employee.status === "Active"
+                        ? "green"
+                        : employee.status === "Probation"
+                        ? "yellow"
+                        : "red"
+                    }
+                    innerText={employee.status}
+                  />
+                </div>
+              ) : (
+                <DetailRow
+                  id={field.id}
+                  text={field.text}
+                  value={employee[field.id]}
+                  key={field.id}
+                />
+              );
+            })}
+          </div>
+          <hr className="detail-hr" />
+          <div className="detail-div">
+            <div className="detail-space">
+              <label htmlFor="add" className="head">
+                Address
+              </label>
+              <div id="add">
+                {employee.address.line1},
+                <br />
+                {employee.address.pincode}
+              </div>
+            </div>
+            <div className="detail-space">
+              <label htmlFor="id" className="head">
+                Employee ID
+              </label>
+              <div id="id">{employee.id}</div>
             </div>
           </div>
-          <div className="detail-space">
-            <label htmlFor="id" className="head">
-              Employee ID
-            </label>
-            <div id="id">{employee.id}</div>
-          </div>
-        </div>
-      </section>
-    </Container>
+        </section>
+      </Container>
+    </>
   );
 };
 export default AdminDashboard;

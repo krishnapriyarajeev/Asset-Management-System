@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 
 const navLinks = [
   {
+    link: "/admindashboard",
+    text: "Dashboard",
+  },
+  {
     link: "/assets",
     text: "Assets",
   },
@@ -16,10 +20,6 @@ const navLinks = [
   {
     link: "/employees",
     text: "List Employees",
-  },
-  {
-    link: "/createEmployee",
-    text: "Create Employee",
   },
 ];
 
@@ -33,7 +33,8 @@ const SideBar = () => {
   return (
     <aside className="sideBarBackground">
       <div className="kv-logo">
-      <img src={kvlogo} alt="" className="kvLogo" /></div>
+        <img src={kvlogo} alt="" className="kvLogo" />
+      </div>
       <nav className="navigation">
         {navLinks.map((navlink) => {
           return (
