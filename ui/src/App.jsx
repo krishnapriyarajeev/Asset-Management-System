@@ -17,7 +17,7 @@ import store from "./store/store";
 import ErrorPage from "./pages/notfound/page";
 
 // TODO: get user data from localstorage
-const getUserData = "Admin";
+const getUserData = "Employee";
 
 function App() {
   const router = createBrowserRouter([

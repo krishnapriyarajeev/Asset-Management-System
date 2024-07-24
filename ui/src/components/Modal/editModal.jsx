@@ -16,7 +16,6 @@ const EditModal = ({ editHandler, cancelHandler, editFields, data }) => {
           fields={editFields}
           acceptHandler={editHandler}
           cancelHandler={cancelHandler}
-          disable={disable}
           acceptText="Edit"
           employee={data}
         />

@@ -9,8 +9,8 @@ const Form = ({
   acceptHandler,
   cancelHandler,
   acceptText,
-  disable,
   accept = "",
+  add,
 }) => {
   // console.log(fields);
   const [data, setData] = useState();
@@ -60,7 +60,7 @@ const Form = ({
             ) : (
               <FormField
                 type={field.type}
-                disable={disable}
+                disable={field.disable}
                 id={field.id}
                 text={field.text}
                 key={field.id}
@@ -71,6 +71,13 @@ const Form = ({
           })}
         </div>
         <div>
+          {add && (
+            <Button
+              innerText="Add"
+              onClick={() => acceptHandler(data)}
+              type="submit"
+            />
+          )}
           <div className="button-group">
             <Button
               innerText={acceptText}

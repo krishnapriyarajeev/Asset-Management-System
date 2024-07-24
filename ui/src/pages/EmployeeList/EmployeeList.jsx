@@ -67,6 +67,7 @@ const editFields = [
   {
     id: "id",
     text: "Employee ID",
+    disable:true
   },
   {
     id: "role",

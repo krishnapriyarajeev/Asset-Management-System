@@ -1,7 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import "./deleteModal.scss";
 import Modal from "./modal";
-import Container from "../container/container";
 import Table from "../../components/table/employeeRequest"
 
 const modelData = [
@@ -66,7 +65,7 @@ const modelData = [
 const HistoryModal = ({ editHandler, cancelHandler, open, fields }) => {
   return (
     open && ( 
-      <Modal>
+      <Modal history="history">
         <div className="close-icon-wrap" onClick={cancelHandler}>
           <IoClose size="25px" />
         </div>
@@ -76,7 +75,7 @@ const HistoryModal = ({ editHandler, cancelHandler, open, fields }) => {
             <h4 className="tail">&nbsp;/requests</h4>
         </div>
       </div>
-      <Table tabledata={modelData}/>
+      <Table tabledata={modelData} />
       </Modal>
     )
   );

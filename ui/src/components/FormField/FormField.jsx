@@ -22,7 +22,7 @@ const FormField = (props) => {
         id={props.id}
         placeholder={props.text}
         onChange={onChange}
-        disabled={props.id == "id"}
+        disabled={props.disable}
         value={props.data && props.data[props.id]}
       />
     </div>

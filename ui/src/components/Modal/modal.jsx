@@ -1,9 +1,9 @@
 import "./modal.scss";
 
-const Modal = ({ children }) => {
+const Modal = ({ children, history = "" }) => {
   return (
     <div className="modal-background">
-      <div className="modal">{children}</div>
+      <div className={`modal ${history}`}>{children}</div>
     </div>
   );
 };

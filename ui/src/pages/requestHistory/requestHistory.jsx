@@ -1,11 +1,9 @@
 import { useState } from "react";
-import Container from "../../components/container/container"
-import './requestHistory.scss'
+import Container from "../../components/container/container";
+import "./requestHistory.scss";
 import HistoryModal from "../../components/Modal/historyModal";
 import RequestModal from "../../components/Modal/requestModel";
 
-
-  
 const tabledata = [
   {
     category: "Laptops",
@@ -20,22 +18,45 @@ const tabledata = [
     specs: "Wireless, Ergonomic",
   },
 ];
-  
+
 const RequestHistory = () => {
-    const [modalToggle, setModalToggle] = useState(false)
-    const [requestToggle,setRequestToggle] = useState(false)
-    return <>
-    <HistoryModal open={modalToggle} cancelHandler={()=>setModalToggle(false)}/>
-    <RequestModal open={requestToggle} cancelHandler={()=>setRequestToggle(false)}/>
-      <div className='employee-request'>
-        <div className="heading-display">
-            <h1 className="head">Assets</h1>
-            <h4 className="tail">&nbsp;/employee</h4>
+  const [modalToggle, setModalToggle] = useState(false);
+  const [requestToggle, setRequestToggle] = useState(false);
+  return (
+    <>
+      <HistoryModal
+        open={modalToggle}
+        cancelHandler={() => setModalToggle(false)}
+      />
+      <RequestModal
+        open={requestToggle}
+        cancelHandler={() => setRequestToggle(false)}
+      />
+      <div className="category-style">
+        <div className="employee-category">
+          <div className="heading-display">
+            <h1 className="head">Assets/&nbsp;</h1>
+            <h4 className="tail">employee</h4>
+          </div>
         </div>
       </div>
-      <button className="history-button" onClick={()=>{setModalToggle(true)}}>History</button>
-      <button className="request-button" onClick={()=>{setRequestToggle(true)}}>Request</button>
       <Container>
+        <button
+          className="history-button"
+          onClick={() => {
+            setModalToggle(true);
+          }}
+        >
+          History
+        </button>
+        <button
+          className="request-button"
+          onClick={() => {
+            setRequestToggle(true);
+          }}
+        >
+          Request
+        </button>
         <div className="table-wrapper">
           <table>
             <tbody>
@@ -60,19 +81,15 @@ const RequestHistory = () => {
                     // setDeleteId(id);
                   }}
                 /> */}
-                    
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          
         </div>
-        </Container>
-        
+      </Container>
     </>
+  );
+};
 
-
-}
-
-export default RequestHistory
+export default RequestHistory;
