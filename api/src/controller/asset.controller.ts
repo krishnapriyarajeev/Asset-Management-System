@@ -17,7 +17,7 @@ export default class assetController {
     this.router.get("/", authMiddleware, this.getAllAsset);
     this.router.get("/count",this.countByCategory)
     this.router.get("/:id", authMiddleware, this.getAssetById);
-    this.router.post("/", this.createAsset);
+    this.router.post("/", authMiddleware,this.createAsset);
     this.router.put("/", authMiddleware, this.updateAsset);
     this.router.delete("/:id", authMiddleware, this.deleteAsset);
     

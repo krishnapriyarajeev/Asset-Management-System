@@ -2,13 +2,11 @@ import { Type } from "class-transformer";
 import {
   IsNotEmpty,
   IsString,
-  ValidateNested,
   IsOptional,
   IsNumber,
 } from "class-validator";
-import { CreateCategoryDto } from "./category.dto";
-import Category from "../entity/category.entity";
-import { CreateEmployeeDto } from "./employee.dto";
+
+
 
 export class CreateSubcategoryDto {
   @IsString()

@@ -1,9 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, ValidateNested,IsNumber } from "class-validator";
-import { CreateRequestsDto } from "./requests.dto";
-import { Type } from "class-transformer";
-import Requests from "../entity/requests.entity";
-import Subcategory from "../entity/subcategory.entity";
-import { CreateSubcategoryDto } from "./subcategory.dto";
+import { IsNotEmpty, IsOptional, IsString,IsNumber } from "class-validator";
 
 export class CreateRequestedItems {
     @IsString()

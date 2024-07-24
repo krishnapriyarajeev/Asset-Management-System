@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany , Unique} from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import Category from "./category.entity";
 import Assets from "./assets.entity";
 import RequestedItems from "./requestedItems.entity";
 
 @Entity()
-
+// @Unique(["brandName", "Specifications"])
 export default class Subcategory extends AbstractEntity{
     @Column()
     brandName: string;

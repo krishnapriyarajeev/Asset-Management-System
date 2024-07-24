@@ -1,8 +1,6 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, ValidateNested } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional} from "class-validator";
 import { RequestStatus } from "../utils/requestStatus.enum";
-import { Type } from "class-transformer";
-import Employee from "../entity/employee.entity";
-import { CreateEmployeeDto } from "./employee.dto";
+
 
 export class CreateRequestsDto {
     @IsEnum(RequestStatus)
