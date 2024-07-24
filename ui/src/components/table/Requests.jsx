@@ -1,14 +1,11 @@
 import { RxCross2 } from "react-icons/rx";
 import "./table.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CiCircleCheck } from "react-icons/ci";
 import Pill from "../pill/pill";
-import AcceptModal from "../Modal/acceptModal";
-import DeclineModal from "../Modal/declineModal";
-import { useParams } from "react-router-dom";
-import { useGetRequestDetailsQuery } from "../../pages/requests/request";
+import RequestModal from "../Modal/requestModal";
 
-const RequestsTable = ({ tabledata = [], requestStatus = "pending", employee = {} }) => {
+const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
   let tableheader = [
     "S.No",
     "Employee",
@@ -18,52 +15,46 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending", employee = {
     "Reason",
     "Type",
     "Requested At",
+    "Status",
+    "Actions",
   ];
-  const { requestId } = useParams();
-  const { data } = useGetRequestDetailsQuery(requestId);
-  useEffect(() => {
-    console.log(data?.requestedItems)
-  }, [data]);
-  if (requestStatus.toLowerCase() === "pending") tableheader.push("Actions");
-  else tableheader.push("Status");
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
-  const [declineId, setDeclineId] = useState("");
-  const [acceptId, setAcceptId] = useState("");
-  const [acceptType, setAcceptType] = useState("");
+  const [declineId, setDeclineId] = useState(null);
+  const [acceptId, setAcceptId] = useState(null);
 
-  const deleteHandler = () => {
-    // TODO: Delete API call
-    setDeclineId("");
+  const declineHandler = () => {
+    // TODO: Request Handler API call
+    setDeclineId(null);
   };
 
   const cancelDelete = () => {
-    setDeclineId("");
+    setDeclineId(null);
   };
 
-  const editHandler = () => {
-    setAcceptId("");
-    setAcceptType("");
+  const acceptHandler = () => {
+    // TODO: Request Handler API call
+    setAcceptId(null);
   };
 
-  const cancelEdit = () => {
-    setAcceptId("");
-    setAcceptType("");
+  const cancelAccept = () => {
+    setAcceptId(null);
   };
 
   return (
     <>
-      {declineId.length > 0 && (
-        <DeclineModal
-          deleteHandler={deleteHandler}
+      {!!declineId && (
+        <RequestModal
+          accept={false}
+          requestHandler={declineHandler}
           cancelHandler={cancelDelete}
         />
       )}
-      {acceptId.length > 0 && (
-        <AcceptModal
-          editHandler={editHandler}
-          cancelHandler={cancelEdit}
-          acceptType={acceptType}
+      {!!acceptId && (
+        <RequestModal
+          accept
+          requestHandler={acceptHandler}
+          cancelHandler={cancelAccept}
         />
       )}
       <div className="table-wrapper request-table">
@@ -76,71 +67,69 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending", employee = {
             </tr>
           </thead>
           <tbody>
-            {data?.requestedItems && data?.requestedItems.map(
-              (data) => {
-                console.log(data);
+            {!!tabledata.requestedItems &&
+              tabledata.requestedItems.map((data) => {
                 return (
                   <tr key={data?.id}>
                     <td>{data?.id}</td>
-                    <td>{employee.name}</td>
-                    <td>{employee.name}</td>
-                    <td>{employee.name}</td>
-                    <td>{employee.name}</td>
-
-                    <td>{data?.reason}</td>
-                    <td>
-                    <Pill
-                      color={
-                        data?.requestType === "Exchange" ? "purple" : "blue"
-                      }
-                      innerText={data?.requestType}
-                      type="sm"
-                    />
-                  </td>
-                    <td>{data?.createdAt.slice(0, 10)}</td>
-                  
-                    
-                    
-                  {requestStatus.toLowerCase() === "pending" && (
-                    <td className="action-td">
-                      <CiCircleCheck
-                        size="25px"
-                        color="#6ab7e7d9"
-                        className="delete-icon"
-                        style={{ cursor: "pointer" }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAcceptId(id);
-                          setAcceptType(data?.requestType);
-                        }}
-                      />
-                      <RxCross2
-                        size="25px"
-                        color="#e76a6ad9"
-                        className="edit-icon"
-                        style={{ cursor: "pointer" }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setDeclineId(id);
-                        }}
-                      />
-                    </td>
-                  )}
-                  {requestStatus.toLowerCase() !== "pending" && (
+                    <td>{tabledata.employee.name}</td>
+                    <td>{data.subcategory.category.categoryName}</td>
+                    <td>{data.subcategory.brandName}</td>
+                    <td>{data.subcategory.modelName}</td>
+                    <td>{data.reason}</td>
                     <td>
                       <Pill
                         color={
-                          status.toLowerCase() === "Accepted" ? "green" : "red"
+                          data?.requestType === "Exchange" ? "purple" : "blue"
                         }
-                        innerText={status}
+                        innerText={data?.requestType}
                         type="sm"
                       />
                     </td>
-                  )}
+                    <td>{data.createdAt.slice(0, 10)}</td>
+                    <td>
+                      <Pill color="yellow" innerText="Pending" type="sm" />
+                    </td>
+                    {requestStatus.toLowerCase() === "pending" && (
+                      <td className="action-td">
+                        <CiCircleCheck
+                          size="25px"
+                          color="#6ab7e7d9"
+                          className="delete-icon"
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAcceptId("id");
+                          }}
+                        />
+                        <RxCross2
+                          size="25px"
+                          color="#e76a6ad9"
+                          className="edit-icon"
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDeclineId("id");
+                          }}
+                        />
+                      </td>
+                    )}
+                    {requestStatus.toLowerCase() !== "pending" && (
+                      <td>
+                        <Pill
+                          color={
+                            status.toLowerCase() === "Accepted"
+                              ? "green"
+                              : "red"
+                          }
+                          innerText={status}
+                          type="sm"
+                        />
+                      </td>
+                    )}
                   </tr>
-                )
-              }
-            )}
+                );
+              })}
           </tbody>
         </table>
       </div>

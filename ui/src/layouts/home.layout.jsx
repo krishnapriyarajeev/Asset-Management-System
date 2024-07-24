@@ -10,7 +10,6 @@ const HomeLayout = () => {
   useEffect(() => {
     if (!user) navigate("/");
   }, [user, navigate]);
-
   return (
     <>
       <SideBar />

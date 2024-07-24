@@ -71,7 +71,7 @@ const Login = () => {
 
   const user = localStorage.getItem("kvLogin");
   useEffect(() => {
-    if (user) navigate(-1);
+    if (user) navigate("/profile");
   }, [user, navigate]);
 
   return (
