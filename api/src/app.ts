@@ -11,6 +11,8 @@ import categoryRouter from "./routes/category.route";
 import SubcategoryRouter from "./routes/subcategory.route";
 import requestRouter from "./routes/request.route";
 import requestedItemsRouter from "./routes/requestedItems.route";
+import userHistoryRouter from "./routes/userHistory.route";
+import assetHistoryRouter from "./routes/assetHistory.route";
 
 const app = express();
 dotenv.config();
@@ -45,6 +47,10 @@ app.use("/request", requestRouter);
 app.use("/requestedItems", requestedItemsRouter);
 
 app.use("/department", departmentRouter);
+
+app.use("/userHistory", userHistoryRouter);
+
+app.use("/assetHistory", assetHistoryRouter)
 
 app.use(errorHandler);
 

@@ -21,14 +21,15 @@ export class CreateAssetDto {
   // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)
   @IsNotEmpty()
-  @IsNotEmpty()
+  @IsNumber()
   subcategory_id: number;
 
   // @ValidateNested()
   // @Type(() => CreateEmployeeDto)
-  @IsNotEmpty()
   @IsOptional()
+  @IsNumber()
   employee_id: number;
+
 }
 
 export class UpdateAssetDto {
