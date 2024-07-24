@@ -18,6 +18,7 @@ export default class requestedItemController {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllRequestedItem);
+    this.router.get("/count",this.countRequestedItem)
     this.router.get("/:id", authMiddleware, this.getRequestedItemById);
     this.router.post("/", authMiddleware, this.createRequestedItem);
     this.router.put("/", authMiddleware, this.updateRequestedItem);
@@ -123,4 +124,11 @@ export default class requestedItemController {
       next(err);
     }
   };
+
+  countRequestedItem=async (_, res: Response)=>{
+    const requestedItem= await this.requestedItemService.getAllRequestedItems()
+    const result= await this.requestedItemService.countRequestedItem(requestedItem)
+    res.status(200).send(result)
+  }
+
 }

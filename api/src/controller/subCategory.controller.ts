@@ -19,8 +19,9 @@ export default class SubCategoryController {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllSubCategory);
+    this.router.get("/count",this.countBySubCategory)
     this.router.get("/:id", authMiddleware, this.getSubCategoryById);
-    this.router.post("/", this.createNewSubCategory);
+    this.router.post("/", authMiddleware,this.createNewSubCategory);
     this.router.put("/", authMiddleware, this.updateSubCategory);
     this.router.delete("/:id", authMiddleware, this.deleteSubCategory);
   }
@@ -53,9 +54,9 @@ export default class SubCategoryController {
     next: NextFunction
   ) => {
     try {
-      // if (req.role !== Role.ADMIN) {
-      //   throw new HttpException(403, "Invalid Access");
-      // }
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
       const subCategoryDto = plainToInstance(CreateSubcategoryDto, req.body);
       const errors = await validate(subCategoryDto);
 
@@ -123,4 +124,10 @@ export default class SubCategoryController {
       next(err);
     }
   };
+
+  countBySubCategory=async(_, res: Response)=>{
+    const subCategory= await this.subCategoryService.getAllSubCategory()
+    const result= await this.subCategoryService.countBySubCategory(subCategory)
+    res.status(200).send(result)
+  }
 }

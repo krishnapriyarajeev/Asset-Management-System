@@ -9,14 +9,14 @@ export default class CategoryRepository {
 
   find = async () =>
     await this.categoryRepository.find({
-      relations: { subcategory: true },
+      relations: { },
     });
   
   //add relations
   findOneBy = async (filter: Partial<Category>) =>
     await this.categoryRepository.findOne({
       where: filter,
-      relations: { subcategory: true },
+      relations: {},
     });
 
   save = async (newAsset: Partial<Category>) =>

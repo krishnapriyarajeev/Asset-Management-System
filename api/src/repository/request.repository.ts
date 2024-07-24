@@ -10,14 +10,14 @@ export default class RequestRepository {
 
   find = async () =>
     await this.requestRepository.find({
-      relations: { requestedItems: true, employee: true },
+      relations: { employee: true },
     });
 
   //add relations
   findOneBy = async (filter: Partial<Requests>) =>
     await this.requestRepository.findOne({
       where: filter,
-      relations: { requestedItems: true, employee: true },
+      relations: { employee: true },
     });
 
   save = async (newRequest: Partial<Requests>) =>

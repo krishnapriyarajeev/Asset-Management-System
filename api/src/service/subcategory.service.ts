@@ -9,9 +9,7 @@ import { UpdateSubcategoryDto } from "../dto/subcategory.dto";
 import CategoryService from "./category.service";
 
 export default class SubCategoryService {
-  constructor(
-    private subCategoryRepository: SubCategoryRepository
-  ) {
+  constructor(private subCategoryRepository: SubCategoryRepository) {
     this.subCategoryRepository = subCategoryRepository;
   }
 
@@ -20,13 +18,21 @@ export default class SubCategoryService {
   public getSubCategoryById = async (id: number) =>
     this.subCategoryRepository.findOneBy({ id });
 
-  public getSubCategoryByName = async (brandName: string, modelName: string, Specifications: string) =>
-    this.subCategoryRepository.findOneBy({ brandName, modelName, Specifications });
+  public getSubCategoryByName = async (
+    brandName: string,
+    modelName: string,
+    Specifications: string
+  ) =>
+    this.subCategoryRepository.findOneBy({
+      brandName,
+      modelName,
+      Specifications,
+    });
 
   public createNewSubCategory = async (
+    brandName: string,
     modelName: string,
     Specifications: string,
-    brandName: string,
     category: any
   ) => {
     console.log(category);
@@ -56,8 +62,8 @@ export default class SubCategoryService {
       updateSubCategoryData.brandName = subcategory.brandName;
     }
 
-    if(subcategory.category_id){
-    updateSubCategoryData.category.id = subcategory.category_id;
+    if (subcategory.category_id) {
+      updateSubCategoryData.category.id = subcategory.category_id;
     }
 
     return await this.subCategoryRepository.save(updateSubCategoryData);
@@ -70,5 +76,33 @@ export default class SubCategoryService {
     }
     this.subCategoryRepository.remove({ id });
     return subCategoryData;
+  };
+
+  public countBySubCategory = async (subCategory: any) => {
+    const array = [];
+   
+    subCategory.map((subCategories) => {
+      if (
+        !(
+          subCategories.modelName in array &&
+          subCategories.Specifications in array
+        )
+      ) {
+        array.push([subCategories.modelName, subCategories.Specifications]);
+      }
+      // console.log("service", array);
+    });
+    const count = {};
+
+    for (let i = 0; i < array.length; i++) {
+      let item = array[i];
+      if (count[item]) {
+        count[item] += 1;
+      } else {
+        count[item] = 1;
+      }
+    }
+    // console.log(count);
+    return count;
   };
 }

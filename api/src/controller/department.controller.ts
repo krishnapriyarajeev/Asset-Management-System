@@ -21,7 +21,7 @@ export default class DepartmentController {
 
     this.router.get("/", authMiddleware, this.getAllDepartments);
     this.router.get("/:id", authMiddleware, this.getDepartmentById);
-    this.router.post("/", this.createDepartment);
+    this.router.post("/",authMiddleware, this.createDepartment);
     this.router.patch("/", authMiddleware, this.updateDepartment);
     this.router.delete("/:id", authMiddleware, this.deleteDepartment);
   }
@@ -53,9 +53,9 @@ export default class DepartmentController {
     next: NextFunction
   ) => {
     try {
-      // if (req.role !== Role.HR) {
-      //   throw new HttpException(403, "Invalid Access");
-      // }
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
       const departmentDto = plainToInstance(CreateDepartmentDto, req.body);
       const errors = await validate(departmentDto);
 
@@ -84,7 +84,7 @@ export default class DepartmentController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.HR) {
+      if (req.role !== Role.ADMIN) {
         throw new HttpException(403, "Invalid Access");
       }
       const departmentDto = plainToInstance(UpdateDepartmentDto, req.body);
@@ -114,7 +114,7 @@ export default class DepartmentController {
     next: NextFunction
   ) => {
     try {
-      if (req.role !== Role.HR) {
+      if (req.role !== Role.ADMIN) {
         throw new HttpException(403, "Invalid Access");
       }
       const id = Number(req.params.id);

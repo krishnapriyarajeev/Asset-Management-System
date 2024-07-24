@@ -64,4 +64,48 @@ export default class AssetService {
     this.assetRepository.remove({ id });
     return assetData;
   };
+
+  public countByCategory=async (asset:any)=>{
+    
+    let totalCategory=asset.length
+    let total={"Allocated":0,"Unallocated":0, "Damaged":0}
+
+    const array=[]
+    let seenArray=new Set()
+    asset.map((assets)=>{
+        if(!(assets.subcategory.category.categoryName in seenArray)){
+          seenArray.add(assets.subcategory.category.categoryName)
+           let countStatus={
+            "Allocated":0,"Unallocated":0, "Damaged":0
+           }
+           if(assets.status=="Allocated"){
+            total.Allocated+=1
+           }
+           else if(assets.status=="Damaged"){
+            total.Damaged+=1
+           }
+           else{
+            total.Unallocated+=1
+           }
+           asset.map((assetitem)=>{
+            if(assetitem.subcategory.category.categoryName===assets.subcategory.category.categoryName){
+                if(assetitem.status=="Allocated"){
+                    countStatus.Allocated+=1
+                }
+                else if(assetitem.status=="Damaged"){
+                    countStatus.Damaged+=1
+                }
+                else{
+                    countStatus.Unallocated+=1
+                }
+            }
+           })
+           array.push({"Category":assets.subcategory.category.categoryName,"statusCounts":countStatus})
+        }
+    })
+    console.log("service",array)
+    return {totalCategory,total,array}
+  }
+
+
 }

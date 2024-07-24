@@ -15,14 +15,35 @@ export default class assetController {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllAsset);
+    this.router.get("/count",this.countByCategory)
     this.router.get("/:id", authMiddleware, this.getAssetById);
     this.router.post("/", this.createAsset);
     this.router.put("/", authMiddleware, this.updateAsset);
     this.router.delete("/:id", authMiddleware, this.deleteAsset);
+    
   }
   getAllAsset = async (_, res: Response) => {
     const asset = await this.assetService.getAllAssets();
+    // let Allocated=0;
+    // let Unallocated=0;
+    // let Damaged=0;
+    // asset.map((assets)=>{
+    //     if(assets.status=="Allocated"){
+    //         Allocated+=1
+    //     }
+    //     else if(assets.status=="Damaged"){
+    //         Damaged+=1
+    //     }
+    //     else{
+    //         Unallocated+=1
+    //     }
+    //     console.log("asttt",assets.subcategory.category.categoryName)
+    // })
+    // const countStatus=[{"Allocated":Allocated},{"Unallocated":Unallocated},{"Damaged":Damaged}]
+    // console.log("countStatus",countStatus)
+    // console.log("Total",Total)
     res.status(200).send(asset);
+
   };
 
   getAssetById = async (req: Request, res: Response, next: NextFunction) => {
@@ -45,9 +66,9 @@ export default class assetController {
     next: NextFunction
   ) => {
     try {
-      // if (req.role !== Role.ADMIN) {
-      //   throw new HttpException(403, "Invalid Access");
-      // }
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
       const assetDto = plainToInstance(CreateAssetDto, req.body);
       const errors = await validate(assetDto);
 
@@ -113,4 +134,14 @@ export default class assetController {
       next(err);
     }
   };
+
+  countByCategory=async(_, res: Response)=>{
+    const asset = await this.assetService.getAllAssets();
+    const result= await this.assetService.countByCategory(asset)
+   
+    res.status(200).send(result)
+    
+
+  }
+ 
 }

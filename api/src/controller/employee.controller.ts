@@ -25,7 +25,7 @@ export default class EmployeeController {
     this.router.post("/", authMiddleware, this.createEmployee);
     this.router.put("/", authMiddleware, this.updateEmployee);
     this.router.delete("/:id", authMiddleware, this.deleteEmployee);
-    this.router.post("/login", this.loginEmployee);
+    this.router.post("/login",this.loginEmployee);
   }
   getAllEmployees = async (_, res: Response) => {
     const employees = await this.employeeService.getAllEmployees();

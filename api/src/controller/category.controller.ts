@@ -27,6 +27,7 @@ export default class categoryController {
   getAllCategory = async (_, res: Response) => {
     const category = await this.categoryService.getAllCategory();
     res.json(plainToInstance(CategoryResponseDto, category));
+
   };
 
   getCategoryById = async (req: Request, res: Response, next: NextFunction) => {

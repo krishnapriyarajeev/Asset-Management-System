@@ -10,7 +10,7 @@ export default class SubCategoryRepository {
 
   find = async () =>
     await this.subCategoryRepository.find({
-      relations: { category: true, assets: true },
+      relations: { category: true },
     });
 
   //add relations

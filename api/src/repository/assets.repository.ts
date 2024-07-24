@@ -8,7 +8,7 @@ export default class AssetRepository {
 
   find = async () =>
     await this.assetRepository.find({
-      relations: { subcategory: true, employee: true },
+      relations: ["subcategory", "employee", "subcategory.category"],
     });
 
   //add relations

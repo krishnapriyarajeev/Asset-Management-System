@@ -15,8 +15,7 @@ export default class DepartmentRepository {
   findOneBy = async (filter: Partial<Department>) =>
     await this.departmentRepository.findOne({
       where: filter,
-      relations: { employee: true },
-    });
+      });
 
   save = async (department: Department) =>
     await this.departmentRepository.save(department);
