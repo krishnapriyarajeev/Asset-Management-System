@@ -1,19 +1,76 @@
 import { AssetStatus } from "../utils/assetStatus.enum";
-import Employee from "../entity/employee.entity";
 import Assets from "../entity/assets.entity";
 import HttpException from "../exceptions/http.exception";
 import AssetRepository from "../repository/assets.repository";
-import Subcategory from "../entity/subcategory.entity";
-import { UpdateAssetDto } from "../dto/assets.dto";
-import EmployeeService from "./employee.service";
-import SubCategoryService from "./subcategory.service";
+import { UpdateAssetDto, UploadAssetDto } from "../dto/assets.dto";
+import * as ExcelJS from "exceljs";
+import pool from "../utils/db";
+import { dataSource } from "../db/data-source.db";
 
 export default class AssetService {
-  constructor(
-    private assetRepository: AssetRepository,
-  ) {
+  constructor(private assetRepository: AssetRepository) {
     this.assetRepository = assetRepository;
   }
+
+  public processExcelFile = async (file: Express.Multer.File) => {
+    console.log(file);
+    console.log("buffer", file.buffer);
+    if (!file) {
+      throw new HttpException(400, "File Missing");
+    }
+    if (file.buffer.length === 0) {
+      throw new HttpException(400, "Empty file");
+    }
+    // console.log(file);
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(file.buffer);
+    const worksheet = workbook.worksheets[0];
+
+    const data: UploadAssetDto[] = [];
+
+    console.log(data);
+
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber === 1) {
+        return;
+      }
+      const rowData: UploadAssetDto = {
+        serialNumber: row.getCell(1).value as string,
+        status: row.getCell(2).value as AssetStatus,
+        subcategory_id: row.getCell(3).value as number,
+        employee_id: row.getCell(4).value as number,
+      };
+      data.push(rowData);
+    });
+
+    // // Bulk insert into PostgreSQL
+    // const client = await pool.connect();
+    const queryRunner = dataSource.createQueryRunner();
+    const con = await queryRunner.connect();
+    const start = await queryRunner.startTransaction();
+
+    console.log(con);
+    console.log(start);
+
+    try {
+      let AddedAssets = [];
+      for (const asset of data) {
+        const data = await this.createNewAsset(
+          asset.serialNumber,
+          asset.status,
+          asset.subcategory_id,
+          asset.employee_id
+        );
+        AddedAssets.push(data);
+      }
+      await pool.query("COMMIT");
+      console.log(AddedAssets);
+      return AddedAssets;
+    } catch (err) {
+      await pool.query("ROLLBACK");
+      throw err;
+    }
+  };
 
   public getAllAssets = async () => this.assetRepository.find();
 
@@ -26,7 +83,6 @@ export default class AssetService {
     subcategory: any,
     employee: any
   ) => {
-
     const newAsset = new Assets();
     newAsset.serialNumber = serialNumber;
     newAsset.status = status;
@@ -46,11 +102,11 @@ export default class AssetService {
       assetData.status = asset.status;
     }
 
-    if (asset.employee_id){
+    if (asset.employee_id) {
       assetData.employee.id = asset.employee_id;
     }
 
-    if (asset.subcategory_id){
+    if (asset.subcategory_id) {
       assetData.subcategory.id = asset.subcategory_id;
     }
     return await this.assetRepository.save(assetData);

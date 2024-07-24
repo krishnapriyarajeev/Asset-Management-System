@@ -7,6 +7,10 @@ import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { CreateAssetDto, UpdateAssetDto } from "../dto/assets.dto";
 import AssetService from "../service/assets.services";
+import multer from "multer";
+
+const storage = multer.memoryStorage();
+const upload = multer({ dest: "uploads/", storage });
 
 export default class assetController {
   public router: Router;
@@ -15,13 +19,32 @@ export default class assetController {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllAsset);
-    this.router.get("/count",this.countByCategory)
+    this.router.get("/count", this.countByCategory);
+    this.router.post("/upload", upload.single("file"), this.uploadFile);
     this.router.get("/:id", authMiddleware, this.getAssetById);
-    this.router.post("/", authMiddleware,this.createAsset);
+    this.router.post("/", authMiddleware, this.createAsset);
     this.router.put("/", authMiddleware, this.updateAsset);
     this.router.delete("/:id", authMiddleware, this.deleteAsset);
-    
   }
+
+  uploadFile = async (req: Request, res: Response, next: NextFunction) => {
+    const file = req.file;
+    if (!file) {
+      res.status(400).send("No file uploaded.");
+      return;
+    }
+    // console.log(file);
+
+    try {
+      const data = await this.assetService.processExcelFile(file);
+      console.log(data);
+      res.send(`${data.length} datas inserted successfully!`);
+      // res.json(data);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  };
+
   getAllAsset = async (_, res: Response) => {
     const asset = await this.assetService.getAllAssets();
     // let Allocated=0;
@@ -43,7 +66,6 @@ export default class assetController {
     // console.log("countStatus",countStatus)
     // console.log("Total",Total)
     res.status(200).send(asset);
-
   };
 
   getAssetById = async (req: Request, res: Response, next: NextFunction) => {
@@ -135,13 +157,10 @@ export default class assetController {
     }
   };
 
-  countByCategory=async(_, res: Response)=>{
+  countByCategory = async (_, res: Response) => {
     const asset = await this.assetService.getAllAssets();
-    const result= await this.assetService.countByCategory(asset)
-   
-    res.status(200).send(result)
-    
+    const result = await this.assetService.countByCategory(asset);
 
-  }
- 
+    res.status(200).send(result);
+  };
 }

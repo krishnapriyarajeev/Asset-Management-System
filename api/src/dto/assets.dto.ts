@@ -62,4 +62,22 @@ export class UpdateAssetDto {
   employee_id: number;
 }
 
+export class UploadAssetDto {
+  @IsString()
+  @IsNotEmpty()
+  serialNumber: string;
+
+  @IsEnum(AssetStatus)
+  @IsNotEmpty()
+  status: AssetStatus;
+
+  @IsNotEmpty()
+  @IsNotEmpty()
+  subcategory_id: number;
+
+  @IsNotEmpty()
+  @IsOptional()
+  employee_id: number;
+}
+
 export class AssetResponseDto extends CreateAssetDto {}

@@ -32,7 +32,7 @@ export default class RequestedItemService {
 
     newRequestedItem.reason = reason;
     newRequestedItem.requestType = requestType;
-    newRequestedItem.requests=requests;
+    newRequestedItem.requests = requests;
     newRequestedItem.subcategory = subcategory;
 
     return await this.requestedItemRepository.save(newRequestedItem);
@@ -66,35 +66,34 @@ export default class RequestedItemService {
     return requestItemData;
   };
 
-  public countRequestedItem=async(items:any)=>{
-    let totalRequest=items.length
+  public countRequestedItem = async (items: any) => {
+    let totalRequest = items.length;
 
-
-    const array=[]
-    let seenArray=new Set()
-    items.map((item)=>{
-        if(!(item.requests.status in seenArray)){
-          seenArray.add(item.requests.status)
-           let countStatus={
-            "Accepted":0,"Declined":0, "Pending":0
-           }
-           items.map((itemstatus)=>{
-            if(itemstatus.requests.status===item.requests.status){
-                if(itemstatus.requests.status=="Accepted"){
-                    countStatus.Accepted+=1
-                }
-                else if(itemstatus.requests.status=="Declined"){
-                    countStatus.Declined+=1
-                }
-                else{
-                    countStatus.Pending+=1
-                }
+    const array = [];
+    let seenArray = new Set();
+    items.map((item) => {
+      if (!(item.requests.status in seenArray)) {
+        seenArray.add(item.requests.status);
+        let countStatus = {
+          Accepted: 0,
+          Declined: 0,
+          Pending: 0,
+        };
+        items.map((itemstatus) => {
+          if (itemstatus.requests.status === item.requests.status) {
+            if (itemstatus.requests.status == "Accepted") {
+              countStatus.Accepted += 1;
+            } else if (itemstatus.requests.status == "Declined") {
+              countStatus.Declined += 1;
+            } else {
+              countStatus.Pending += 1;
             }
-           })
-           array.push({"Status":item.requests.status,"statusCounts":countStatus})
-        }
-    })
-    console.log("service",array)
-    return {totalRequest,array}
-  }
+          }
+        });
+        array.push({ Status: item.requests.status, statusCounts: countStatus });
+      }
+    });
+    console.log("service", array);
+    return { totalRequest, array };
+  };
 }
