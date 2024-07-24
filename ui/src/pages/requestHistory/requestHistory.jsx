@@ -22,6 +22,7 @@ const tabledata = [
 const RequestHistory = () => {
   const [modalToggle, setModalToggle] = useState(false);
   const [requestToggle, setRequestToggle] = useState(false);
+
   return (
     <>
       <HistoryModal
@@ -31,12 +32,15 @@ const RequestHistory = () => {
       <RequestModal
         open={requestToggle}
         cancelHandler={() => setRequestToggle(false)}
+        editHandler={(data) => {
+          console.log("FinalData", data), setRequestToggle(false);
+        }}
       />
       <div className="category-style">
         <div className="employee-category">
           <div className="heading-display">
-            <h1 className="head">Assets/&nbsp;</h1>
-            <h4 className="tail">employee</h4>
+            <h1 className="head">Assets&nbsp;</h1>
+            <h4 className="tail">/employee</h4>
           </div>
         </div>
       </div>

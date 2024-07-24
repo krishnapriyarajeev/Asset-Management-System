@@ -17,7 +17,11 @@
   background: #fafafa;
   border-style: solid;
   border-color: #e7e7e7;
-  padding-left: 8px;
+  padding-left: 15px;
+}
+
+.form-input:disabled {
+  background-color: #dbdbdb;
 }
 
 .cancel {

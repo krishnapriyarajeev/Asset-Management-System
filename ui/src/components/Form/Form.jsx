@@ -10,7 +10,6 @@ const Form = ({
   cancelHandler,
   acceptText,
   accept = "",
-  add,
 }) => {
   // console.log(fields);
   const [data, setData] = useState();
@@ -70,30 +69,21 @@ const Form = ({
             );
           })}
         </div>
-        <div>
-          {add && (
-            <Button
-              innerText="Add"
-              onClick={() => acceptHandler(data)}
-              type="submit"
-            />
-          )}
-          <div className="button-group">
-            <Button
-              innerText={acceptText}
-              onClick={() => acceptHandler(data)}
-              type="submit"
-            />
-            <Button
-              innerText="Cancel"
-              style="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                cancelHandler();
-              }}
-              type="reset"
-            />
-          </div>
+        <div className="button-group">
+          <Button
+            innerText={acceptText}
+            onClick={() => acceptHandler(data)}
+            type="submit"
+          />
+          <Button
+            innerText="Cancel"
+            style="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              cancelHandler();
+            }}
+            type="reset"
+          />
         </div>
       </form>
     </section>

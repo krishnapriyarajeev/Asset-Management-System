@@ -20,7 +20,7 @@ const FormField = (props) => {
         type={type}
         className="form-input"
         id={props.id}
-        placeholder={props.text}
+        placeholder={props.id == "exchangeAsset" ? " -" : props.text}
         onChange={onChange}
         disabled={props.disable}
         value={props.data && props.data[props.id]}
