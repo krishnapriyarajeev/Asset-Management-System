@@ -2,28 +2,28 @@ import { subCategoryWithTag } from "../../../api/subCategoryApi";
 
 export const SubCategoryApi = subCategoryWithTag.injectEndpoints({
   endpoints: (builder) => ({
-    createCategory: builder.mutation({
+    createSubcategory: builder.mutation({
       query: (payload) => ({
         url: "/subcategory",
         method: "POST",
         body: payload,
       }),
     }),
-    getAllCategories: builder.query({
+    getAllSubcategories: builder.query({
       query: () => ({
         url: "/subcategory",
         method: "GET",
       }),
       providesTags: ["SUBCATEGORY_LIST"],
     }),
-    getCategoryById: builder.query({
+    getSubcategoryById: builder.query({
       query: (id) => ({
         url: `/subcategory/${id}`,
         method: "GET",
       }),
       providesTags: ["SUBCATEGORY_LIST"],
     }),
-    editCategory: builder.mutation({
+    editSubcategory: builder.mutation({
       query: (payload) => ({
         url: "/subcategory",
         method: "PUT",
@@ -31,7 +31,7 @@ export const SubCategoryApi = subCategoryWithTag.injectEndpoints({
       }),
       invalidatesTags: ["SUBCATEGORY_LIST"],
     }),
-    deleteCategory: builder.mutation({
+    deleteSubcategory: builder.mutation({
       query: (id) => ({
         url: `/subcategory/${id}`,
         method: "DELETE",
@@ -42,9 +42,9 @@ export const SubCategoryApi = subCategoryWithTag.injectEndpoints({
 });
 
 export const {
-  useGetCategoryByIdQuery,
-  useGetAllCategoriesQuery,
-  useCreateCategoryMutation,
-  useEditCategoryMutation,
-  useDeleteCategoryMutation,
+  useGetSubcategoryByIdQuery,
+  useGetAllSubcategoriesQuery,
+  useCreateSubcategoryMutation,
+  useEditSubcategoryMutation,
+  useDeleteSubcategoryMutation,
 } = SubCategoryApi;

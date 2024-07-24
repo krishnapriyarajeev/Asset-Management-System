@@ -9,46 +9,59 @@ import { FiActivity } from "react-icons/fi";
 import { FiTrendingUp } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiAlertCircle } from "react-icons/fi";
-const statusField = [
-  {
-    head: "Total",
-    count: "100",
-    front: "#007FFF",
-    middle: "#007FFF",
-    end: "#007FFF",
-    color: "#663dff 0%",
-    icon: FiActivity,
-  },
-  {
-    head: "Unallocated",
-    count: "40",
-    front: "#74d680 74%",
-    middle: "#378b29 0%",
-    end: "#74d680 74%",
-    color: "#dbf26e 0% ",
-    icon: FiTrendingUp,
-  },
-  {
-    head: "Allocated",
-    count: "50",
-    front: "#c11d38 0%",
-    middle: "#ffc857 0%",
-    end: "#ffc857 24%",
-    color: "#c11d38 0%",
-    icon: IoEyeOutline,
-  },
-  {
-    head: "Damaged",
-    count: "10",
-    front: "#e85d65",
-    middle: "#e85d65",
-    end: "#e85d65",
-    color: "#ffc857 0%",
-    icon: FiAlertCircle,
-  },
-];
+import { useGetAllSubcategoriesQuery, useGetSubcategoryByIdQuery } from "./subCategory.api";
+import { useEffect } from "react";
+import { useGetAllCountQuery } from "../category/count.api";
+
 
 const SubCategory = () => {
+  const { categoryId } = useParams();
+
+  const { data } = useGetSubcategoryByIdQuery(categoryId)
+  const count = useGetAllCountQuery()
+
+  const filteredArray = count.isSuccess && count.data.array.filter((data) => (data.Category.toLowerCase() === categoryId))
+  const filteredCounts = filteredArray[0]?.statusCounts
+
+  const statusField = [
+    {
+      head: "Total",
+      count: filteredCounts ? filteredCounts.Allocated + filteredCounts.Unallocated + filteredCounts.Damaged : 0,
+      front: "#007FFF",
+      middle: "#007FFF",
+      end: "#007FFF",
+      color: "#663dff 0%",
+      icon: FiActivity,
+    },
+    {
+      head: "Unallocated",
+      count: filteredCounts ? filteredCounts.Unallocated : 0,
+      front: "#74d680 74%",
+      middle: "#378b29 0%",
+      end: "#74d680 74%",
+      color: "#dbf26e 0% ",
+      icon: FiTrendingUp,
+    },
+    {
+      head: "Allocated",
+      count: filteredCounts ? filteredCounts?.Allocated : 0,
+      front: "#c11d38 0%",
+      middle: "#ffc857 0%",
+      end: "#ffc857 24%",
+      color: "#c11d38 0%",
+      icon: IoEyeOutline,
+    },
+    {
+      head: "Damaged",
+      count: filteredCounts ? filteredCounts.Damaged : 0,
+      front: "#e85d65",
+      middle: "#e85d65",
+      end: "#e85d65",
+      color: "#ffc857 0%",
+      icon: FiAlertCircle,
+    },
+  ];
+
   const fields = [
     {
       id: "BrandName",
@@ -64,7 +77,6 @@ const SubCategory = () => {
     },
   ];
 
-  const { categoryId } = useParams();
   const subCategoryData = [
     {
       brand: "Dell",
@@ -119,7 +131,7 @@ const SubCategory = () => {
   return (
     <div>
       <div className="heading-subcategory">
-        <h1 className="head">{categoryId}</h1>
+        <h1 className="head">{categoryId.charAt(0).toUpperCase() + categoryId.slice(1).toLowerCase()}</h1>
         <h4 className="tail">&nbsp;/assets</h4>
       </div>
 
@@ -143,7 +155,7 @@ const SubCategory = () => {
         </div>
       </div>
       <Container>
-        <CategoryTable tabledata={subCategoryData} fields={fields} />
+        <CategoryTable tabledata={data} fields={fields} />
       </Container>
     </div>
   );

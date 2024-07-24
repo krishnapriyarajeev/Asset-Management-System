@@ -13,7 +13,7 @@ export const CategoryApi = categoryWithTag.injectEndpoints({
       query: () => ({
         url: "/category",
         method: "GET",
-      }),
+      }), 
       providesTags: ["CATEGORY_LIST"],
     }),
     getCategoryById: builder.query({

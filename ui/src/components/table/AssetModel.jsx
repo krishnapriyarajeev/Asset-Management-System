@@ -3,7 +3,10 @@ import "./table.scss";
 import Pill from "../pill/pill";
 import DeleteModal from "../Modal/deleteModal";
 import EditModal from "../Modal/editModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetAllAssetsQuery } from "../../pages/model/asset.api";
+import { useGetSubcategoryByIdQuery } from "../../pages/subcategory/subCategory.api";
+import { useParams } from "react-router-dom";
 
 const ModelTable = ({ tabledata = [], fields }) => {
   const tableheader = [
@@ -19,7 +22,12 @@ const ModelTable = ({ tabledata = [], fields }) => {
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   const [deleteId, setDeleteId] = useState("");
   const [editId, setEditId] = useState("");
+  const { subCategoryId } = useParams();
 
+  const { isSuccess } = useGetSubcategoryByIdQuery(subCategoryId)
+  useEffect(()=>{
+    console.log(tabledata);
+  },[tabledata])
   const deleteHandler = () => {
     // TODO: Delete API call
     console.log(deleteId);
@@ -64,27 +72,27 @@ const ModelTable = ({ tabledata = [], fields }) => {
             </tr>
           </thead>
           <tbody>
-            {tabledata.map(
-              ({ serialNo, status, employee, createdAt, updatedAt }, key) => (
-                <tr key={key}>
-                  <td>{key}</td>
-                  <td>{serialNo}</td>
-                  <td>{!employee ? "---" : employee}</td>
+            {isSuccess && tabledata.assets.map(
+              (tabledata) => (
+                <tr key={tabledata.id}>
+                  <td>{tabledata.id}</td>
+                  <td>{tabledata.serialNumber}</td>
+                  <td>{!!tabledata?.employee ? tabledata.employee.name : "---"}</td>
                   <td>
                     <Pill
                       color={
-                        status === "allocated"
+                        tabledata.status === "Allocated"
                           ? "yellow"
-                          : status === "unallocated"
-                          ? "green"
-                          : "red"
+                          : tabledata.status === "Unallocated"
+                            ? "green"
+                            : "red"
                       }
-                      innerText={status}
+                      innerText={tabledata.status}
                       type="sm"
                     />
                   </td>
-                  <td>{createdAt}</td>
-                  <td>{updatedAt}</td>
+                  <td>{tabledata.createdAt.slice(0, 10)}</td>
+                  <td>{tabledata.updatedAt.slice(0, 10)}</td>
                   <td className="action-td">
                     <MdOutlineDelete
                       size="25px"
@@ -93,7 +101,7 @@ const ModelTable = ({ tabledata = [], fields }) => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setDeleteId(serialNo);
+                        setDeleteId(tabledata.serialNumber);
                         // setDeleteId(id);
                       }}
                     />
@@ -104,7 +112,7 @@ const ModelTable = ({ tabledata = [], fields }) => {
                       style={{ cursor: "pointer" }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setEditId(serialNo);
+                        setEditId(tabledata.serialNumber);
                       }}
                     />
                   </td>

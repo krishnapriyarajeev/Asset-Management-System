@@ -9,6 +9,9 @@ import { FiActivity } from "react-icons/fi";
 import { FiTrendingUp } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiAlertCircle } from "react-icons/fi";
+import { useGetAllAssetsQuery } from "./asset.api";
+import { useEffect } from "react";
+import { useGetSubcategoryByIdQuery } from "../subcategory/subCategory.api";
 const statusField = [
   {
     head: "Total",
@@ -49,7 +52,10 @@ const statusField = [
 ];
 const ModalList = () => {
   const { subCategoryId } = useParams();
-
+  const { data } = useGetSubcategoryByIdQuery(subCategoryId)
+  useEffect(()=>{
+    console.log(data);
+  },[data])
   const fields = [
     {
       id: "SerialNumber",
@@ -131,7 +137,7 @@ const ModalList = () => {
       <Container>
         
         <CreateButton fields={fields} />
-        <Table tabledata={modelData} fields={fields} />
+        <Table tabledata={data} fields={fields} />
       </Container>
     </>
   );

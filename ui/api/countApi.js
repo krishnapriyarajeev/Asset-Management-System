@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const subCategoryBaseApi = createApi({
-  reducerPath: "subCategoryApi",
+const countBaseApi = createApi({
+  reducerPath: "countApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3001",
     prepareHeaders: (headers) => {
@@ -13,8 +13,8 @@ const subCategoryBaseApi = createApi({
   endpoints: () => ({}),
 });
 
-const subCategoryWithTag = subCategoryBaseApi.enhanceEndpoints({
-  addTagTypes: ["SUBCATEGORY_LIST"],
+const countWithTag = countBaseApi.enhanceEndpoints({
+  addTagTypes: ["COUNT_LIST"],
 });
 
-export { subCategoryBaseApi, subCategoryWithTag };
+export { countBaseApi, countWithTag };

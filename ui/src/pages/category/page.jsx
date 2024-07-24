@@ -8,45 +8,12 @@ import { FiActivity } from "react-icons/fi";
 import { FiTrendingUp } from "react-icons/fi";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiAlertCircle } from "react-icons/fi";
+import { useGetAllCategoriesQuery } from "./category.api";
 
-const statusField = [
-  {
-    head: "Total",
-    count: "100",
-    front: "#007FFF",
-    middle: "#007FFF",
-    end: "#007FFF",
-    color: "#663dff 0%",
-    icon: FiActivity,
-  },
-  {
-    head: "Unallocated",
-    count: "40",
-    front: "#74d680 74%",
-    middle: "#378b29 0%",
-    end: "#74d680 74%",
-    color: "#dbf26e 0% ",
-    icon: FiTrendingUp,
-  },
-  {
-    head: "Allocated",
-    count: "50",
-    front: "#c11d38 0%",
-    middle: "#ffc857 0%",
-    end: "#ffc857 24%",
-    color: "#c11d38 0%",
-    icon: IoEyeOutline,
-  },
-  {
-    head: "Damaged",
-    count: "10",
-    front: "#e85d65",
-    middle: "#e85d65",
-    end: "#e85d65",
-    color: "#ffc857 0%",
-    icon: FiAlertCircle,
-  },
-];
+import { useEffect } from "react";
+import { useGetAllCountQuery } from "./count.api";
+
+
 const datas = [
   {
     id: 1,
@@ -107,6 +74,50 @@ const fields = [
 
 const Category = () => {
   const navigate = useNavigate();
+  const { data, isSuccess } = useGetAllCategoriesQuery()
+  const count = useGetAllCountQuery()
+  
+  const statusField = [
+    {
+      head: "Total",
+      count: count.isSuccess && count.data.totalCategory,
+      front: "#007FFF",
+      middle: "#007FFF",
+      end: "#007FFF",
+      color: "#663dff 0%",
+      icon: FiActivity,
+    },
+    {
+      head: "Unallocated",
+      count: count.isSuccess && count.data.total.Unallocated,
+      front: "#74d680 74%",
+      middle: "#378b29 0%",
+      end: "#74d680 74%",
+      color: "#dbf26e 0% ",
+      icon: FiTrendingUp,
+    },
+    {
+      head: "Allocated",
+      count: count.isSuccess && count.data.total.Allocated,
+      front: "#c11d38 0%",
+      middle: "#ffc857 0%",
+      end: "#ffc857 24%",
+      color: "#c11d38 0%",
+      icon: IoEyeOutline,
+    },
+    {
+      head: "Damaged",
+      count: count.isSuccess && count.data.total.Damaged,
+      front: "#e85d65",
+      middle: "#e85d65",
+      end: "#e85d65",
+      color: "#ffc857 0%",
+      icon: FiAlertCircle,
+    },
+  ];
+  useEffect(() => {
+    console.log(data);
+  }, [data])
   return (
     <div className="category-style">
       <div className="heading-display">
@@ -131,11 +142,12 @@ const Category = () => {
         )}
       </div>
       <div className="cards">
-        {datas.map((data) => (
+        {isSuccess && data.map((data) => (
           <CategoryCard
             key={data.id}
             data={data}
-            onClick={() => navigate(data.heading.toLowerCase())}
+            count={count}
+            onClick={() => navigate(data.categoryName.toLowerCase())}
           />
         ))}
       </div>

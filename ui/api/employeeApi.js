@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const employeeBaseApi = createApi({
   reducerPath: "employeeApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3001",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("kvLogin");
       headers.set("Authorization", `Bearer ${token}`);
@@ -16,7 +16,7 @@ const employeeBaseApi = createApi({
 const departmentBaseApi = createApi({
   reducerPath: "departmentApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3001",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("kvLogin");
       headers.set("Authorization", `Bearer ${token}`);

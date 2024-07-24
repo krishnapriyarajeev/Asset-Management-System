@@ -1,18 +1,23 @@
 import { MdOutlineDelete, MdModeEditOutline } from "react-icons/md";
 import "./table.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DeleteModal from "../Modal/deleteModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditModal from "../Modal/editModal";
+import { useGetAllSubcategoriesQuery, useGetSubcategoryByIdQuery } from "../../pages/subcategory/subCategory.api";
 
 const CategoryTable = ({ tabledata = [], fields }) => {
   const tableheader = ["S.No", "Brand", "Model", "Specs", "Count", "Actions"];
   const navigate = useNavigate();
-
+  const { data,isSuccess } = useGetAllSubcategoriesQuery()
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   const [deleteId, setDeleteId] = useState("");
   const [editId, setEditId] = useState("");
+  const { categoryId } = useParams();
 
+  // useEffect(()=>{
+  //   console.log(categoryId);
+  // },[tabledata])
   const deleteHandler = () => {
     // TODO: Delete API call
     setDeleteId("");
@@ -55,13 +60,14 @@ const CategoryTable = ({ tabledata = [], fields }) => {
             </tr>
           </thead>
           <tbody>
-            {tabledata.map(({ brand, model, specs, count }, key) => (
-              <tr key={key} onClick={() => navigate(`${brand.toLowerCase()}`)}>
-                <td>{key}</td>
-                <td>{brand}</td>
-                <td>{model}</td>
-                <td>{specs}</td>
-                <td>{count}</td>
+            {isSuccess && data.filter((tabledata) => tabledata.category.categoryName.toLowerCase() === `${categoryId}`).map((tabledata) => (
+              <tr key={tabledata.id} onClick={() => navigate(`${tabledata.id}`)}>
+                <td>{tabledata.id}</td>
+                <td>{tabledata.brandName}</td>
+                <td>{tabledata.modelName}</td>
+                <td>{tabledata.Specifications}</td>
+                <td>count</td>
+
                 <td className="action-td">
                   <MdOutlineDelete
                     size="25px"
@@ -70,7 +76,7 @@ const CategoryTable = ({ tabledata = [], fields }) => {
                     style={{ cursor: "pointer" }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setDeleteId(model);
+                      setDeleteId(tabledata.modelName);
                     }}
                   />
                   <MdModeEditOutline
@@ -80,7 +86,7 @@ const CategoryTable = ({ tabledata = [], fields }) => {
                     style={{ cursor: "pointer" }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setEditId(model);
+                      setEditId(tabledata.modelName);
                     }}
                   />
                 </td>
