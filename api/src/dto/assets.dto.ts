@@ -4,10 +4,9 @@ import {
   IsOptional,
   IsString,
   IsNumber,
-  } from "class-validator";
+} from "class-validator";
 import { AssetStatus } from "../utils/assetStatus.enum";
-import { Transform, Type } from "class-transformer";
-
+import { Transform } from "class-transformer";
 
 export class CreateAssetDto {
   @IsString()
@@ -19,7 +18,7 @@ export class CreateAssetDto {
   @Transform(({ value }) => (value === "" ? AssetStatus.UNALLOCATED : value))
   status?: AssetStatus;
 
- // @ValidateNested()
+  // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)
   @IsNotEmpty()
   @IsNotEmpty()
@@ -30,9 +29,6 @@ export class CreateAssetDto {
   @IsNotEmpty()
   @IsOptional()
   employee_id: number;
-
-
-
 }
 
 export class UpdateAssetDto {
@@ -47,7 +43,6 @@ export class UpdateAssetDto {
   @IsEnum(AssetStatus)
   @IsOptional()
   status: AssetStatus;
-
 
   // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)

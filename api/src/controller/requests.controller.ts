@@ -61,7 +61,8 @@ export default class requestsController {
 
       const requestsData = await this.requestsService.createNewRequest(
         requestsDto.employee_id,
-        requestsDto.status
+        requestsDto.status,
+        requestsDto.requestedItems
       );
 
       res.status(201).send(requestsData);

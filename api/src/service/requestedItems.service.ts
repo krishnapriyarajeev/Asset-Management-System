@@ -24,15 +24,12 @@ export default class RequestedItemService {
 
     requestType: string,
 
-    requests: any,
-
     subcategory: any
   ) => {
     const newRequestedItem = new RequestedItems();
 
     newRequestedItem.reason = reason;
     newRequestedItem.requestType = requestType;
-    newRequestedItem.requests = requests;
     newRequestedItem.subcategory = subcategory;
 
     return await this.requestedItemRepository.save(newRequestedItem);

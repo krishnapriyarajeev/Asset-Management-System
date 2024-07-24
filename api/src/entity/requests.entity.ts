@@ -5,16 +5,20 @@ import RequestedItems from "./requestedItems.entity";
 import Employee from "./employee.entity";
 
 @Entity()
+export default class Requests extends AbstractEntity {
+  @Column()
+  status: RequestStatus;
 
-export default class Requests extends AbstractEntity{
+  @OneToMany(
+    () => RequestedItems,
+    (requestedItems) => requestedItems.requests,
+    {
+      cascade: true,
+    }
+  )
+  requestedItems: RequestedItems[];
 
-    @Column()
-    status: RequestStatus; 
-
-    @OneToMany(() => RequestedItems, (requestedItems) => requestedItems.requests)
-    requestedItems: RequestedItems;
-
-    @ManyToOne(() => Employee, (employee) => employee.requests)
-    @JoinColumn()
-    employee: Employee;
+  @ManyToOne(() => Employee, (employee) => employee.requests)
+  @JoinColumn()
+  employee: Employee;
 }
