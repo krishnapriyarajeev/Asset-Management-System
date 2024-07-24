@@ -4,26 +4,22 @@ import {
   IsOptional,
   IsString,
   IsNumber,
-  ValidateNested,
-} from "class-validator";
+  } from "class-validator";
 import { AssetStatus } from "../utils/assetStatus.enum";
-import { CreateSubcategoryDto } from "./subcategory.dto";
-import Subcategory from "../entity/subcategory.entity";
-import { Type } from "class-transformer";
-import Employee from "../entity/employee.entity";
-import { CreateEmployeeDto } from "./employee.dto";
-import { CannotCreateEntityIdMapError } from "typeorm";
+import { Transform, Type } from "class-transformer";
+
 
 export class CreateAssetDto {
   @IsString()
   @IsNotEmpty()
   serialNumber: string;
 
+  @IsOptional()
   @IsEnum(AssetStatus)
-  @IsNotEmpty()
-  status: AssetStatus;
+  @Transform(({ value }) => (value === "" ? AssetStatus.UNALLOCATED : value))
+  status?: AssetStatus;
 
-  // @ValidateNested()
+ // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)
   @IsNotEmpty()
   @IsNotEmpty()
@@ -34,6 +30,9 @@ export class CreateAssetDto {
   @IsNotEmpty()
   @IsOptional()
   employee_id: number;
+
+
+
 }
 
 export class UpdateAssetDto {
