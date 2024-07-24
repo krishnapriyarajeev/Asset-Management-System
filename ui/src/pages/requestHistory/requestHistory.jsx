@@ -32,9 +32,7 @@ const RequestHistory = () => {
       <RequestModal
         open={requestToggle}
         cancelHandler={() => setRequestToggle(false)}
-        editHandler={(data) => {
-          console.log("FinalData", data), setRequestToggle(false);
-        }}
+        editHandler={() => setRequestToggle(false)}
       />
       <div className="category-style">
         <div className="employee-category">

@@ -2,7 +2,7 @@ import "./Select.scss";
 /* eslint-disable react/prop-types */
 const Select = ({ id, choose, onselect, defaultValue, label }) => {
   const onSelect = (e) => {
-    let x = [e.target.id, e.target.value];
+    let x = { id: e.target.id, value: e.target.value };
     onselect(x);
   };
 

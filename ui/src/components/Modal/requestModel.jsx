@@ -39,26 +39,7 @@ const formData = [
   },
 ];
 
-const RequestForm = ({ handleData }) => {
-  const [data, setData] = useState({
-    category: "Laptop",
-    SubCategory:
-      "Dell Inspiron 15 12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
-    requestType: "New",
-    reason: "",
-  });
-
-  const changeData = ([id, value]) => {
-    let newData = {};
-    newData[id] = value;
-    setData((data) => ({ ...data, ...newData }));
-    console.log("changeData", data);
-  };
-
-  useEffect(() => {
-    handleData(data);
-  }, [data]);
-
+const RequestForm = ({ handleData, formValue }) => {
   return (
     <section className="form-modal">
       <form className="form" onSubmit={(e) => e.preventDefault()}>
@@ -69,7 +50,7 @@ const RequestForm = ({ handleData }) => {
                 id={field.id}
                 key={field.id}
                 choose={field.choose}
-                onselect={changeData}
+                onselect={({ id, value }) => handleData(id, value)}
                 label={field.label}
               />
             ) : (
@@ -79,8 +60,8 @@ const RequestForm = ({ handleData }) => {
                 id={field.id}
                 text={field.text}
                 key={field.id}
-                onchange={changeData}
-                data={data}
+                onchange={({ id, value }) => handleData(id, value)}
+                data={formValue}
               />
             );
           })}
@@ -91,37 +72,63 @@ const RequestForm = ({ handleData }) => {
 };
 
 const RequestModal = ({ editHandler, cancelHandler, open }) => {
-  const [data, setData] = useState();
-  const [requestData, setRequestData] = useState([]);
-
-  const [inputList, setInputList] = useState([
-    <RequestForm handleData={setData} key="0" />,
+  const [data, setData] = useState([
+    {
+      category: "Laptop",
+      SubCategory:
+        "Dell Inspiron 15 12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
+      requestType: "New",
+      reason: "",
+    },
   ]);
 
   const addHandler = () => {
-    setInputList(
-      inputList.concat(
-        <hr className="detail-hr" key={(inputList.length + 1) * 100} />,
-        <RequestForm handleData={setData} key={inputList.length} />
-      )
-    );
+    const list = [...data];
+    list.push({
+      category: "Laptop",
+      SubCategory:
+        "Dell Inspiron 15 12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
+      requestType: "New",
+      reason: "",
+    });
+    setData(list);
   };
 
-  useEffect(() => {
-    console.log("RequestData", requestData);
-  }, [data]);
-
-  const acceptHandler = (data) => {
-    setInputList([<RequestForm handleData={setData} key="0" />]);
-    console.log("FinalAcceptData", data);
-    setRequestData([]);
-    editHandler(data);
+  const acceptHandler = () => {
+    console.log("FinalData", data);
+    setData([
+      {
+        category: "Laptop",
+        SubCategory:
+          "Dell Inspiron 15 12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
+        requestType: "New",
+        reason: "",
+      },
+    ]);
+    editHandler();
   };
 
   const closeHandler = () => {
-    console.log("FinalCancelData", requestData);
-    setRequestData([]);
+    setData([
+      {
+        category: "Laptop",
+        SubCategory:
+          "Dell Inspiron 15 12GB RAM, Intel i5 11th Gen, RTX 3050 Studio, 512GB SSD",
+        requestType: "New",
+        reason: "",
+      },
+    ]);
     cancelHandler();
+  };
+
+  const handleData = (id, value, index) => {
+    console.log("id", id, value);
+    const list = [...data];
+    let newData = data[index];
+    newData = { ...newData, [id]: value };
+    list[index] = newData;
+    setData(list);
+    console.log("newData", data);
   };
 
   return (
@@ -130,7 +137,6 @@ const RequestModal = ({ editHandler, cancelHandler, open }) => {
         <div
           className="close-icon-wrap"
           onClick={() => {
-            setInputList([<RequestForm handleData={setData} key="0" />]);
             closeHandler();
           }}
         >
@@ -141,30 +147,23 @@ const RequestModal = ({ editHandler, cancelHandler, open }) => {
           <h1>Request</h1>
         </div>
 
-        {inputList}
-        <Button
-          innerText="Add"
-          onClick={() => {
-            setRequestData(requestData.concat(data));
-            addHandler();
-          }}
-          type="submit"
-        />
+        {data.map((formValue, index) => {
+          return (
+            <RequestForm
+              formValue={formValue}
+              key={index}
+              handleData={(id, value) => handleData(id, value, index)}
+            />
+          );
+        })}
+        <Button innerText="Add" onClick={addHandler} type="submit" />
         <div className="button-group">
-          <Button
-            innerText="Confirm"
-            onClick={() => {
-              // setRequestData(requestData.concat(data));
-              acceptHandler(requestData.concat(data));
-            }}
-            type="submit"
-          />
+          <Button innerText="Confirm" onClick={acceptHandler} type="submit" />
           <Button
             innerText="Cancel"
             style="outline"
             onClick={(e) => {
               e.preventDefault();
-              setInputList([<RequestForm handleData={setData} key="0" />]);
               closeHandler();
             }}
             type="reset"

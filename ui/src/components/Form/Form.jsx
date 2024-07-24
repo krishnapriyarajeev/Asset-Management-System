@@ -32,7 +32,7 @@ const Form = ({
       );
   }, []);
 
-  const handleData = ([id, value]) => {
+  const handleData = ({ id, value }) => {
     let newData = {};
     newData[id] = value;
     setData((data) => ({ ...data, ...newData }));

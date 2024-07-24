@@ -5,7 +5,7 @@ import "./FormField.scss";
 const FormField = (props) => {
   const [type, setType] = useState(props.type);
   const onChange = (e) => {
-    let x = [e.target.id, e.target.value];
+    let x = { id: e.target.id, value: e.target.value };
     console.log(x);
     props.onchange(x);
   };
