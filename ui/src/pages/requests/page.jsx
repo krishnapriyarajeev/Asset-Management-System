@@ -4,6 +4,9 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FiActivity, FiAlertCircle, FiTrendingUp } from "react-icons/fi";
 import StatusCard from "../../components/statusCard/statusCard";
 import RequestCard from "../../components/card/RequestCard";
+import { useGetRequestListQuery } from "./request";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const statusField = [
   {
@@ -44,39 +47,60 @@ const statusField = [
   },
 ];
 
-const requestData = [
-  {
-    id: 1,
-    name: "John Doe",
-    department: "IT",
-    date: "2023-07-01",
-    status: "pending",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    department: "HR",
-    date: "2023-07-05",
-    status: "completed",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    department: "Finance",
-    date: "2023-07-10",
-    status: "completed",
-  },
-  {
-    id: 4,
-    name: "Bob Brown",
-    department: "Marketing",
-    date: "2023-07-15",
-    status: "pending",
-  },
-];
+// const requestData = [
+//   {
+//     id: 1,
+//     name: "John Doe",
+//     department: "IT",
+//     date: "2023-07-01",
+//     status: "pending",
+//   },
+//   {
+//     id: 2,
+//     name: "Jane Smith",
+//     department: "HR",
+//     date: "2023-07-05",
+//     status: "completed",
+//   },
+//   {
+//     id: 3,
+//     name: "Alice Johnson",
+//     department: "Finance",
+//     date: "2023-07-10",
+//     status: "completed",
+//   },
+//   {
+//     id: 4,
+//     name: "Bob Brown",
+//     department: "Marketing",
+//     date: "2023-07-15",
+//     status: "pending",
+//   },
+// ]
 
 const Request = () => {
   const navigate = useNavigate();
+  const [list, setList] = useState([]);
+const dispatch = useDispatch();
+
+const { data = [] } = useGetRequestListQuery();
+  useEffect(() => {
+    
+    const request = data.map((request) => ({
+      
+        ...request,
+        joiningDate: new Date(request.createdAt).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            
+        })
+        
+    }));
+    setList(request);
+
+}, [data]);
+
   return (
     <div className="category-style">
       <div className="heading-display">
@@ -100,12 +124,13 @@ const Request = () => {
         )}
       </div>
       <div className="cards">
-        {requestData.map((data, index) => (
+        {data.map((data, index) => (
           <RequestCard
             key={index}
             data={data}
+            
             onClick={(path) =>
-              navigate(`${path}`, { state: { status: data.status } })
+              navigate(`${path}`, { state: { employee: data.employee } })
             }
           />
         ))}

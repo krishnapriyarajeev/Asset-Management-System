@@ -1,12 +1,14 @@
 import { RxCross2 } from "react-icons/rx";
 import "./table.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiCircleCheck } from "react-icons/ci";
 import Pill from "../pill/pill";
 import AcceptModal from "../Modal/acceptModal";
 import DeclineModal from "../Modal/declineModal";
+import { useParams } from "react-router-dom";
+import { useGetRequestDetailsQuery } from "../../pages/requests/request";
 
-const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
+const RequestsTable = ({ tabledata = [], requestStatus = "pending", employee = {} }) => {
   let tableheader = [
     "S.No",
     "Employee",
@@ -17,7 +19,11 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
     "Type",
     "Requested At",
   ];
-
+  const { requestId } = useParams();
+  const { data } = useGetRequestDetailsQuery(requestId);
+  useEffect(() => {
+    console.log(data?.requestedItems)
+  }, [data]);
   if (requestStatus.toLowerCase() === "pending") tableheader.push("Actions");
   else tableheader.push("Status");
 
@@ -70,38 +76,31 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
             </tr>
           </thead>
           <tbody>
-            {tabledata.map(
-              (
-                {
-                  id,
-                  employee,
-                  category,
-                  brand,
-                  model,
-                  reason,
-                  type,
-                  status,
-                  requestedAt,
-                },
-                key
-              ) => (
-                <tr key={id}>
-                  <td>{key}</td>
-                  <td>{employee}</td>
-                  <td>{category}</td>
-                  <td>{brand}</td>
-                  <td>{model}</td>
-                  <td>{reason}</td>
-                  <td>
+            {data?.requestedItems && data?.requestedItems.map(
+              (data) => {
+                console.log(data);
+                return (
+                  <tr key={data?.id}>
+                    <td>{data?.id}</td>
+                    <td>{employee.name}</td>
+                    <td>{employee.name}</td>
+                    <td>{employee.name}</td>
+                    <td>{employee.name}</td>
+
+                    <td>{data?.reason}</td>
+                    <td>
                     <Pill
                       color={
-                        type.toLowerCase() === "exchange" ? "purple" : "blue"
+                        data?.requestType === "Exchange" ? "purple" : "blue"
                       }
-                      innerText={type}
+                      innerText={data?.requestType}
                       type="sm"
                     />
                   </td>
-                  <td>{requestedAt}</td>
+                    <td>{data?.createdAt.slice(0, 10)}</td>
+                  
+                    
+                    
                   {requestStatus.toLowerCase() === "pending" && (
                     <td className="action-td">
                       <CiCircleCheck
@@ -112,7 +111,7 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
                         onClick={(e) => {
                           e.stopPropagation();
                           setAcceptId(id);
-                          setAcceptType(type);
+                          setAcceptType(data?.requestType);
                         }}
                       />
                       <RxCross2
@@ -131,15 +130,16 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
                     <td>
                       <Pill
                         color={
-                          status.toLowerCase() === "accepted" ? "green" : "red"
+                          status.toLowerCase() === "Accepted" ? "green" : "red"
                         }
                         innerText={status}
                         type="sm"
                       />
                     </td>
                   )}
-                </tr>
-              )
+                  </tr>
+                )
+              }
             )}
           </tbody>
         </table>

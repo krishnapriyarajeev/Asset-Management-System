@@ -2,12 +2,15 @@ import { useLocation, useParams } from "react-router-dom";
 import Container from "../../components/container/container";
 import "./page.scss";
 import RequestsTable from "../../components/table/Requests";
+import { useGetRequestDetailsQuery, useGetRequestListQuery } from "../requests/request";
+import { useEffect } from "react";
 
 const RequestDetail = () => {
   const { requestId } = useParams();
   const location = useLocation();
-  const { status } = location.state;
-
+  const { status, employee } = location.state;
+  // const { data } = useGetRequestDetailsQuery(requestId);
+  const { data = [], isSuccess } = useGetRequestListQuery();
   const subCategoryData = [
     {
       id: "1",
@@ -52,7 +55,7 @@ const RequestDetail = () => {
       </div>
 
       <Container>
-        <RequestsTable tabledata={subCategoryData} requestStatus={status} />
+        <RequestsTable tabledata={data} requestStatus={status} employee={employee} />
       </Container>
     </div>
   );
