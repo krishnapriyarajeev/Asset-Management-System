@@ -71,6 +71,7 @@ export default class SubCategoryController {
           subCategoryDto.Specifications,
           subCategoryDto.category_id
         );
+        
 
       res.status(201).send(subCategoryData);
     } catch (error) {

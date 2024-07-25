@@ -13,6 +13,9 @@ export default class RequestedItems extends AbstractEntity{
     @Column()
     requestType: string;
 
+    @Column({default:"Pending"})
+    status:string
+
     @ManyToOne(() => Requests, (requests) => requests.requestedItems)
     @JoinColumn()
     requests: Requests;
@@ -20,4 +23,7 @@ export default class RequestedItems extends AbstractEntity{
     @ManyToOne(() => Subcategory, (subcategory) => subcategory.requestedItems)
     @JoinColumn()
     subcategory: Subcategory;
+
+   
+
 }

@@ -77,6 +77,32 @@ export default class AssetService {
   public getAssetById = async (id: number) =>
     this.assetRepository.findOneBy({ id });
 
+  public getBySerialNumber = async (serialNumber: string) => {
+    return this.assetRepository.findOneBy({ serialNumber });
+  };
+
+  public exchangeAsset = async (oldAsset: Assets, newAsset: Assets) => {
+    const id = oldAsset.employeeId;
+    const object = oldAsset.employee;
+    // console.log("oldassetnefore",oldAsset.employeeId)
+    // console.log("oldasset no1",oldAsset)
+    oldAsset.employeeId = newAsset.employeeId;
+    oldAsset.employee = newAsset.employee;
+    // console.log("oldasset no2",oldAsset)
+    // console.log("oldassetneAFTER",oldAsset.employeeId)
+    if (oldAsset.employeeId != null) {
+      oldAsset.status = AssetStatus.ALLOCATED;
+    } else {
+      oldAsset.status = AssetStatus.UNALLOCATED;
+    }
+    await this.assetRepository.save(oldAsset);
+
+    newAsset.employeeId = id;
+    newAsset.employee = object;
+    newAsset.status = AssetStatus.ALLOCATED;
+    await this.assetRepository.save(newAsset);
+  };
+
   public createNewAsset = async (
     serialNumber: string,
     status: AssetStatus,
@@ -87,7 +113,8 @@ export default class AssetService {
     newAsset.serialNumber = serialNumber;
     newAsset.status = status;
     newAsset.subcategory = subcategory;
-    newAsset.employee = employee;
+
+    newAsset.employeeId = employee;
     return await this.assetRepository.save(newAsset);
   };
   //Handle edge cases
@@ -103,7 +130,7 @@ export default class AssetService {
     }
 
     if (asset.employee_id) {
-      assetData.employee.id = asset.employee_id;
+      assetData.employeeId = asset.employee_id;
     }
 
     if (asset.subcategory_id) {
@@ -121,47 +148,138 @@ export default class AssetService {
     return assetData;
   };
 
-  public countByCategory=async (asset:any)=>{
-    
-    let totalCategory=asset.length
-    let total={"Allocated":0,"Unallocated":0, "Damaged":0}
+  public countByCategory = async (asset: any) => {
+    let totalCategory = asset.length;
+    let total = { Allocated: 0, Unallocated: 0, Damaged: 0 };
+    asset.map((assets) => {
+      if (assets.status == "Allocated") {
+        total.Allocated += 1;
+      } else if (assets.status == "Damaged") {
+        total.Damaged += 1;
+      } else {
+        total.Unallocated += 1;
+      }
+    });
+    const array = [];
+    let seenArray = new Set();
+    asset.map((assets) => {
+      if (!seenArray.has(assets.subcategory.category.categoryName)) {
+        // console.log("here")
+        // console.log("SN",seenArray)
 
-    const array=[]
-    let seenArray=new Set()
-    asset.map((assets)=>{
-        if(!(assets.subcategory.category.categoryName in seenArray)){
-          seenArray.add(assets.subcategory.category.categoryName)
-           let countStatus={
-            "Allocated":0,"Unallocated":0, "Damaged":0
-           }
-           if(assets.status=="Allocated"){
-            total.Allocated+=1
-           }
-           else if(assets.status=="Damaged"){
-            total.Damaged+=1
-           }
-           else{
-            total.Unallocated+=1
-           }
-           asset.map((assetitem)=>{
-            if(assetitem.subcategory.category.categoryName===assets.subcategory.category.categoryName){
-                if(assetitem.status=="Allocated"){
-                    countStatus.Allocated+=1
-                }
-                else if(assetitem.status=="Damaged"){
-                    countStatus.Damaged+=1
-                }
-                else{
-                    countStatus.Unallocated+=1
-                }
+        seenArray.add(assets.subcategory.category.categoryName);
+
+        let countStatus = {
+          Allocated: 0,
+          Unallocated: 0,
+          Damaged: 0,
+        };
+        console.log("assetStatus", assets.status);
+
+        asset.map((assetitem) => {
+          if (
+            assetitem.subcategory.category.categoryName ==
+            assets.subcategory.category.categoryName
+          ) {
+            if (assetitem.status == "Allocated") {
+              countStatus.Allocated += 1;
+            } else if (assetitem.status == "Damaged") {
+              countStatus.Damaged += 1;
+            } else {
+              countStatus.Unallocated += 1;
             }
-           })
-           array.push({"Category":assets.subcategory.category.categoryName,"statusCounts":countStatus})
-        }
-    })
-    console.log("service",array)
-    return {totalCategory,total,array}
-  }
+          }
+        });
 
+        array.push({
+          Category: assets.subcategory.category.categoryName,
+          statusCounts: countStatus,
+        });
+      }
+    });
+    console.log("service", array);
+    return { totalCategory, total, array };
+  };
 
+  public countByAsset = async (asset: any) => {
+    const array = [];
+    const arr = new Set();
+    asset.map((assets) => {
+      if (
+        !(
+          assets.subcategory.modelName in array &&
+          assets.subcategory.Specifications in array
+        )
+      ) {
+        array.push([
+          assets.subcategory.modelName,
+          assets.subcategory.Specifications,
+        ]);
+      }
+    });
+
+    asset.map((assets) => {
+      if (
+        !(
+          assets.id in arr &&
+          assets.subcategory.modelName in arr &&
+          assets.subcategory.Specifications in arr
+        )
+      ) {
+        arr.add({
+          assets_id: assets.id,
+          ModelName: assets.subcategory.modelName,
+          Specifications: assets.subcategory.Specifications,
+          Status: assets.status,
+        });
+      }
+    });
+    // console.log(array)
+    // console.log("arr",arr)
+
+    const count = {};
+
+    for (let i = 0; i < array.length; i++) {
+      let item = array[i];
+      if (count[item]) {
+        count[item] += 1;
+      } else {
+        count[item] = 1;
+      }
+    }
+
+    const set = new Set();
+
+    const res = [];
+
+    arr.forEach((item: any) => {
+      if (!set.has(`${item.ModelName}-${item.Specifications}`)) {
+        set.add(`${item.ModelName}-${item.Specifications}`);
+
+        let countStatus = { Allocated: 0, Unallocated: 0, Damaged: 0 };
+        arr.forEach((innerItem: any) => {
+          if (
+            innerItem.ModelName === item.ModelName &&
+            innerItem.Specifications === item.Specifications
+          ) {
+            if (innerItem.Status === "Allocated") {
+              countStatus.Allocated++;
+            } else if (innerItem.Status === "Unallocated") {
+              countStatus.Unallocated++;
+            } else if (innerItem.Status === "Damaged") {
+              countStatus.Damaged++;
+            }
+          }
+        });
+
+        res.push({
+          subCategory: [item.ModelName, item.Specifications],
+          countStatus: countStatus,
+        });
+      }
+    });
+
+    // console.log(res);
+    return { count, res };
+  };
 }

@@ -7,20 +7,21 @@ import Employee from "./employee.entity";
 import { IsOptional } from "class-validator";
 
 @Entity()
+export default class Assets extends AbstractEntity {
+  @Column()
+  serialNumber: string;
 
-export default class Assets extends AbstractEntity{
-    @Column()
-    serialNumber: string;
-    
-    @Column()
-    status: AssetStatus;
+  @Column()
+  status: AssetStatus;
 
-    @ManyToOne(() => Subcategory, (subcategory) => subcategory.assets)
-    @JoinColumn()
-    subcategory: Subcategory;
-    
-    @ManyToOne(() => Employee, (employee) => employee.assets)
-    @JoinColumn()
-    employee: Employee;
+  @ManyToOne(() => Subcategory, (subcategory) => subcategory.assets)
+  @JoinColumn()
+  subcategory: Subcategory;
 
+  @ManyToOne(() => Employee, (employee) => employee.assets, { nullable: true })
+  @JoinColumn({})
+  employee: Employee;
+
+  @Column()
+  employeeId: number;
 }

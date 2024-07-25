@@ -21,9 +21,12 @@ export default class assetController {
     this.router.get("/", authMiddleware, this.getAllAsset);
     this.router.get("/count", this.countByCategory);
     this.router.post("/upload", upload.single("file"), this.uploadFile);
+    this.router.get("/count", this.countByCategory);
+    this.router.get("/countAssets", this.countByAsset);
     this.router.get("/:id", authMiddleware, this.getAssetById);
     this.router.post("/", authMiddleware, this.createAsset);
     this.router.put("/", authMiddleware, this.updateAsset);
+    this.router.put("/exchange", authMiddleware, this.handleExchange);
     this.router.delete("/:id", authMiddleware, this.deleteAsset);
   }
 
@@ -47,24 +50,6 @@ export default class assetController {
 
   getAllAsset = async (_, res: Response) => {
     const asset = await this.assetService.getAllAssets();
-    // let Allocated=0;
-    // let Unallocated=0;
-    // let Damaged=0;
-    // asset.map((assets)=>{
-    //     if(assets.status=="Allocated"){
-    //         Allocated+=1
-    //     }
-    //     else if(assets.status=="Damaged"){
-    //         Damaged+=1
-    //     }
-    //     else{
-    //         Unallocated+=1
-    //     }
-    //     console.log("asttt",assets.subcategory.category.categoryName)
-    // })
-    // const countStatus=[{"Allocated":Allocated},{"Unallocated":Unallocated},{"Damaged":Damaged}]
-    // console.log("countStatus",countStatus)
-    // console.log("Total",Total)
     res.status(200).send(asset);
   };
 
@@ -127,7 +112,6 @@ export default class assetController {
         throw new HttpException(400, JSON.stringify(errors));
       }
 
-      console.log("Here");
       const assetData = await this.assetService.updateAsset(assetDto);
       //   res.json({
       //     sucess: true,
@@ -162,5 +146,54 @@ export default class assetController {
     const result = await this.assetService.countByCategory(asset);
 
     res.status(200).send(result);
+  };
+  countByAsset = async (_, res: Response) => {
+    const asset = await this.assetService.getAllAssets();
+    const result = await this.assetService.countByAsset(asset);
+    res.status(200).send(result);
+  };
+
+  handleExchange = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      if (req.role !== Role.ADMIN) {
+        throw new HttpException(403, "Invalid Access");
+      }
+      const { oldSerialNumber, newSerialNumber, requestType, reason } =
+        req.body;
+      if (requestType !== "Exchange") {
+        throw new HttpException(400, "Invalid request type for asset exchange");
+      }
+      if (!oldSerialNumber || !newSerialNumber) {
+        throw new HttpException(
+          400,
+          "Both old and new serial number are required"
+        );
+      }
+      const oldAsset = await this.assetService.getBySerialNumber(
+        oldSerialNumber
+      );
+
+      const newAsset = await this.assetService.getBySerialNumber(
+        newSerialNumber
+      );
+      // if(newAsset.employeeId!=null){
+      //     throw new HttpException(400,"The requested asset is already allocated")
+      // }
+      // console.log("oldAsset",oldAsset)
+      // console.log("newAsset",newAsset)
+
+      if (!oldAsset || !newAsset) {
+        throw new HttpException(400, "One or both asset not found");
+      }
+
+      await this.assetService.exchangeAsset(oldAsset, newAsset);
+      res.json({ success: true, message: "Asset exchanged successfully" });
+    } catch (err) {
+      next(err);
+    }
   };
 }

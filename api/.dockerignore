@@ -4,3 +4,4 @@ volumes/
 .logs
 .err.logs
 .env.file
+.env
