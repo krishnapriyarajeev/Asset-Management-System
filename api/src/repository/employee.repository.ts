@@ -14,7 +14,12 @@ export default class EmployeeRepository {
   findOneBy = async (filter: Partial<Employee>) =>
     await this.employeeRepository.findOne({
       where: filter,
-      relations: { address: true, department: true },
+      relations: {
+        address: true,
+        department: true,
+        assets: { subcategory: { category: true } },
+        requests: { requestedItems: { subcategory: { category: true } } },
+      },
     });
 
   save = async (newEmployee: Partial<Employee>) =>

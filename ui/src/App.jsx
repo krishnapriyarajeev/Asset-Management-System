@@ -10,11 +10,11 @@ import RequestDetail from "./pages/reqestsDetailed/page";
 import EmployeeList from "./pages/EmployeeList/EmployeeList";
 import EmployeeDetails from "./pages/EmployeeDetails/EmployeeDetails";
 import EmployeeLayout from "./layouts/employee.home.layout";
-import RequestHistory from "./pages/requestHistory/requestHistory";
 import Profile from "./pages/profile/page";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ErrorPage from "./pages/notfound/page";
+import EmployeeAssetPage from "./pages/requestHistory/page";
 
 // TODO: get user data from localstorage
 const getUserData = "Employee";
@@ -88,7 +88,7 @@ function App() {
       children: [
         {
           path: "",
-          element: <RequestHistory />,
+          element: <EmployeeAssetPage />,
         },
       ],
     },

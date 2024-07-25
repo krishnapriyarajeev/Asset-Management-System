@@ -57,7 +57,7 @@ const RequestsTable = ({ tabledata = [], requestStatus = "pending" }) => {
           cancelHandler={cancelAccept}
         />
       )}
-      <div className="table-wrapper request-table">
+      <div className="table-wrapper no-link-table">
         <table>
           <thead>
             <tr>
