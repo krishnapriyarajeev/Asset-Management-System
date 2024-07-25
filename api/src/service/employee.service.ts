@@ -95,7 +95,7 @@ export default class EmployeeService {
       const token = sign(payload, process.env.JWT_SECRET, {
         expiresIn: process.env.TOKEN_EXPIRY,
       });
-      return token;
+      return { token, employee };
     } else {
       throw new HttpException(403, "Wrong Credentials");
     }

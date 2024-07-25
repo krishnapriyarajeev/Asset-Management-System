@@ -20,12 +20,12 @@ export default class EmployeeController {
   constructor(private employeeService: EmployeeService) {
     this.router = Router();
 
-    this.router.get("/",authMiddleware, this.getAllEmployees);
+    this.router.get("/", authMiddleware, this.getAllEmployees);
     this.router.get("/:id", authMiddleware, this.getEmployeeById);
     this.router.post("/", authMiddleware, this.createEmployee);
     this.router.put("/", authMiddleware, this.updateEmployee);
     this.router.delete("/:id", authMiddleware, this.deleteEmployee);
-    this.router.post("/login",this.loginEmployee);
+    this.router.post("/login", this.loginEmployee);
   }
   getAllEmployees = async (_, res: Response) => {
     const employees = await this.employeeService.getAllEmployees();
@@ -140,11 +140,11 @@ export default class EmployeeController {
         );
         throw new HttpException(400, "Validation Error", [...constraints]);
       }
-      const token = await this.employeeService.loginEmployee(
+      const { token, employee } = await this.employeeService.loginEmployee(
         loginDto.email,
         loginDto.password
       );
-      res.json({ sucess: true, token });
+      res.json({ sucess: true, token, employee });
     } catch (error) {
       next(error);
     }
