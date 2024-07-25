@@ -24,5 +24,6 @@ export default class Subcategory extends AbstractEntity{
     assets: Assets[];
 
     @OneToMany(() => RequestedItems, (requestedItems) => requestedItems.subcategory)
+
     requestedItems: RequestedItems[];
 }

@@ -9,9 +9,15 @@ import { CreateRequestsDto, UpdateRequestsDto } from "../dto/requests.dto";
 import { CreateEmployeeDto } from "../dto/employee.dto";
 import RequestedItems from "../entity/requestedItems.entity";
 import { CreateRequestedItems } from "../dto/requestedItems.dto";
+import RequestedItemService from "./requestedItems.service";
+import SubCategoryService from "./subcategory.service";
 
 export default class RequestService {
-  constructor(private requestRepository: RequestRepository) {
+  constructor(
+    private requestedItemService: RequestedItemService,
+    private subcategoryService: SubCategoryService,
+    private requestRepository: RequestRepository
+  ) {
     this.requestRepository = requestRepository;
   }
 
@@ -25,10 +31,23 @@ export default class RequestService {
     status: RequestStatus,
     requestedItems: CreateRequestedItems[]
   ) => {
+    const requestedItemsEntities = [];
+    requestedItems.map(async (requestedItem) => {
+      const subcategory = await this.subcategoryService.getSubCategoryById(
+        requestedItem.subcategory_id
+      );
+      const requestedItemEntity =
+        await this.requestedItemService.createNewRequestedItem(
+          requestedItem.reason,
+          requestedItem.requestType,
+          subcategory
+        );
+      requestedItemsEntities.push(requestedItemEntity);
+    });
     const newRequest = new Requests();
     newRequest.employee = employee;
     newRequest.status = status;
-    newRequest.requestedItems = requestedItems as unknown as RequestedItems[];
+    newRequest.requestedItems = requestedItemsEntities;
 
     return await this.requestRepository.save(newRequest);
   };

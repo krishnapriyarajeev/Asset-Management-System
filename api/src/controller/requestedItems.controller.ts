@@ -9,6 +9,7 @@ import RequestedItemService from "../service/requestedItems.service";
 import {
   CreateRequestedItems,
   UpdateRequestedItems,
+  handleRequestedItem,
 } from "../dto/requestedItems.dto";
 
 export default class requestedItemController {
@@ -18,12 +19,54 @@ export default class requestedItemController {
     this.router = Router();
 
     this.router.get("/", authMiddleware, this.getAllRequestedItem);
+    this.router.put("/handle", authMiddleware, this.handleRequestedItem);
     this.router.get("/count", this.countRequestedItem);
     this.router.get("/:id", authMiddleware, this.getRequestedItemById);
     this.router.post("/", authMiddleware, this.createRequestedItem);
     this.router.put("/", authMiddleware, this.updateRequestedItem);
     this.router.delete("/:id", authMiddleware, this.deleteRequestedItem);
   }
+
+  handleRequestedItem = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const handlerequestedItemDto = plainToInstance(
+        handleRequestedItem,
+        req.body
+      );
+
+      const errors = await validate(handlerequestedItemDto);
+
+      if (errors.length) {
+        throw new HttpException(400, JSON.stringify(errors));
+      }
+
+      const id = handlerequestedItemDto.id;
+
+      console.log(id);
+
+      const updateReqItems = new UpdateRequestedItems();
+
+      updateReqItems.id = id;
+      updateReqItems.requestStatus = handlerequestedItemDto.requestStatus;
+
+      const requestedItemData =
+        await this.requestedItemService.updateRequestedItem(updateReqItems);
+
+      await this.requestedItemService.updateAsset(
+        handlerequestedItemDto.subcategory_id,
+        handlerequestedItemDto.employee_id as number,
+        handlerequestedItemDto.requestStatus
+      );
+      res.status(200).send(requestedItemData);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   getAllRequestedItem = async (_, res: Response) => {
     const requestedItem =
       await this.requestedItemService.getAllRequestedItems();

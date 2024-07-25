@@ -4,26 +4,26 @@ import Requests from "./requests.entity";
 import Subcategory from "./subcategory.entity";
 
 @Entity()
+export default class RequestedItems extends AbstractEntity {
+  @Column()
+  reason: string;
 
-export default class RequestedItems extends AbstractEntity{
+  @Column()
+  requestType: string;
 
-    @Column()
-    reason: string;
+  @ManyToOne(() => Requests, (requests) => requests.requestedItems)
+  @JoinColumn()
+  requests: Requests;
 
-    @Column()
-    requestType: string;
+  @Column({ default: "Pending" })
+  status: string;
 
-    @Column({default:"Pending"})
-    status:string
+  @ManyToOne(() => Subcategory, (subcategory) => subcategory.requestedItems, {
+    cascade: true,
+  })
+  @JoinColumn({ name: "subcategory_id" })
+  subcategory: Subcategory;
 
-    @ManyToOne(() => Requests, (requests) => requests.requestedItems)
-    @JoinColumn()
-    requests: Requests;
-
-    @ManyToOne(() => Subcategory, (subcategory) => subcategory.requestedItems)
-    @JoinColumn()
-    subcategory: Subcategory;
-
-   
-
+  @Column({ name: "subcategory_id" })
+  subcategoryId: number;
 }

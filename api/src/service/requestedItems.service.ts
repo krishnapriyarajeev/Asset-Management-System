@@ -8,11 +8,44 @@ import Subcategory from "../entity/subcategory.entity";
 import RequestedItems from "../entity/requestedItems.entity";
 import RequestedItemRepository from "../repository/requestedItem.repository";
 import { UpdateRequestedItems } from "../dto/requestedItems.dto";
+import AssetService from "./assets.services";
+import { UpdateAssetDto } from "../dto/assets.dto";
+import { RequestItemStatus } from "../utils/RequestItemStatus.enum";
 
 export default class RequestedItemService {
-  constructor(private requestedItemRepository: RequestedItemRepository) {
+  constructor(
+    private requestedItemRepository: RequestedItemRepository,
+    private assetService: AssetService
+  ) {
     this.requestedItemRepository = requestedItemRepository;
+    this.assetService = assetService;
   }
+
+  public updateAsset = async (
+    id: number,
+    employee_id: number,
+    Status: RequestItemStatus
+  ) => {
+    console.log(id);
+    const assetData = await this.assetService.getUnallocatedAssetById(id);
+
+    if (!assetData) {
+      throw new HttpException(
+        200,
+        `No unallocated asset found with subcategory ID ${id}`
+      );
+    }
+
+    assetData.employeeId = employee_id;
+    assetData.status =
+      Status === RequestItemStatus.ACCEPTED
+        ? AssetStatus.ALLOCATED
+        : AssetStatus.UNALLOCATED;
+
+    return await this.assetService.updateAsset(
+      assetData as unknown as UpdateAssetDto
+    );
+  };
 
   public getAllRequestedItems = async () => this.requestedItemRepository.find();
 
@@ -50,6 +83,10 @@ export default class RequestedItemService {
 
     if (requestedItem.subcategory_id) {
       requestedItemsData.subcategory.id = requestedItem.subcategory_id;
+    }
+
+    if (requestedItem.requestStatus) {
+      requestedItemsData.status = requestedItem.requestStatus;
     }
     return await this.requestedItemRepository.save(requestedItemsData);
   };

@@ -103,6 +103,9 @@ export default class AssetService {
     await this.assetRepository.save(newAsset);
   };
 
+  public getUnallocatedAssetById = async (id: number) =>
+    this.assetRepository.findOneUnallocatedAssetBySubcategoryId(id);
+
   public createNewAsset = async (
     serialNumber: string,
     status: AssetStatus,

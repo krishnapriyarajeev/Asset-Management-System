@@ -10,6 +10,7 @@ import { Type } from "class-transformer";
 import Requests from "../entity/requests.entity";
 import Subcategory from "../entity/subcategory.entity";
 import { CreateSubcategoryDto } from "./subcategory.dto";
+import { RequestItemStatus } from "../utils/RequestItemStatus.enum";
 
 export class CreateRequestedItems {
   @IsString()
@@ -20,17 +21,6 @@ export class CreateRequestedItems {
   @IsNotEmpty()
   requestType: string;
 
-  // @ValidateNested()
-  // @IsOptional()
-  // @Type(() => CreateRequestsDto)
-  //--------------------------------
-  // @IsNotEmpty()
-  // @IsNumber()
-  // requests_id: number;
-
-  // @ValidateNested()
-  // @IsOptional()
-  // @Type(() => CreateSubcategoryDto)
   @IsNotEmpty()
   @IsNumber()
   subcategory_id: number;
@@ -54,9 +44,29 @@ export class UpdateRequestedItems {
   @IsNumber()
   requests_id: number;
 
+  @IsString()
+  @IsNotEmpty()
+  requestStatus: string;
+
   // @ValidateNested()
   // @Type(() => CreateSubcategoryDto)
   @IsOptional()
+  @IsNumber()
+  subcategory_id: number;
+}
+
+export class handleRequestedItem {
+  @IsNotEmpty()
+  id: number;
+
+  @IsString()
+  @IsNotEmpty()
+  requestStatus: RequestItemStatus;
+
+  @IsNumber()
+  employee_id: number;
+
+  @IsNotEmpty()
   @IsNumber()
   subcategory_id: number;
 }

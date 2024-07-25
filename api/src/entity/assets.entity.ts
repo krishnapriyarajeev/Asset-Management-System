@@ -18,7 +18,10 @@ export default class Assets extends AbstractEntity {
   @JoinColumn()
   subcategory: Subcategory;
 
-  @ManyToOne(() => Employee, (employee) => employee.assets, { nullable: true })
+  @Column()
+  subcategory_Id: number;
+
+  @ManyToOne(() => Employee, (employee) => employee.assets)
   @JoinColumn({})
   employee: Employee;
 

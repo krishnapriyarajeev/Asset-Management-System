@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 import Assets from "../entity/assets.entity";
+import { AssetStatus } from "../utils/assetStatus.enum";
 
 export default class AssetRepository {
   constructor(private assetRepository: Repository<Assets>) {
@@ -17,6 +18,17 @@ export default class AssetRepository {
       where: filter,
       relations: { subcategory: true, employee: true },
     });
+
+  findOneUnallocatedAssetBySubcategoryId = async (subcategoryId: number) => {
+    return await this.assetRepository.findOne({
+      where: {
+        subcategory_Id: subcategoryId,
+        status: AssetStatus.UNALLOCATED,
+      },
+      relations: { subcategory: true, employee: true },
+      order: { id: "ASC" },
+    });
+  };
 
   save = async (newAsset: Partial<Assets>) =>
     await this.assetRepository.save(newAsset);

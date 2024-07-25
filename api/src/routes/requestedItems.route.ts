@@ -7,11 +7,20 @@ import RequestRepository from "../repository/request.repository";
 import RequestedItemRepository from "../repository/requestedItem.repository";
 import RequestService from "../service/request.service";
 import RequestedItemService from "../service/requestedItems.service";
+import AssetService from "../service/assets.services";
+import AssetRepository from "../repository/assets.repository";
+import Assets from "../entity/assets.entity";
 
-const requestedItemsRouter = new requestedItemController(
-  new RequestedItemService(
-    new RequestedItemRepository(dataSource.getRepository(RequestedItems))
-  )
-).router;
+const assetService = new AssetService(
+  new AssetRepository(dataSource.getRepository(Assets))
+);
+
+export const requestedItemService = new RequestedItemService(
+  new RequestedItemRepository(dataSource.getRepository(RequestedItems)),
+  assetService
+);
+
+const requestedItemsRouter = new requestedItemController(requestedItemService)
+  .router;
 
 export default requestedItemsRouter;

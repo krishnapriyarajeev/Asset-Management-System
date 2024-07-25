@@ -7,10 +7,10 @@ import SubCategoryService from "../service/subcategory.service";
 import SubCategoryController from "../controller/subCategory.controller";
 import Category from "../entity/category.entity";
 
-const SubcategoryRouter = new SubCategoryController(
-  new SubCategoryService(
-    new SubCategoryRepository(dataSource.getRepository(Subcategory))
-  )
-).router;
+export const subcategoryService = new SubCategoryService(
+  new SubCategoryRepository(dataSource.getRepository(Subcategory))
+);
+
+const SubcategoryRouter = new SubCategoryController(subcategoryService).router;
 
 export default SubcategoryRouter;
