@@ -3,12 +3,13 @@ import { MdModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import Pill from "../../components/pill/pill";
 import EditModal from "../../components/Modal/editModal";
 import DeleteModal from "../../components/Modal/deleteModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateButton from "../../components/button/create";
 import Container from "../../components/container/container";
 
 import { useNavigate } from "react-router-dom";
 import Select from "../../components/Select/Select";
+import { useGetAllEmployeesQuery } from "../EmployeeDetails/employee.api";
 
 const createFields = [
   {
@@ -67,7 +68,7 @@ const editFields = [
   {
     id: "id",
     text: "Employee ID",
-    disable:true
+    disable: true,
   },
   {
     id: "role",
@@ -101,6 +102,11 @@ const editFields = [
 ];
 
 const EmployeeList = () => {
+  const { data, isSuccess } = useGetAllEmployeesQuery();
+  useEffect(() => {
+    console.log(data);
+  }, [data, isSuccess]);
+
   const tableheader = [
     "ID",
     "Name",
@@ -111,28 +117,28 @@ const EmployeeList = () => {
     "Actions",
   ];
 
-  const tabledata = [
-    {
-      id: "1",
-      name: "Alice",
-      email: "alice@gmail.com",
-      role: "HR",
-      status: "Active",
-      experience: "2",
-      department: { name: "HR" },
-      address: {
-        line1: "Kochi",
-        line2: "632416",
-      },
-    },
-  ];
+  // const tabledata = [
+  //   {
+  //     id: "1",
+  //     name: "Alice",
+  //     email: "alice@gmail.com",
+  //     role: "HR",
+  //     status: "Active",
+  //     experience: "2",
+  //     department: { name: "HR" },
+  //     address: {
+  //       line1: "Kochi",
+  //       line2: "632416",
+  //     },
+  //   },
+  // ];
 
   // TODO: Make it to delete id and check for if it's null to toggle visibility
   // const [deleteModal, setDeleteModal] = useState(false);
   // const [editModal, setEditModal] = useState(false);
   const [editId, setEditId] = useState("");
   const [deleteId, setDeleteId] = useState("");
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
   const navigate = useNavigate();
 
   const deleteHandler = () => {
@@ -158,18 +164,18 @@ const EmployeeList = () => {
     setEditId("");
   };
 
-  const editEmployee = (e, id) => {
-    e.stopPropagation();
-    const employee = tabledata.find((employee) => employee.id == id);
-    if (!employee) return;
-    const list = {
-      ...employee,
-      ...employee?.address,
-      departmentName: employee.department.name,
-    };
-    setData(list);
-    setEditId(id);
-  };
+  // const editEmployee = (e, id) => {
+  //   e.stopPropagation();
+  //   const employee = tabledata.find((employee) => employee.id == id);
+  //   if (!employee) return;
+  //   const list = {
+  //     ...employee,
+  //     ...employee?.address,
+  //     departmentName: employee.department.name,
+  //   };
+  //   setData(list);
+  //   setEditId(id);
+  // };
 
   return (
     <>
@@ -204,8 +210,11 @@ const EmployeeList = () => {
               </tr>
             </thead>
             <tbody>
-              {tabledata.map((employee) => (
-                <tr key={employee.id} onClick={() => navigate(employee.id)}>
+              {data?.map((employee) => (
+                <tr
+                  key={employee.id}
+                  onClick={() => navigate(`/employees/${employee.id}`)}
+                >
                   <td>{employee.id}</td>
                   <td>{employee.name}</td>
                   <td>{employee.email}</td>

@@ -17,7 +17,9 @@ import ErrorPage from "./pages/notfound/page";
 import EmployeeAssetPage from "./pages/requestHistory/page";
 
 // TODO: get user data from localstorage
-const getUserData = "Employee";
+
+const userRole = localStorage.getItem("kvRole");
+console.log(userRole);
 
 function App() {
   const router = createBrowserRouter([
@@ -74,7 +76,7 @@ function App() {
     },
     {
       path: "/profile",
-      element: getUserData === "Admin" ? <HomeLayout /> : <EmployeeLayout />,
+      element: userRole === "ADMIN" ? <HomeLayout /> : <EmployeeLayout />,
       children: [
         {
           path: "",
@@ -84,7 +86,7 @@ function App() {
     },
     {
       path: "/asset",
-      element: getUserData === "Admin" ? <HomeLayout /> : <EmployeeLayout />,
+      element: userRole === "ADMIN" ? <HomeLayout /> : <EmployeeLayout />,
       children: [
         {
           path: "",

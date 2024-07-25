@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import Container from "../../components/container/container";
 import Pill from "../../components/pill/pill";
 import DetailRow from "../../components/DetailRow/DetailRow";
+import { useGetEmployeeByIdQuery } from "../EmployeeDetails/employee.api";
 
 const fields = [
   {
-    id: "ename",
+    id: "name",
     text: "Employee Name",
   },
   {
@@ -14,8 +15,9 @@ const fields = [
     text: "E-mail",
   },
   {
-    id: "dept",
+    id: "department",
     text: "Department",
+    getValue: (data) => data?.department?.name,
   },
   {
     id: "role",
@@ -26,18 +28,6 @@ const fields = [
   },
 ];
 
-const employee = {
-  id: "1",
-  ename: "Alice",
-  email: "alice@gmail.com",
-  role: "HR",
-  dept: "HR",
-  status: "Active",
-  address: {
-    line1: "Kochi",
-    pincode: "632416",
-  },
-};
 const today = new Date();
 const options = {
   weekday: "long",
@@ -48,15 +38,21 @@ const options = {
 const formatter = new Intl.DateTimeFormat("en-US", options);
 const formattedDate = formatter.format(today).replace(/,/g, "");
 
+// //Get employee
+
+// console.log(data);
+
 const Profile = () => {
-  const { id } = useParams();
+  const EmployeeId = localStorage.getItem("kvEmployeeId");
+  const { data } = useGetEmployeeByIdQuery(Number(EmployeeId));
+  // console.log(data["status"]);
 
   return (
     <>
       <div className="employee-request">
         <div className="heading">
           <h2 className="tail">Hello,&nbsp;</h2>
-          <h1 className="head">{employee.ename}</h1>
+          <h1 className="head">{data?.name}</h1>
         </div>
         <h1 className="date">{formattedDate}</h1>
       </div>
@@ -70,20 +66,22 @@ const Profile = () => {
                   <label className="head">Status</label>
                   <Pill
                     color={
-                      employee.status === "Active"
+                      data?.status === "Active"
                         ? "green"
-                        : employee.status === "Probation"
+                        : data?.status === "Probation"
                         ? "yellow"
                         : "red"
                     }
-                    innerText={employee.status}
+                    innerText={data?.status}
                   />
                 </div>
               ) : (
                 <DetailRow
                   id={field.id}
                   text={field.text}
-                  value={employee[field.id]}
+                  value={
+                    field.getValue ? field.getValue(data) : data?.[field.id]
+                  }
                   key={field.id}
                 />
               );
@@ -96,16 +94,16 @@ const Profile = () => {
                 Address
               </label>
               <div id="add">
-                {employee.address.line1},
+                {data?.address.line1},
                 <br />
-                {employee.address.pincode}
+                {data?.address.line2}
               </div>
             </div>
             <div className="detail-space">
               <label htmlFor="id" className="head">
                 Employee ID
               </label>
-              <div id="id">{id}</div>
+              <div id="id">{data?.id}</div>
             </div>
           </div>
         </section>

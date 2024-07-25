@@ -1,6 +1,3 @@
-// eslint-disable-next-line react/prop-types
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import "./Login.scss";
 import TextField from "../../components/LoginTextField/TextField";
 import kvlogo from "../../assets/kv-logo.png";
@@ -61,6 +58,8 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("kvLogin", data.token);
+      localStorage.setItem("kvRole", data.employee.role);
+      localStorage.setItem("kvEmployeeId", data.employee.id);
       navigate("/profile");
     } else if (isError) toggleToast("Credentials Wrong, Try again!!");
   }, [isSuccess, isError, data, navigate]);

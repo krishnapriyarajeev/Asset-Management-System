@@ -6,10 +6,11 @@ import DetailRow from "../../components/DetailRow/DetailRow";
 import { MdModeEditOutline } from "react-icons/md";
 import EditModal from "../../components/Modal/editModal";
 import { useState } from "react";
+import { useGetEmployeeByIdQuery } from "./employee.api";
 
 const fields = [
   {
-    id: "ename",
+    id: "name",
     text: "Employee Name",
   },
   {
@@ -17,8 +18,9 @@ const fields = [
     text: "E-mail",
   },
   {
-    id: "dept",
+    id: "department",
     text: "Department",
+    getValue: (data) => data?.department?.name,
   },
   {
     id: "role",
@@ -28,7 +30,6 @@ const fields = [
     id: "status",
   },
 ];
-
 const tabledata = [
   {
     category: "Laptops",
@@ -38,22 +39,23 @@ const tabledata = [
   },
 ];
 
-const employee = {
-  id: "1",
-  ename: "Alice",
-  email: "alice@gmail.com",
-  role: "HR",
-  dept: "HR",
-  status: "Active",
-  address: {
-    line1: "Kochi",
-    pincode: "632416",
-  },
-};
+// const employee = {
+//   id: "1",
+//   ename: "Alice",
+//   email: "alice@gmail.com",
+//   role: "HR",
+//   dept: "HR",
+//   status: "Active",
+//   address: {
+//     line1: "Kochi",
+//     pincode: "632416",
+//   },
+// };
 
 const EmployeeDetails = () => {
   const { id } = useParams();
   const [editId, setEditId] = useState("");
+  const { data } = useGetEmployeeByIdQuery(id);
 
   const editHandler = () => {
     setEditId(id);
@@ -69,7 +71,7 @@ const EmployeeDetails = () => {
         <EditModal editHandler={editHandler} cancelHandler={cancelEdit} />
       )}
       <div className="heading-subcategory">
-        <h1 className="head">{employee.ename}/</h1>
+        <h1 className="head">{data?.name}/</h1>
         <h4 className="tail">Employee</h4>
       </div>
       <Container>
@@ -81,13 +83,13 @@ const EmployeeDetails = () => {
                   <label className="head">Status</label>
                   <Pill
                     color={
-                      employee.status === "Active"
+                      data?.status === "Active"
                         ? "green"
-                        : employee.status === "Probation"
+                        : data?.status === "Probation"
                         ? "yellow"
                         : "red"
                     }
-                    innerText={employee.status}
+                    innerText={data?.status}
                     type="sm"
                   />
                 </div>
@@ -95,7 +97,9 @@ const EmployeeDetails = () => {
                 <DetailRow
                   id={field.id}
                   text={field.text}
-                  value={employee[field.id]}
+                  value={
+                    field.getValue ? field.getValue(data) : data?.[field.id]
+                  }
                   key={field.id}
                 />
               );
@@ -108,9 +112,9 @@ const EmployeeDetails = () => {
                 Address
               </label>
               <div id="add">
-                {employee.address.line1},
+                {data?.address.line1},
                 <br />
-                {employee.address.pincode}
+                {data?.address.line2}
               </div>
             </div>
             <div className="detail-space">

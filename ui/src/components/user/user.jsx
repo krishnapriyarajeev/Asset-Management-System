@@ -9,6 +9,8 @@ const User = () => {
   const [modal, setModal] = useState(false);
   const signout = () => {
     localStorage.removeItem("kvLogin");
+    localStorage.removeItem("kvRole");
+    localStorage.removeItem("kvEmployeeId");
     setModal(false);
     navigate("/");
   };
